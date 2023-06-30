@@ -8,116 +8,98 @@ a {
     text-decoration: none;
 }
 
-/* LoginPage */
-#login-page-background{
-    background-color: var(--primary-color);
-    background-size: cover;
-    background-position: center;
-    position:fixed;
-    width:100%;
-    height:100%;
-    top:0;
-    left:0;
-    z-index:1000
-}
+/* Loading animation */
 
-.login-page {
-    height: 100vh;
-    display: flex;
-    font-size: 20px;
-    align-items: center;
-    justify-content: center;
-}
-
-.login-page h1{
-    color: #333333
-}
-
-.login-page > div{
-    display: flex;
-    box-shadow: 5px 5px 5px #111111 ;
-    align-items: center;
-    flex-direction: column;
-    background-color: #ebf1ff;
-    width: clamp(250px, 25vw, 600px);
-    height: clamp(400px, 50vh, 800px);
-    border-radius: 10px;
-    border: 1px solid white;
-}
-
-#login-form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: auto;
-}
-
-#login-form div {
-    display: flex;
-    align-items: baseline;
-    font-size: 15px;
-    width: clamp(220px, 23vw, 515px);
-}
-
-#login-form input:not(#remember-me-checkbox) {
-    background-color: var(--secondary-color);
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    width: clamp(150px, calc(25vw - 90px), 500px);
-    font-size: 18px;
-    padding: 10px;
-}
-
-#login-checkbox-label {
-    position: relative;
-    top:9px
-}
-
-#remember-me-checkbox {
-    position: relative;
-    top: 9px;
-    left: 5px;
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: #fff;
-    font: inherit;
-    width: 16px;
-    height: 16px;
-    outline: 1px solid black;
-    border-radius: 0.15em;
-    transform: translateY(-0.075em);
-    display: grid;
-    place-content: center;
-    margin-left: 5px;
-}
-
-#remember-me-checkbox::before {
-    position: relative;
-    content: "";
-    width: 10px;
-    height: 10px;
-    transform: scale(0);
-    transition: 120ms transform ease-in-out;
-    box-shadow: inset 1em 1em var(--accent-color);
-}
-
-#remember-me-checkbox:checked::before {
-    transform: scale(1);
-}
-
-.login-page button {
-    color: #730075;
-}
-
-.login-page button {
-    margin-top: 20px;
-    width: clamp(220px, 23vw, 515px);
-    color: black;
-    font-size: 20px;
+.lds-roller {
     display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.lds-roller div {
+    animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    transform-origin: 40px 40px;
+}
+.lds-roller div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    margin: -4px 0 0 -4px;
+}
+.lds-roller div:nth-child(1) {
+    animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+    top: 63px;
+    left: 63px;
+}
+.lds-roller div:nth-child(2) {
+    animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+    top: 68px;
+    left: 56px;
+}
+.lds-roller div:nth-child(3) {
+    animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+    top: 71px;
+    left: 48px;
+}
+.lds-roller div:nth-child(4) {
+    animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+    top: 72px;
+    left: 40px;
+}
+.lds-roller div:nth-child(5) {
+    animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+    top: 71px;
+    left: 32px;
+}
+.lds-roller div:nth-child(6) {
+    animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+    top: 68px;
+    left: 24px;
+}
+.lds-roller div:nth-child(7) {
+    animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+    top: 63px;
+    left: 17px;
+}
+.lds-roller div:nth-child(8) {
+    animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+    top: 56px;
+    left: 12px;
+}
+@keyframes lds-roller {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Cover accent button */
+
+.cover-button {
+    color: black;
     padding: 10px 20px;
-    margin-bottom: 30px;
     border-radius: 4px;
     background-color: var(--secondary-color);
     text-align: center;
@@ -127,7 +109,7 @@ a {
     transition: background-color 0.3s, transform 0.3s;
     border: 1px solid var(--accent-color)
 }
-.login-page button::before {
+.cover-button::before {
     content: "";
     position: absolute;
     top: 0;
@@ -139,68 +121,43 @@ a {
     transform: skewX(45deg);
     z-index: -1;
 }
-.login-page button:hover {
+.cover-button:hover {
     background-color: var(--accent-color);
     transform: scale(1.02);
     color: white;
     cursor: pointer;
 }
 
-.login-page button:hover:before {
+.cover-button:hover:before {
     transform: translateX(100%);
 }
 
-.login-page a {
-    color: #555555;
-    font-size: 14px;
+/* purple-checkbox */
+
+.purple-checkbox {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    font: inherit;
+    width: 16px;
+    height: 16px;
+    outline: 1px solid black;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
 }
 
-#no-account-div {
-    margin-top: auto;
-    text-align: center;
-    margin-bottom: 5px;
-}
-
-#login-user-icon {
-    font-variation-settings:
-            'FILL' 0,
-            'wght' 400,
-            'GRAD' 0,
-            'opsz' 48;
-    font-size: 45px;
-    color: #730075;
+.purple-checkbox::before {
     position: relative;
-    top:5px;
+    content: "";
+    width: 10px;
+    height: 10px;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--accent-color);
 }
 
-#login-password-icon {
-    font-variation-settings:
-            'FILL' 0,
-            'wght' 400,
-            'GRAD' 0,
-            'opsz' 48;
-    font-size: 35px;
-    color: #730075;
-    position: relative;
-    top:10px;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-#login-username-div {
-    border: 2px solid #AAA;
-    border-radius: 10px;
-    height: 50px;
-    margin-bottom: 5px;
-}
-
-#login-password-div {
-    border: 2px solid #AAA;
-    border-radius: 10px;
-    height: 50px;
-}
-
-#login-username {
-    position: relative;
-    bottom: 10px
+.purple-checkbox:checked::before {
+    transform: scale(1);
 }
