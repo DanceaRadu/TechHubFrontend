@@ -1,13 +1,17 @@
 import React, {useState} from 'react'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import './LoginPage.css'
+// @ts-ignore
+import Cookies from 'js-cookie'
 
 type AuthenticationRequest = {
     username:string;
     password:string;
 }
 
-function LoginPage() {
+function LoginPage(this: any) {
+
+    const navigate = useNavigate();
 
     const [isUserFocused, setUserFocused] = useState<boolean>(false);
     const [isPasswordFocused, setPasswordFocused] = useState<boolean>(false);
@@ -34,10 +38,16 @@ function LoginPage() {
     const [usernameInput, setUsernameInput] = useState<string>('');
     const [passwordInput, setPasswordInput] = useState<string>('');
 
+    const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
+
    const handleLoginSubmit = (e: any) => {
      e.preventDefault();
+     if(usernameInput === '' || passwordInput === '') return;
+
+     setIsButtonDisabled(true);
      setIsPending(true);
      setError(null);
+
      fetch('http://localhost:8080/api/v1/auth/authenticate', {
          method: 'POST',
          headers: {
@@ -49,12 +59,19 @@ function LoginPage() {
          if(!res.ok) throw Error('Could not complete the login process')
          setIsPending(false);
          setError(null);
-         //redirect
-     }).catch(err => {
-        setIsPending(false);
-        setError(err.message);
-        setPasswordInput('');
-     })
+         setIsButtonDisabled(false);
+         return res.json();
+     }).then(json => {
+            Cookies.set('jwtToken', json.token, { expires: 30});
+            setIsButtonDisabled(false);
+            navigate('/');
+         })
+         .catch(err => {
+            setIsButtonDisabled(false);
+            setIsPending(false);
+            setError(err.message);
+            setPasswordInput('');
+        });
    };
 
     return (
@@ -90,14 +107,14 @@ function LoginPage() {
                                 onChange={(event) => setPasswordInput(event.target.value)}
                             />
                         </div>
-                        {error && <div className='login-error-div'>! Wrong username or password</div>}
+                        {error && <div className='login-error-div'>! Wrong account information</div>}
                         <div>
                             <div>
                                 <label htmlFor="remember-me-checkbox" id="login-checkbox-label">Remember me</label>
                                 <input type="checkbox" id="remember-me-checkbox" className="purple-checkbox"/>
                             </div>
                         </div>
-                        <button className="cover-button">Login</button>
+                        <button className="cover-button" disabled={isButtonDisabled}>Login</button>
                     </form>
                     {isPending &&
                         <div className="lds-roller">
