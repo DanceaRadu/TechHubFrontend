@@ -1,30 +1,15 @@
-import React, {useEffect, useState} from "react";
-// @ts-ignore
-import Cookies from "js-cookie";
-import {Link} from "react-router-dom";
+import React from "react";
 import Navbar from "../Navbar/Navbar";
 import './Home.css'
+import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 
 function Home() {
 
-    const [jwt, setJWT] = useState<string>('');
-
-    useEffect(() => {
-        setJWT(Cookies.get('jwtToken'));
-    }, []);
-
-    function deleteToken() {
-        Cookies.remove("jwtToken");
-        setJWT('');
-        window.location.reload();
-    }
+    const {isLoggedIn, isPending: isPendingLoggedIn} = useCheckLoggedIn();
 
     return(
         <div className="background-div">
-            <Navbar></Navbar>
-            <h1>{jwt || 'no token'}</h1>
-            <Link to="/login">Login</Link>
-            <button onClick={deleteToken}>Delete token</button>
+            <Navbar isLoggedIn={isLoggedIn} isPendingLoggedIn={isPendingLoggedIn}></Navbar>
         </div>
     );
 }

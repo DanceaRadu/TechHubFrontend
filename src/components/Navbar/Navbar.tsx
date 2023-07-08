@@ -1,8 +1,20 @@
 import './Navbar.css'
-import React from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import UserButton from "./UserButton/UserButton";
-function Navbar() {
+function Navbar(props: any) {
+
+    let isLoggedIn:boolean = props.isLoggedIn;
+    let isPendingLoggedIn:boolean = props.isPendingLoggedIn;
+    const [isSearchBarFocused, setIsSearchBarFocused] = useState<boolean>(false);
+
+    const handleSearchBarFocus = () => {
+        setIsSearchBarFocused(true);
+    }
+
+    const handleSearchBarBlur = () => {
+        setIsSearchBarFocused(false);
+    }
 
     return (
       <div id="navbar-div">
@@ -12,11 +24,11 @@ function Navbar() {
                     <span style={{color: 'purple'}}>Hub</span>
                 </h1>
           </Link>
-          <form id="navbar-search-form">
-              <input type = "text" placeholder="Search for a product" id="navbar-search-field"/>
+          <form id="navbar-search-form" style={{border: isSearchBarFocused ? '2px solid #730075' : '2px solid #AAAAAA'}}>
+              <input type = "text" placeholder="Search for a product" id="navbar-search-field" onFocus={handleSearchBarFocus} onBlur={handleSearchBarBlur}/>
               <span className="material-symbols-outlined" id="navbar-search-icon">search</span>
           </form>
-          <UserButton></UserButton>
+          <UserButton isLoggedIn={isLoggedIn} isPendingLoggedIn = {isPendingLoggedIn}></UserButton>
       </div>
     );
 }

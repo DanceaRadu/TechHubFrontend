@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
 
-function useFetchBlob() {
+function useFetchProfilePicture() {
 
     const [imageSourceUrl, setImageSourceUrl] = useState<string>("");
     const [error, setError] = useState<any>(null);
@@ -27,7 +27,7 @@ function useFetchBlob() {
                 setIsPending(false);
                 setError(err.message);
             })
-    }, )
+    }, [])
     return {imageSourceUrl, error, isPending};
 }
-export default useFetchBlob;
+export default useFetchProfilePicture;
