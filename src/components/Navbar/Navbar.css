@@ -1,0 +1,55 @@
+
+#navbar-div{
+    display: flex;
+    background-color: #151515;
+    height: clamp(70px, 8vh, 500px);
+    box-shadow: 0 5px 5px #111111;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#navbar-div h1 {
+    position: relative;
+    top: 5px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(50px, 5.5vh, 500px);
+    margin-left: 10px;
+}
+
+#navbar-search-icon {
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48;
+    font-size: clamp(70px * 0.5, 8vh * 0.5, 500px * 0.5);
+    color: var(--secondary-color);
+}
+
+#navbar-search-icon:hover {
+    color: var(--accent-color);
+    cursor: pointer;
+}
+
+#navbar-search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40%;
+}
+
+#navbar-search-field {
+    height: calc(100% - 10px);
+    width: clamp(100px, 40vw, 2000px);
+    background-color: var(--secondary-color);
+    outline: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 17px;
+    border: 2px solid var(--secondary-color);
+}
+
+#navbar-search-field:focus {
+  outline: none;
+    border: 2px solid var(--accent-color);
+}

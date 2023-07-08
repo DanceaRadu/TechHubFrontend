@@ -75,7 +75,7 @@ function LoginPage(this: any) {
    };
 
     return (
-        <div id='login-page-background'>
+        <div className="background-div">
             <div className="login-page">
                 <div>
                     <Link to='/'>
