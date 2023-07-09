@@ -1,0 +1,39 @@
+import './Navbar.css'
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
+import UserButton from "./UserButton/UserButton";
+function Navbar(props: any) {
+
+    let isLoggedIn:boolean = props.isLoggedIn;
+    let isPendingLoggedIn:boolean = props.isPendingLoggedIn;
+    const [isSearchBarFocused, setIsSearchBarFocused] = useState<boolean>(false);
+
+    const handleSearchBarFocus = () => {
+        setIsSearchBarFocused(true);
+    }
+
+    const handleSearchBarBlur = () => {
+        setIsSearchBarFocused(false);
+    }
+
+    return (
+      <div id="navbar-div">
+          <Link to='/' onClick={() => window.location.reload()}>
+                <h1>
+                    <span style={{color: '#ebf1ff'}}>Tech</span>
+                    <span style={{color: 'purple'}}>Hub</span>
+                </h1>
+          </Link>
+          <form id="navbar-search-form" style={{border: isSearchBarFocused ? '2px solid #730075' : '2px solid #AAAAAA'}}>
+              <input type = "text" placeholder="Search for a product" id="navbar-search-field" onFocus={handleSearchBarFocus} onBlur={handleSearchBarBlur}/>
+              <span className="material-symbols-outlined" id="navbar-search-icon">search</span>
+          </form>
+          <div id="navbar-right-div">
+              <span className="material-symbols-outlined" id="navbar-shopping-cart-icon">shopping_cart</span>
+              <UserButton isLoggedIn={isLoggedIn} isPendingLoggedIn = {isPendingLoggedIn}></UserButton>
+          </div>
+      </div>
+    );
+}
+
+export default Navbar;

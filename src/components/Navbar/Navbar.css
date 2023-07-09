@@ -1,0 +1,79 @@
+#navbar-div{
+    display: flex;
+    background-color: #151515;
+    height: clamp(70px, 8vh, 500px);
+    box-shadow: 0 5px 5px #111111;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#navbar-div h1 {
+    position: relative;
+    top: 5px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(50px, 5.5vh, 500px);
+    margin-left: 10px;
+}
+
+#navbar-search-icon {
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48;
+    font-size: clamp(70px * 0.5, 8vh * 0.5, 500px * 0.5);
+    color: var(--primary-color);
+    margin-right: 5px;
+}
+
+#navbar-search-icon:hover {
+    color: var(--accent-color);
+    cursor: pointer;
+}
+
+#navbar-search-form {
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    background-color: var(--secondary-color);
+    margin-left: 5px;
+}
+
+#navbar-search-field {
+    position: relative;
+    top: 1px;
+    height: calc(100% - 20px);
+    width: clamp(100px, 40vw, 2000px);
+    background-color: var(--secondary-color);
+    outline: none;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 17px;
+    border: 2px solid var(--secondary-color);
+}
+
+#navbar-search-field:focus + #navbar-search-form{
+    background-color: red;
+  outline: none;
+    border: 2px solid var(--accent-color);
+}
+
+.user-button-dropdown-item {
+    padding: 5px;
+}
+
+#navbar-shopping-cart-icon {
+    align-self: center;
+     font-variation-settings:
+             'FILL' 0,
+             'wght' 400,
+             'GRAD' 0,
+             'opsz' 48
+}
+
+#navbar-right-div {
+    height: 100%;
+    display: flex;
+}

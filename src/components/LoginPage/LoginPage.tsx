@@ -4,11 +4,6 @@ import './LoginPage.css'
 // @ts-ignore
 import Cookies from 'js-cookie'
 
-type AuthenticationRequest = {
-    username:string;
-    password:string;
-}
-
 function LoginPage(this: any) {
 
     const navigate = useNavigate();
@@ -35,13 +30,19 @@ function LoginPage(this: any) {
     const [isPending, setIsPending] = useState<boolean>(false);
     const [error, setError] = useState(null);
 
-    const [usernameInput, setUsernameInput] = useState<string>('');
+    const [usernameInput, setUsernameInput] = useState<string>(Cookies.get("username"));
     const [passwordInput, setPasswordInput] = useState<string>('');
 
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
+    const [isChecked, setIsChecked] = useState<boolean>(false);
+
+    const handleCheckboxChange = (event: any) => {
+        setIsChecked(event.target.checked);
+    };
 
    const handleLoginSubmit = (e: any) => {
      e.preventDefault();
+     Cookies.remove("username");
      if(usernameInput === '' || passwordInput === '') return;
 
      setIsButtonDisabled(true);
@@ -63,6 +64,7 @@ function LoginPage(this: any) {
          return res.json();
      }).then(json => {
             Cookies.set('jwtToken', json.token, { expires: 30});
+            if(isChecked) Cookies.set("username", usernameInput);
             setIsButtonDisabled(false);
             navigate('/');
          })
@@ -75,7 +77,7 @@ function LoginPage(this: any) {
    };
 
     return (
-        <div id='login-page-background'>
+        <div className="background-div">
             <div className="login-page">
                 <div>
                     <Link to='/'>
@@ -94,6 +96,7 @@ function LoginPage(this: any) {
                                 onFocus={handleUserFocus}
                                 onBlur={handleUserBlur}
                                 onChange={(event) => setUsernameInput(event.target.value)}
+                                value={usernameInput}
                             />
                         </div>
                         <div id="login-password-div" style={{border: isPasswordFocused ? '2px solid #730075' : '2px solid #AAAAAA'}}>
@@ -105,13 +108,20 @@ function LoginPage(this: any) {
                                 onFocus={handlePasswordFocus}
                                 onBlur={handlePasswordBlur}
                                 onChange={(event) => setPasswordInput(event.target.value)}
+                                value={passwordInput}
                             />
                         </div>
                         {error && <div className='login-error-div'>! Wrong account information</div>}
                         <div>
                             <div>
                                 <label htmlFor="remember-me-checkbox" id="login-checkbox-label">Remember me</label>
-                                <input type="checkbox" id="remember-me-checkbox" className="purple-checkbox"/>
+                                <input
+                                    type="checkbox"
+                                    id="remember-me-checkbox"
+                                    className="purple-checkbox"
+                                    checked={isChecked}
+                                    onChange={handleCheckboxChange}
+                                />
                             </div>
                         </div>
                         <button className="cover-button" disabled={isButtonDisabled}>Login</button>
