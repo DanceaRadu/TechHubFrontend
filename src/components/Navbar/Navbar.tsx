@@ -28,7 +28,10 @@ function Navbar(props: any) {
               <input type = "text" placeholder="Search for a product" id="navbar-search-field" onFocus={handleSearchBarFocus} onBlur={handleSearchBarBlur}/>
               <span className="material-symbols-outlined" id="navbar-search-icon">search</span>
           </form>
-          <UserButton isLoggedIn={isLoggedIn} isPendingLoggedIn = {isPendingLoggedIn}></UserButton>
+          <div id="navbar-right-div">
+              <span className="material-symbols-outlined" id="navbar-shopping-cart-icon">shopping_cart</span>
+              <UserButton isLoggedIn={isLoggedIn} isPendingLoggedIn = {isPendingLoggedIn}></UserButton>
+          </div>
       </div>
     );
 }

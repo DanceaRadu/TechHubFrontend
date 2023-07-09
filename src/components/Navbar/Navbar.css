@@ -63,3 +63,17 @@
 .user-button-dropdown-item {
     padding: 5px;
 }
+
+#navbar-shopping-cart-icon {
+    align-self: center;
+     font-variation-settings:
+             'FILL' 0,
+             'wght' 400,
+             'GRAD' 0,
+             'opsz' 48
+}
+
+#navbar-right-div {
+    height: 100%;
+    display: flex;
+}
