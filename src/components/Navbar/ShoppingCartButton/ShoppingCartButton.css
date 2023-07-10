@@ -1,18 +1,9 @@
-#user-button-container {
+
+#shopping-cart-button-container {
     height: 100%;
-    margin-right: 15px;
+    margin-right: 10px;
 }
-
-#user-button-container:hover {
-    cursor: pointer;
-}
-
-#user-button-container:hover #user-button-dropdown {
-    display: block;
-    opacity: 1;
-}
-
-#user-button {
+#shopping-cart-button {
     position: relative;
     display: flex;
     height: calc(100% - 10px);
@@ -22,7 +13,7 @@
     padding-top: 5px;
 }
 
-#user-button-icon {
+#navbar-shopping-cart-icon {
     margin-left: 5px;
     position: relative;
     top: 2px;
@@ -31,29 +22,27 @@
             'wght' 400,
             'GRAD' 0,
             'opsz' 48;
-    font-size: clamp(50px, 6vh, 500px);
+    font-size: clamp(45px, 5.8vh, 500px);
     color: var(--accent-color);
 }
 
-#user-button-container:hover #user-button-icon {
+#navbar-shopping-cart-icon:hover {
     font-variation-settings:
             'FILL' 1;
     cursor: pointer;
 }
 
-#user-button-image {
-    aspect-ratio: 1/1;
-    border-radius: 100%;
-    margin-left: 30px;
-    border: 2px solid var(--accent-color);
-    max-width: calc(90% - 20px);
-    max-height: calc(90% - 20px);
-}
-
-#user-button-text {
-    margin-left: 5px;
+#shopping-cart-button-text {
     color: var(--secondary-color);
     font-size: clamp(11px, 1.6vh, 500px);
+}
+
+#shopping-cart-button-item-number {
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+    padding: 5px;
+    border-radius: 50px;
+    font-size: 12px
 }
 
 @keyframes fade-in {
@@ -67,13 +56,13 @@
     }
 }
 
-#user-button-dropdown {
+#shopping-cart-button-dropdown {
     color: var(--secondary-color);
     background-color: var(--primary-color);
     opacity: 0;
     display: none;
     position: relative;
-    right: 20%;
+    right: 25%;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 5px 5px #111111;
@@ -81,14 +70,9 @@
     z-index: 1;
 }
 
-
-.user-button-dropdown-item {
-    border-radius: 5px;
-    margin-top: 5px;
-    font-size: clamp(11px, 1.6vh, 500px);
+#shopping-cart-button-container:hover #shopping-cart-button-dropdown {
+    display: block;
+    opacity: 1;
 }
 
-.user-button-dropdown-item:hover {
-    background-color: var(--accent-color);
-    color: var(--secondary-color);
-}
+

@@ -1,0 +1,14 @@
+#shopping-cart-button-entry-container {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#shopping-cart-button-entry-product-name {
+    margin-right: 5px;
+}
+
+#shopping-cart-button-entry-product-quantity {
+
+}
