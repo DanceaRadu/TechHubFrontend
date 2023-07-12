@@ -14,9 +14,11 @@ function ProductPreview(props: any) {
     let setShoppingCartEntries = props.setShoppingCartEntries;
     const [error, setError] = useState<boolean>(false);
     const [isPending, setIsPending] = useState<boolean>(true);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     function handleAddToCart() {
 
+        setIsButtonDisabled(true);
         if(props.isLoggedIn) {
             fetch("http://localhost:8080/api/v1/user/shoppingcart/" + product.productID, {
                 method: 'POST',
@@ -75,13 +77,14 @@ function ProductPreview(props: any) {
             setIsPending(false);
             setError(false);
         }
+        setIsButtonDisabled(false);
     }
 
     return (
         <div id = "product-preview-container">
             <img src={require("./login-background.jpg")} id="product-preview-image"></img>
             <p id="product-preview-name">{product.productName}</p>
-            <button className="cover-button" id="product-preview-cart-button" onClick={handleAddToCart}>Add to cart</button>
+            <button className="cover-button" id="product-preview-cart-button" onClick={handleAddToCart} disabled={isButtonDisabled}>Add to cart</button>
         </div>
     )
 }

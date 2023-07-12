@@ -17,7 +17,6 @@ function useFetchImage(id:UUID) {
                 )
                     .then(res => {
                         if (!res.ok) throw Error("Could not fetch image");
-                        console.log("http://localhost:8080/api/v1/image/" + id);
                         return res.blob();
                     })
                     .then(blob => {
