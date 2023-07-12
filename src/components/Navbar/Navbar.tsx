@@ -2,6 +2,7 @@ import './Navbar.css'
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import UserButton from "./UserButton/UserButton";
+import ShoppingCartButton from "./ShoppingCartButton/ShoppingCartButton";
 function Navbar(props: any) {
 
     let isLoggedIn:boolean = props.isLoggedIn;
@@ -29,7 +30,12 @@ function Navbar(props: any) {
               <span className="material-symbols-outlined" id="navbar-search-icon">search</span>
           </form>
           <div id="navbar-right-div">
-              <span className="material-symbols-outlined" id="navbar-shopping-cart-icon">shopping_cart</span>
+              <ShoppingCartButton
+                  isLoggedIn={isLoggedIn}
+                  isPendingLoggedIn = {isPendingLoggedIn}
+                  shoppingCartEntries = {props.shoppingCartEntries}
+                  setShoppingCartEntries = {props.setShoppingCartEntries} >
+              </ShoppingCartButton>
               <UserButton isLoggedIn={isLoggedIn} isPendingLoggedIn = {isPendingLoggedIn}></UserButton>
           </div>
       </div>
