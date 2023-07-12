@@ -3,11 +3,15 @@ import {Link, useNavigate} from "react-router-dom";
 import './LoginPage.css'
 // @ts-ignore
 import Cookies from 'js-cookie'
+import shoppingCartEntry from "../../models/ShoppingCartEntry";
+import ShoppingCartEntry from "../../models/ShoppingCartEntry";
 
-function LoginPage(this: any) {
+function LoginPage(props:any) {
+
+    let shoppingCartEntries:shoppingCartEntry[] = props.shoppingCartEntries;
+    let setShoppingCartEntries = props.setShoppingCartEntries;
 
     const navigate = useNavigate();
-
     const [isUserFocused, setUserFocused] = useState<boolean>(false);
     const [isPasswordFocused, setPasswordFocused] = useState<boolean>(false);
 
@@ -66,8 +70,56 @@ function LoginPage(this: any) {
             Cookies.set('jwtToken', json.token, { expires: 30});
             if(isChecked) Cookies.set("username", usernameInput);
             setIsButtonDisabled(false);
-            navigate('/');
+
+            //if the login process is successful then we get the stored shopping cart items and add it the shopping cart entries in the database
+            let fetchPromises = [];
+
+            if(Cookies.get('shoppingCartProducts') != null) {
+                let cookieStoredShoppingCartItems: ShoppingCartEntry[] = JSON.parse(Cookies.get('shoppingCartProducts'));
+
+                for(let i = 0; i < cookieStoredShoppingCartItems.length; i++) {
+                    fetchPromises.push(
+                        fetch("http://localhost:8080/api/v1/user/shoppingcart/" + cookieStoredShoppingCartItems[i].product.productID, {
+                            method: 'POST',
+                            headers: {
+                                "Origin": "http://localhost:8080:3000",
+                                "Authorization": "Bearer " + Cookies.get('jwtToken')
+                            }
+                        })
+                            .then(res => {
+                                if (!res.ok) throw Error("Couldn't add product to cart");
+                            })
+                            .catch(() => {
+                                console.log("Error appending the cookie shopping cart");
+                            })
+                    );
+                }
+                Cookies.set('shoppingCartProducts', JSON.stringify([]));
+            }
+            Promise.all(fetchPromises)
+                .then(() => {
+                    fetch("http://localhost:8080/api/v1/user/shoppingcart",
+                        {
+                            method: 'GET',
+                            headers: {
+                                "Origin": "http://localhost:8080:3000",
+                                "Authorization": "Bearer " + Cookies.get('jwtToken')
+                            }
+                        }
+                    )
+                        .then(res => {
+                            if (!res.ok) throw Error("Could not fetch shopping cart products");
+                            return res.json();
+                        })
+                        .then(data => {
+                            props.setShoppingCartEntries(data);
+                        })
+                        .catch(err => {
+                            console.log(err.message);
+                        })
+                })
          })
+         .then(() => navigate('/'))
          .catch(err => {
             setIsButtonDisabled(false);
             setIsPending(false);

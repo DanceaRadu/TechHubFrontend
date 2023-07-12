@@ -1,8 +1,10 @@
 #shopping-cart-button-entry-container {
-    margin-top: 10px;
+    margin: 5px 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    height: 60px;
+    width: 250px;
 }
 
 #shopping-cart-button-entry-product-name {
@@ -11,4 +13,9 @@
 
 #shopping-cart-button-entry-product-quantity {
 
+}
+
+#shopping-cart-button-entry-image {
+    aspect-ratio: 1/1;
+    height: 100%;
 }

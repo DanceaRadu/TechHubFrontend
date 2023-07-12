@@ -27,7 +27,7 @@ function ProductGrid(props:any) {
             {products &&
                 products.map((product) => (
                     <div key={product.productID}>
-                        <ProductPreview product = {product} shoppingCartEntries={props.shoppingCartEntries} setShoppingCartEntries={props.setShoppingCartEntries}></ProductPreview>
+                        <ProductPreview product = {product} isLoggedIn = {props.isLoggedIn} shoppingCartEntries={props.shoppingCartEntries} setShoppingCartEntries={props.setShoppingCartEntries}></ProductPreview>
                     </div>
                 ))}
         </div>
