@@ -1,0 +1,12 @@
+#email-token-page-container {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#email-token-page-container > p {
+    color: var(--secondary-color);
+    font-size: clamp(12px, 4vh, 12vh);
+}

@@ -3,6 +3,7 @@ import useFetchProfilePicture from "../../../hooks/useFetchProfilePicture";
 import {Link, useNavigate} from "react-router-dom";
 // @ts-ignore
 import Cookies from "js-cookie";
+import {useEffect, useState} from "react";
 
 function UserButton(props: any) {
 
@@ -10,6 +11,11 @@ function UserButton(props: any) {
     let isLoggedIn:boolean = props.isLoggedIn;
     let isPendingLoggedIn:boolean = props.isPendingLoggedIn;
 
+    const [loginLink, setLoginLink] = useState<string>("/login");
+    useEffect(() => {
+        if(props.isLoggedIn) setLoginLink("/user");
+        else setLoginLink("/login");
+    }, [props.isLoggedIn]);
 
     const navigate = useNavigate();
 
@@ -26,7 +32,7 @@ function UserButton(props: any) {
         <div id="user-button-container">
             <div id = "user-button">
                 {(isPending || error) ? (
-                    <Link to="/Login">
+                    <Link to={loginLink}>
                         <span className="material-symbols-outlined" id="user-button-icon">account_circle</span>
                     </Link>
                 ) : null}
@@ -41,7 +47,7 @@ function UserButton(props: any) {
             </div>}
             {!isLoggedIn && !isPendingLoggedIn && <div id="user-button-dropdown">
                 <div className="user-button-dropdown-item" onClick={handleLogIn}>Log in</div>
-                <div className="user-button-dropdown-item">Sign up</div>
+                <div className="user-button-dropdown-item" onClick={() => {navigate("/signup")}}>Sign up</div>
             </div>
             }
             {isPendingLoggedIn && <div id="user-button-dropdown">
