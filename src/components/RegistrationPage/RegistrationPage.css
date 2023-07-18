@@ -102,4 +102,89 @@
     width: clamp(10px, 90%, 615px);
 }
 
+.registration-page-error-p {
+    width: clamp(10px, 90%, 615px);
+    margin-top: 2px;
+    color: darkred;
+    font-size: 14px;
+}
+
+#registration-page-fetch-error {
+    width: clamp(10px, 90%, 615px);
+    color: darkred;
+    font-size: 16px;
+    text-align: center;
+    position: relative;
+    bottom: 15px;
+}
+
+.lds-roller {
+    width: clamp(400px, 30%, 800px);
+    position: relative;
+    left: 125px;
+    align-items: center;
+}
+
+
+/*email notification CSS*/
+#registration-page-email-notification-div {
+    display: flex;
+    width: clamp(400px, 90%, 800px);
+    height: clamp(500px, 70%, 900px);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#registration-page-email-notification-div > :not(#registration-page-new-email-error-div) {
+    font-size: 18px;
+    color: #444;
+}
+
+#registration-page-new-email-input {
+    height: 32px;
+    width: 50%;
+    outline: none;
+    border: 1px solid #888;
+    border-right: none;
+    background-color: var(--secondary-color);
+    font-size: 100%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    position: relative;
+    top: 5px;
+    padding: 2px;
+}
+
+#registration-page-email-notification-button-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: clamp(400px, 90%, 800px);
+    height: 50px;
+}
+
+#registration-page-new-email-input:focus {
+    border: 1px solid var(--accent-color);
+    border-right: none;
+}
+
+#registration-page-new-email-submit-button {
+    height: 38px;
+    width: 20%;
+    font-size: 16px;
+    position: relative;
+    top: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#registration-page-new-email-error-div {
+    width: 64%;
+    color: darkred;
+    text-align: left;
+    font-size: 14px;
+}
 

@@ -1,7 +1,7 @@
 import ShoppingCartEntry from "../../../../models/ShoppingCartEntry";
 import './ShoppingCartButtonEntry.css'
 import useFetchImage from "../../../../hooks/useFetchImage";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
 
@@ -62,16 +62,26 @@ function ShoppingCartButtonEntry(props:any) {
 
     return(
         <div id="shopping-cart-button-entry-container">
-            {!error && !isPending && <img id="shopping-cart-button-entry-image" src={imageSourceUrl} alt="asd"/>}
-            {(isPending || error) ? (
+            {!error && !isPending && !isLoadingDelete && <img id="shopping-cart-button-entry-image" src={imageSourceUrl} alt="asd"/>}
+            {((isPending || error) && !isLoadingDelete) ? (
                 <img id="shopping-cart-button-entry-image" src={require('../../../../resources/images/whiteSquare.png')}  alt="asdasd"/>
             ) : null}
-            <div id="shopping-cart-button-entry-product-name">{product.product.productName}</div>
-            <div id="shopping-cart-button-entry-product-quantity">{"x" + product.quantity}</div>
-            <div id="shopping-cart-button-entry-right-div">
+            {!isLoadingDelete && <div id="shopping-cart-button-entry-product-name">{product.product.productName}</div>}
+            {!isLoadingDelete && <div id="shopping-cart-button-entry-product-quantity">{"x" + product.quantity}</div>}
+            {!isLoadingDelete && <div id="shopping-cart-button-entry-right-div">
                 <div id="shopping-cart-button-entry-product-total">{itemTotal + "$"}</div>
                 <button id="shopping-cart-button-entry-x-button" onClick={handleEntryDelete}>X</button>
-            </div>
+            </div>}
+            {isLoadingDelete && <div className="lds-roller">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div> }
         </div>
     )
 }
