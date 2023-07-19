@@ -1,17 +1,22 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link, useNavigate} from "react-router-dom";
 import './LoginPage.css'
 // @ts-ignore
 import Cookies from 'js-cookie'
 import shoppingCartEntry from "../../models/ShoppingCartEntry";
 import ShoppingCartEntry from "../../models/ShoppingCartEntry";
+import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 
 function LoginPage(props:any) {
 
-    let shoppingCartEntries:shoppingCartEntry[] = props.shoppingCartEntries;
-    let setShoppingCartEntries = props.setShoppingCartEntries;
-
     const navigate = useNavigate();
+
+    //if the user is already logged in, redirect them to their user page
+    const {isLoggedIn, isPending: isPendingLoggedIn} = useCheckLoggedIn();
+    useEffect(() => {
+        if(isLoggedIn) navigate("/");
+    }, [isLoggedIn, navigate])
+    
     const [isUserFocused, setUserFocused] = useState<boolean>(false);
     const [isPasswordFocused, setPasswordFocused] = useState<boolean>(false);
 
