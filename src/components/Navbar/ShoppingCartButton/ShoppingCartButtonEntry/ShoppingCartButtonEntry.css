@@ -63,3 +63,7 @@
     aspect-ratio: 1/1;
     height: 90%;
 }
+
+.lds-roller {
+    transform: scale(0.8);
+}

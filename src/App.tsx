@@ -6,6 +6,8 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./components/Home/Home";
 import useCheckLoggedIn from "./hooks/useCheckLoggedIn";
 import useFetchShoppingCartProducts from "./hooks/useFetchShoppingCartProducts";
+import RegistrationPage from "./components/RegistrationPage/RegistrationPage";
+import EmailTokenPage from "./components/EmailTokenPage/EmailTokenPage";
 
 function App() {
 
@@ -26,6 +28,14 @@ function App() {
                     shoppingCartEntries = {shoppingCartEntries}
                     setShoppingCartEntries = {setShoppingCartEntries}
                 />}/>
+                <Route path="/signup" element={<RegistrationPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
+                />}/>
+                <Route path = "/verifymail/:token" element={
+                   <EmailTokenPage/>
+                }/>
+
             </Routes>
         </BrowserRouter>
     </div>

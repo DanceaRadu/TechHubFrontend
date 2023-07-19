@@ -183,3 +183,7 @@ a {
 .purple-checkbox:checked::before {
     transform: scale(1);
 }
+
+Link {
+    text-decoration: none;
+}

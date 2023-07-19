@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+#registration-page-background {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+#registration-page-form-container {
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: clamp(400px, 30%, 800px);
+    height: clamp(500px, 70%, 900px);
+    border-radius: 10px;
+}
+
+#registration-page-form-container h1{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(35px, 6vh, 110px);
+}
+
+#registration-page-form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+/*first and last name*/
+#registration-form-name-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 90%;
+}
+
+#registration-form-firstname-div {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    width: clamp(20px, calc(50% - 8px), 300px);
+    height: clamp(35px, 4.5vh, 55px);
+    border: 2px solid #AAA;
+    border-radius: 10px;
+    margin-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#registration-form-lastname-div {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    width: clamp(20px, calc(50% - 4px), 300px);
+    height: clamp(35px, 4.5vh, 55px);
+    border: 2px solid #AAA;
+    border-radius: 10px;
+    margin-left: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#registration-form-lastname, #registration-form-firstname, #registration-form-username, #registration-form-email, #registration-form-password, #registration-form-confirm {
+    height: calc(100% - 2px);
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: var(--secondary-color);
+    font-size: 120%;
+    border-radius: 10px;
+    position: relative;
+    top: 1px;
+}
+
+#registration-firstname-icon, #registration-lastname-icon, #registration-username-icon, #registration-email-icon, #registration-password-icon, #registration-confirm-icon {
+    margin-left: 2px;
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48;
+    font-size: clamp(35px, 4.5vh, 55px);
+    color: var(--accent-color)
+}
+
+#registration-form-username-div, #registration-form-email-div, #registration-form-password-div, #registration-form-confirm-div {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(10px, 90%, 615px);
+    border: 2px solid #AAA;
+    border-radius: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#register-page-register-button {
+    width: clamp(10px, 90%, 615px);
+}
+
+.registration-page-error-p {
+    width: clamp(10px, 90%, 615px);
+    margin-top: 2px;
+    color: darkred;
+    font-size: 14px;
+}
+
+#registration-page-fetch-error {
+    width: clamp(10px, 90%, 615px);
+    color: darkred;
+    font-size: 16px;
+    text-align: center;
+    position: relative;
+    bottom: 15px;
+}
+
+.lds-roller {
+    width: clamp(400px, 30%, 800px);
+    position: relative;
+    left: 125px;
+    align-items: center;
+}
+
+
+/*email notification CSS*/
+#registration-page-email-notification-div {
+    display: flex;
+    width: clamp(400px, 90%, 800px);
+    height: clamp(500px, 70%, 900px);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#registration-page-email-notification-div > :not(#registration-page-new-email-error-div) {
+    font-size: 18px;
+    color: #444;
+}
+
+#registration-page-new-email-input {
+    height: 32px;
+    width: 50%;
+    outline: none;
+    border: 1px solid #888;
+    border-right: none;
+    background-color: var(--secondary-color);
+    font-size: 100%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    position: relative;
+    top: 5px;
+    padding: 2px;
+}
+
+#registration-page-email-notification-button-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: clamp(400px, 90%, 800px);
+    height: 50px;
+}
+
+#registration-page-new-email-input:focus {
+    border: 1px solid var(--accent-color);
+    border-right: none;
+}
+
+#registration-page-new-email-submit-button {
+    height: 38px;
+    width: 20%;
+    font-size: 16px;
+    position: relative;
+    top: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#registration-page-new-email-error-div {
+    width: 64%;
+    color: darkred;
+    text-align: left;
+    font-size: 14px;
+}
+
