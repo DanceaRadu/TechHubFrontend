@@ -125,7 +125,6 @@
     align-items: center;
 }
 
-
 /*email notification CSS*/
 #registration-page-email-notification-div {
     display: flex;
@@ -187,4 +186,3 @@
     text-align: left;
     font-size: 14px;
 }
-

@@ -1,15 +1,23 @@
 import './RegistrationPage.css'
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import RegisterRequest from "../../models/RegisterRequest";
 // @ts-ignore
 import Cookies from "js-cookie";
+import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
+import addCookieShoppingCartEntries from "../../functions/addCookieShoppingCartEntries";
 
 function RegistrationPage(props: any) {
 
     const navigate = useNavigate();
+    const {isLoggedIn, isPending: isPendingLoggedIn} = useCheckLoggedIn();
 
-    //states and functions for changing the style of the divs
+    //if the user is already logged in, redirect them to their user page
+    useEffect(() => {
+        if(isLoggedIn) navigate("/");
+    }, [isLoggedIn, navigate])
+
+    //states and functions for changing the style of the input divs whenever the input field become focused or blurred
     const [isUserFocused, setUserFocused] = useState<boolean>(false);
     const [isPasswordFocused, setPasswordFocused] = useState<boolean>(false);
     const [isConfirmFocused, setConfirmFocused] = useState<boolean>(false);
@@ -65,7 +73,7 @@ function RegistrationPage(props: any) {
         setLastNameFocused(false);
     };
 
-    //states and functions for setting the error messages
+    //states and functions for setting the error messages for each input field
     const [nameErrorMessage, setNameErrorMessage] = useState<string>("");
     const [userErrorMessage, setUserErrorMessage] = useState<string>("");
     const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
@@ -73,7 +81,7 @@ function RegistrationPage(props: any) {
     const [confirmErrorMessage, setConfirmErrorMessage] = useState<string>("");
     const [newEmailErrorMessage, setNewEmailErrorMessage] = useState<string>("");
 
-    //functions and states for getting and changing the user input
+    //states and functions for getting and changing the user input, including the new email input
     const [firstNameInput, setFirstNameInput] = useState<string>('');
     const [lastNameInput, setLastNameInput] = useState<string>('');
     const [usernameInput, setUsernameInput] = useState<string>('');
@@ -82,26 +90,35 @@ function RegistrationPage(props: any) {
     const [confirmInput, setConfirmInput] = useState<string>('');
     const [newEmailInput, setNewEmailInput] = useState<string>('');
 
-    //for disabling the button when the user clicks it
+    //for disabling buttons when the user clicks them
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
     const [isNewEmailButtonDisabled, setIsNewEmailButtonDisabled] = useState<boolean>(false);
+
+    //countdown for disabling the new email button for a number of seconds
     const [newEmailButtonCountdown, setNewEmailButtonCountdown] = useState<number>(0);
 
-    //for displaying loading animation and errors
+    //for displaying loading animation and fetch errors
     const [fetchError, setFetchError] = useState<string>('');
     const [isPending, setIsPending] = useState<boolean>(false);
     const [emailNotificationMessage, setEmailNotificationMessage] = useState<string>('');
 
+    //regex for checking the validity of the password and for the email.
+    //the email must be valid, and the password must be between 8 and 64 chars, contain at least 1 number, 1 letter and 1 uppercase character
     const emailRegex = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{1,}))$/);
     const passwordRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,64}$/);
 
+    //jwt token state for updating and remembering the jwt token returned by the register fetch
     const [jwtToken, setJwtToken] = useState<string>('');
 
+    /*function that handles the registration process. The function checks the validity of the user inputs locally,
+    and then it checks that the user doesn't already exist in the database by sending a request to the backend.
+    Then, it stores the user in the database and sends a request to the backend to send a verification email to the user*/
     function handleRegistrationSubmit(e:any) {
-        setIsPending(true);
-        e.preventDefault();
-        setIsButtonDisabled(true);
+        e.preventDefault(); //prevent page reload
+        setIsPending(true); //set is pending to true, which causes the loading animation to be displayed
+        setIsButtonDisabled(true); //disable the registration button
 
+        //reset the error messages
         setNameErrorMessage('');
         setUserErrorMessage('');
         setEmailErrorMessage('');
@@ -110,7 +127,7 @@ function RegistrationPage(props: any) {
 
         let ok:boolean = true;
 
-        //check that the fields are not empty
+        //check that the name fields are not empty
         if(firstNameInput === '' || lastNameInput === '') {
             setNameErrorMessage("Cannot leave name fields empty");
             ok = false;
@@ -147,6 +164,7 @@ function RegistrationPage(props: any) {
         setLastNameInput(lastNameInput.trim());
         setEmailInput(emailInput.trim());
 
+        //reset the fetch error and send a request to the server to register the user
         setFetchError('');
         fetch("http://localhost:8080/api/v1/auth/register",
             {
@@ -162,6 +180,7 @@ function RegistrationPage(props: any) {
                 return res.json();
             })
             .then((data) => {
+                //if the returned data contains the error param, that means there was an error with the registration process
                 if(data.error) {
                     if(data.error === "User with this email already exists") setEmailErrorMessage(data.error);
                     else if(data.error === "User with this username already exists") setUserErrorMessage(data.error);
@@ -170,8 +189,13 @@ function RegistrationPage(props: any) {
                     setIsButtonDisabled(false);
                 }
                 else if(data.token) {
+                    //if the fetch response contains a jwt token, that means the registration was successful, and we can store the token in the browser cookies
                     setJwtToken(data.token);
-                    //send confirmation email
+
+                    //if there are any shopping cart products stored locally in cookies, fetch them and add them to the user's account. After this, delete the products from the cookies.
+                    addCookieShoppingCartEntries(data.token, props.setShoppingCartEntries);
+
+                    //send confirmation email. This endpoint will email the user a link that they must click in order to validate their email
                     fetch("http://localhost:8080/api/v1/auth/mail/token",
                         {
                             method: 'POST',
@@ -181,20 +205,18 @@ function RegistrationPage(props: any) {
                             }
                         })
                         .then((res) => {
-                            if(!res.ok) throw Error("Could not send email");
+                            //even if there was a problem sending the email, the website will load the message telling the user that the email has been sent.
+                            //if there truly was a problem delivering the email, the user can then resend the email in the next step
                             setEmailNotificationMessage("We've sent a confirmation e-mail to " + emailInput + ". Please access the e-mail to complete the registration process.");
                             setIsPending(false);
                             setIsButtonDisabled(false);
+                            if(!res.ok) throw Error("Could not send email");
                         })
-                        .then()
                         .catch(e => {
                             console.log(e.message);
-                            setEmailNotificationMessage("We've sent a confirmation e-mail to " + emailInput + ". Please access the e-mail to complete the registration process.");
-                            setIsPending(false);
-                            setIsButtonDisabled(false);
                         });
 
-                    //start a timer that checks if the user is verified every 3 seconds
+                    //start a timer that checks if the user is verified every 3 seconds. If the user has verified their email, we then redirect to the main page.
                     let checkVerifiedTimer = setInterval(() => {
                         fetch("http://localhost:8080/api/v1/user/verified",
                             {
@@ -209,7 +231,6 @@ function RegistrationPage(props: any) {
                                 return res.text();
                             })
                             .then((userData) => {
-                                console.log(userData);
                                 const isVerified:boolean = JSON.parse(userData);
                                 if(isVerified) {
                                     clearInterval(checkVerifiedTimer);
@@ -229,10 +250,14 @@ function RegistrationPage(props: any) {
             })
     }
 
+    /*function that allows the user to change their email, in case they typed the wrong one during the previous step.
+    The function makes sure that the new email doesn't already exist in the database, and then in sends a verification email to the new user email*/
     function changeEmail() {
-        setIsNewEmailButtonDisabled(true);
+        setIsNewEmailButtonDisabled(true); //disable the change email button
         setIsPending(true);
         setNewEmailErrorMessage("");
+
+        //test the new email to make sure it has a valid format
         if(!emailRegex.test(newEmailInput)) {
             setNewEmailErrorMessage("Not a valid email!");
             setIsNewEmailButtonDisabled(false);
@@ -240,9 +265,9 @@ function RegistrationPage(props: any) {
             return;
         }
 
+        //countdown for disabling the 'change email button'. The button has a 60-second timeout to make sure the user doesn't spam it.
         const countdownDuration = 60; // Countdown duration in seconds
         const endTime = Date.now() + countdownDuration * 1000; // Calculate end time
-
         setNewEmailButtonCountdown(countdownDuration); // Set initial countdown value
 
         const countdownInterval = setInterval(() => {
@@ -258,6 +283,7 @@ function RegistrationPage(props: any) {
             }}, 1000); // Update every second
 
         //update the email in the database and send a confirmation mail to that address
+        //the method here should normally be PATCH, but CORS in Spring disables the PATCH method, and enabling it doesn't seem to work
         fetch("http://localhost:8080/api/v1/user/email/update/" + newEmailInput,
             {
                 method: 'POST',
