@@ -5,6 +5,7 @@ import RegisterRequest from "../../models/RegisterRequest";
 // @ts-ignore
 import Cookies from "js-cookie";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
+import addCookieShoppingCartEntries from "../../functions/addCookieShoppingCartEntries";
 
 function RegistrationPage(props: any) {
 
@@ -190,6 +191,10 @@ function RegistrationPage(props: any) {
                 else if(data.token) {
                     //if the fetch response contains a jwt token, that means the registration was successful, and we can store the token in the browser cookies
                     setJwtToken(data.token);
+
+                    //if there are any shopping cart products stored locally in cookies, fetch them and add them to the user's account. After this, delete the products from the cookies.
+                    addCookieShoppingCartEntries(data.token, props.setShoppingCartEntries);
+
                     //send confirmation email. This endpoint will email the user a link that they must click in order to validate their email
                     fetch("http://localhost:8080/api/v1/auth/mail/token",
                         {

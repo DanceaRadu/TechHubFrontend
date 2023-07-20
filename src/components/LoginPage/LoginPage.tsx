@@ -3,7 +3,6 @@ import {Link, useNavigate} from "react-router-dom";
 import './LoginPage.css'
 // @ts-ignore
 import Cookies from 'js-cookie'
-import shoppingCartEntry from "../../models/ShoppingCartEntry";
 import ShoppingCartEntry from "../../models/ShoppingCartEntry";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 
