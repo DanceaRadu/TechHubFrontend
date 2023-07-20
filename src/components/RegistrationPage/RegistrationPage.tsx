@@ -90,6 +90,9 @@ function RegistrationPage(props: any) {
     const [confirmInput, setConfirmInput] = useState<string>('');
     const [newEmailInput, setNewEmailInput] = useState<string>('');
 
+    //state for notifying the user that the email is being sent
+    const [isSendingEmail, setIsSendingEmail] = useState<boolean>(false);
+
     //for disabling buttons when the user clicks them
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
     const [isNewEmailButtonDisabled, setIsNewEmailButtonDisabled] = useState<boolean>(false);
@@ -196,6 +199,7 @@ function RegistrationPage(props: any) {
                     addCookieShoppingCartEntries(data.token, props.setShoppingCartEntries);
 
                     //send confirmation email. This endpoint will email the user a link that they must click in order to validate their email
+                    setIsSendingEmail(true);
                     fetch("http://localhost:8080/api/v1/auth/mail/token",
                         {
                             method: 'POST',
@@ -210,6 +214,7 @@ function RegistrationPage(props: any) {
                             setEmailNotificationMessage("We've sent a confirmation e-mail to " + emailInput + ". Please access the e-mail to complete the registration process.");
                             setIsPending(false);
                             setIsButtonDisabled(false);
+                            setIsSendingEmail(false);
                             if(!res.ok) throw Error("Could not send email");
                         })
                         .catch(e => {
@@ -444,9 +449,14 @@ function RegistrationPage(props: any) {
                         <div></div>
                         <div></div>
                     </div>}
+                {isPending && isSendingEmail && <div id = "registration-page-sending-email-div">Sending verification email...</div>}
+                {!emailNotificationMessage &&
+                    <Link to="/login" id="registration-page-existing-account-link">
+                        <div>Already have an account? Log in.</div>
+                    </Link>}
                 {emailNotificationMessage && <div id="registration-page-email-notification-div">
                     <div>{emailNotificationMessage}</div><br/>
-                    <div>Not the right email? Enter a new one below</div>
+                    <div>Not the right e-mail? Enter a new one below</div>
                     <div id="registration-page-email-notification-button-div">
                         <input type="text"
                                id="registration-page-new-email-input"
