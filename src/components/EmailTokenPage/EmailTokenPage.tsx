@@ -25,7 +25,7 @@ function EmailTokenPage(){
                 setIsPending(false);
                 setError(true);
             })
-    }, [token]);
+    }, [token, navigate]);
 
     return(
         <div className="background-div" id="email-token-page-container">
@@ -41,6 +41,7 @@ function EmailTokenPage(){
                 <div></div>
             </div> }
             {error && <p>Error verifying email</p>}
+            {!error && !isPending && <div id="email-token-page-verification-complete-div">Email verification complete. You may return to the registration page.</div>}
         </div>
     );
 }
