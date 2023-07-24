@@ -10,7 +10,7 @@
 #navbar-div h1 {
     position: relative;
     top: 5px;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Bebas Neue', sans-serif !important;
     font-size: clamp(50px, 5.5vh, 500px);
     margin-left: 10px;
 }

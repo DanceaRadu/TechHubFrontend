@@ -1,2 +1,15 @@
 .background-div{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#home-content-div {
+    display: flex;
+    height: 100%;
+}
+
+#home-sorting-div {
+    background-color: var(--primary-color);
+    width: clamp(200px, 20%, 500px);
 }
