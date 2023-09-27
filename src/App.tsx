@@ -8,6 +8,7 @@ import useCheckLoggedIn from "./hooks/useCheckLoggedIn";
 import useFetchShoppingCartProducts from "./hooks/useFetchShoppingCartProducts";
 import RegistrationPage from "./components/RegistrationPage/RegistrationPage";
 import EmailTokenPage from "./components/EmailTokenPage/EmailTokenPage";
+import AccountPage from "./components/AccountPage/AccountPage";
 
 function App() {
 
@@ -31,6 +32,12 @@ function App() {
                 <Route path="/signup" element={<RegistrationPage
                     shoppingCartEntries = {shoppingCartEntries}
                     setShoppingCartEntries = {setShoppingCartEntries}
+                />}/>
+                <Route path="/account" element={<AccountPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
+                    isPendingLoggedIn = {isPendingLoggedIn}
+                    isLoggedIn = {isLoggedIn}
                 />}/>
                 <Route path = "/verifymail/:token" element={
                    <EmailTokenPage/>
