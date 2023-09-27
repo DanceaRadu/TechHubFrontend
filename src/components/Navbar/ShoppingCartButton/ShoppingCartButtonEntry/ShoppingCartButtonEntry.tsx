@@ -17,7 +17,7 @@ function ShoppingCartButtonEntry(props:any) {
 
     useEffect(() => {
         setItemTotal(product.quantity * product.product.productPrice);
-    }, [product.quantity])
+    }, [product.quantity, product.product.productPrice])
 
     function handleEntryDelete() {
         setIsLoadingDelete(true);
@@ -64,7 +64,7 @@ function ShoppingCartButtonEntry(props:any) {
         <div id="shopping-cart-button-entry-container">
             {!error && !isPending && !isLoadingDelete && <img id="shopping-cart-button-entry-image" src={imageSourceUrl} alt="asd"/>}
             {((isPending || error) && !isLoadingDelete) ? (
-                <img id="shopping-cart-button-entry-image" src={require('../../../../resources/images/whiteSquare.png')}  alt="asdasd"/>
+                <img id="shopping-cart-button-entry-image" src={require('../../../../resources/images/whiteSquare.png')}  alt="Product image"/>
             ) : null}
             {!isLoadingDelete && <div id="shopping-cart-button-entry-product-name">{product.product.productName}</div>}
             {!isLoadingDelete && <div id="shopping-cart-button-entry-product-quantity">{"x" + product.quantity}</div>}

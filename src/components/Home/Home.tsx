@@ -16,11 +16,15 @@ function Home(props:any) {
                 shoppingCartEntries={props.shoppingCartEntries}
                 setShoppingCartEntries = {props.setShoppingCartEntries}>
             </Navbar>
-            <ProductGrid
-                isLoggedIn = {isLoggedIn}
-                shoppingCartEntries={props.shoppingCartEntries}
-                setShoppingCartEntries = {props.setShoppingCartEntries}>
-            </ProductGrid>
+            <div id="home-content-div">
+                <div id="home-sorting-div"></div>
+                <ProductGrid
+                    isLoggedIn = {isLoggedIn}
+                    shoppingCartEntries={props.shoppingCartEntries}
+                    setShoppingCartEntries = {props.setShoppingCartEntries}>
+                </ProductGrid>
+            </div>
+
         </div>
     );
 }

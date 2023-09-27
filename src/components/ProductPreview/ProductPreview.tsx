@@ -1,11 +1,12 @@
 import './ProductPreview.css'
 import Product from "../../models/Product";
-import {useState} from "react";
+import React, {useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
 import ShoppingCartEntry from "../../models/ShoppingCartEntry";
 // @ts-ignore
 import { v4 as uuidv4 } from 'uuid';
+import useFetchImage from "../../hooks/useFetchImage";
 
 function ProductPreview(props: any) {
 
@@ -15,6 +16,9 @@ function ProductPreview(props: any) {
     const [error, setError] = useState<boolean>(false);
     const [isPending, setIsPending] = useState<boolean>(true);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+    const imageID = product?.productImages[0]?.image?.imageID;
+    const { imageSourceUrl, error: imageFetchError, isPending: isPendingImage } = useFetchImage(imageID)
 
     function handleAddToCart() {
 
@@ -82,8 +86,14 @@ function ProductPreview(props: any) {
 
     return (
         <div id = "product-preview-container">
-            <img src={require("./login-background.jpg")} id="product-preview-image"></img>
+            {!imageFetchError && !isPendingImage && <img id="product-preview-image" src={imageSourceUrl} alt="Product"/>}
+            {isPendingImage || imageFetchError ? (
+                <img id="product-preview-image" src={require('../../resources/images/product-placeholder.jpg')}  alt="Product"/>
+            ) : null}
             <p id="product-preview-name">{product.productName}</p>
+            <div id="product-preview-price-div">
+                <p id="product-preview-price">{product.productPrice + " USD"}</p>
+            </div>
             <button className="cover-button" id="product-preview-cart-button" onClick={handleAddToCart} disabled={isButtonDisabled}>Add to cart</button>
         </div>
     )
