@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 
 function useFetchAccountInfo(isLoggedIn:boolean) {
 
-    const [accountInfo, setAccountInfo] = useState<User>(new User("", "", "", "", 0, new Image("00000000-0000-0000-0000-000000000000", "", "")));
+    const [accountInfo, setAccountInfo] = useState<User>(new User("", "", "", "", "USER", new Image("00000000-0000-0000-0000-000000000000", "", "")));
 
     useEffect(() => {
 

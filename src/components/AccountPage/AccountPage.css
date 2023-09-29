@@ -1,5 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
 .background-div {
     display: flex;
     flex-direction: column;
     height: 100%;
+    font-family: "Roboto", sans-serif;
+}
+
+#account-container-div {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#account-info-div {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--darker-primary);
+    width: 90%;
+    height: 160px;
+    border-radius: 10px;
+    box-shadow: 0 5px 5px #111111;
+    overflow: hidden;
+    justify-content: left;
+}
+
+#account-page-image-container {
+    display: inline-block; /* Make sure the container doesn't take the full width */
+    border: 2px solid #AAA; /* Add a 2px solid black border */
+    border-radius: 50px;
+    overflow: hidden; /* Ensure the image is contained within the border */
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 100px;
+    min-width: 100px;
+    aspect-ratio: 1/1;
+}
+
+#account-page-user-icon {
+
+}
+
+#account-page-user-image {
+    aspect-ratio: 1/1;
+    height: 100px;
+    border-radius: 5px;
+    border-color: var(--accent-color);
+    border: 2px;
+}
+
+#account-page-info-keys-div, #account-page-info-values-div {
+    color: #DDDDDD;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+#account-page-info-keys-div > div,#account-page-info-values-div > div {
+    margin: 5px;
+}
+
+#account-page-email-button {
+    margin-left: 5px;
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    padding: 5px 5px;
+    text-decoration: none;
+    border-radius: 3px;
+    border: none;
+}
+
+#account-page-email-button:hover {
+    background-color: #540055;
+    cursor: pointer;
+}
+
+#test-div {
+    margin-top: 10px;
+    height: calc(100vh - 280px);
+    width: 90%;
+    background-color: var(--darker-primary);
+    box-shadow: 0 5px 5px #111111;
+    border-radius: 5px;
 }

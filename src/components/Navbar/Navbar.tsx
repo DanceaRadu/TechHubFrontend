@@ -1,6 +1,6 @@
 import './Navbar.css'
 import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import UserButton from "./UserButton/UserButton";
 import ShoppingCartButton from "./ShoppingCartButton/ShoppingCartButton";
 function Navbar(props: any) {
@@ -8,7 +8,7 @@ function Navbar(props: any) {
     let isLoggedIn:boolean = props.isLoggedIn;
     let isPendingLoggedIn:boolean = props.isPendingLoggedIn;
     const [isSearchBarFocused, setIsSearchBarFocused] = useState<boolean>(false);
-
+    const navigate = useNavigate();
     const handleSearchBarFocus = () => {
         setIsSearchBarFocused(true);
     }
@@ -19,7 +19,10 @@ function Navbar(props: any) {
 
     return (
       <div id="navbar-div">
-          <Link to='/' onClick={() => window.location.reload()}>
+          <Link to='/' onClick={() => {
+              navigate("/")
+              window.location.reload();
+          }}>
                 <h1>
                     <span style={{color: '#ebf1ff'}}>Tech</span>
                     <span style={{color: 'purple'}}>Hub</span>

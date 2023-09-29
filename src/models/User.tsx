@@ -7,10 +7,10 @@ class User {
     public firstName: string;
     public lastName: string;
     public email: string;
-    public role:number;
+    public role:string;
     public profileImage:image;
 
-    constructor(_username: string, firstName: string, lastName: string, email: string, role: number, profileImage: image) {
+    constructor(_username: string, firstName: string, lastName: string, email: string, role: string, profileImage: image) {
         this._username = _username;
         this.firstName = firstName;
         this.lastName = lastName;
