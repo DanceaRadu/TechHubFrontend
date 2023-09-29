@@ -38,11 +38,60 @@ function App() {
                     setShoppingCartEntries = {setShoppingCartEntries}
                     isPendingLoggedIn = {isPendingLoggedIn}
                     isLoggedIn = {isLoggedIn}
+                    selectedCategory = {[true,false,false,false,false,false]}
                 />}/>
+                <Route path="/account/orders" element={<AccountPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
+                    isPendingLoggedIn = {isPendingLoggedIn}
+                    isLoggedIn = {isLoggedIn}
+                    selectedCategory = {[true,false,false,false,false,false]}
+                />}>
+                </Route>
+                <Route path="/account/favorites" element={<AccountPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
+                    isPendingLoggedIn = {isPendingLoggedIn}
+                    isLoggedIn = {isLoggedIn}
+                    selectedCategory = {[false,true,false,false,false,false]}
+                />}>
+                </Route>
+                <Route path="/account/reviews" element={<AccountPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
+                    isPendingLoggedIn = {isPendingLoggedIn}
+                    isLoggedIn = {isLoggedIn}
+                    selectedCategory = {[false,false,true,false,false,false]}
+                />}>
+                </Route>
+                <Route path="/account/cards" element={<AccountPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
+                    isPendingLoggedIn = {isPendingLoggedIn}
+                    isLoggedIn = {isLoggedIn}
+                    selectedCategory = {[false,false,false,true,false,false]}
+                />}>
+                </Route>
+                <Route path="/account/addresses" element={<AccountPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
+                    isPendingLoggedIn = {isPendingLoggedIn}
+                    isLoggedIn = {isLoggedIn}
+                    selectedCategory = {[false,false,false,false,true,false]}
+                />}>
+                </Route>
+                <Route path="/account/manage" element={<AccountPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
+                    isPendingLoggedIn = {isPendingLoggedIn}
+                    isLoggedIn = {isLoggedIn}
+                    selectedCategory = {[false,false,false,false,true,false]}
+                />}>
+                </Route>
+
                 <Route path = "/verifymail/:token" element={
                    <EmailTokenPage/>
                 }/>
-
             </Routes>
         </BrowserRouter>
     </div>
