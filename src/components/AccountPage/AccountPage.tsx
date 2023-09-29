@@ -5,7 +5,7 @@ import {Link, redirect, useNavigate} from 'react-router-dom';
 import useFetchAccountInfo from "../../hooks/useFetchAccountInfo";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 import useFetchProfilePicture from "../../hooks/useFetchProfilePicture";
-function AccountPage(props:any) {
+function AccountPage(this: any, props:any) {
 
     const navigate = useNavigate();
 
@@ -13,71 +13,37 @@ function AccountPage(props:any) {
     const [accountInfo] = useFetchAccountInfo(isLoggedIn);
     const {imageSourceUrl, error:imageError, isPending:isProfilePicturePending} = useFetchProfilePicture();
 
-    const [isOrdersClicked, setIsOrdersClicked] = useState<boolean>(true);
-    const [isFavoritesClicked, setIsFavoritesClicked] = useState<boolean>(false);
-    const [isReviewsClicked, setIsReviewsClicked] = useState<boolean>(false);
-    const [isCreditCardsClicked, setIsCreditCardsClicked] = useState<boolean>(false);
-    const [isAddressesClicked, setIsAddressesClicked] = useState<boolean>(false);
-    const [isManageProductsClicked, setIsManageProductsClicked] = useState<boolean>(false);
+    const [navigationOptions, setNavigationOptions] = useState<boolean[]>([false,false,false,false,false,false])
 
     //if the user is not logged in, redirect them to the login page
     useEffect(() => {
         if(!isPending && !isLoggedIn) {
-            navigate("/");
+            navigate("/login");
         }
-    }, [isPending, isLoggedIn]);
+        setNavigationOptions(props.selectedCategory);
+    }, [isPending, isLoggedIn, props.selectedCategory]);
 
     function handleOrders() {
-        setIsOrdersClicked(true);
-        setIsFavoritesClicked(false);
-        setIsReviewsClicked(false);
-        setIsCreditCardsClicked(false);
-        setIsAddressesClicked(false);
-        setIsManageProductsClicked(false);
+        navigate("/account/orders");
     }
 
     function handleFavorites() {
-        setIsOrdersClicked(false);
-        setIsFavoritesClicked(true);
-        setIsReviewsClicked(false);
-        setIsCreditCardsClicked(false);
-        setIsAddressesClicked(false);
-        setIsManageProductsClicked(false);
+        navigate("/account/favorites");
     }
 
     function handleMyReviews() {
-        setIsOrdersClicked(false);
-        setIsFavoritesClicked(false);
-        setIsReviewsClicked(true);
-        setIsCreditCardsClicked(false);
-        setIsAddressesClicked(false);
-        setIsManageProductsClicked(false);
+        navigate("/account/reviews");
     }
 
     function handleMyCreditCards() {
-        setIsOrdersClicked(false);
-        setIsFavoritesClicked(false);
-        setIsReviewsClicked(false);
-        setIsCreditCardsClicked(true);
-        setIsAddressesClicked(false);
-        setIsManageProductsClicked(false);
+        navigate("/account/cards");
     }
 
     function handleMyAddresses() {
-        setIsOrdersClicked(false);
-        setIsFavoritesClicked(false);
-        setIsReviewsClicked(false);
-        setIsCreditCardsClicked(false);
-        setIsAddressesClicked(true);
-        setIsManageProductsClicked(false);
+        navigate("/account/addresses");
     }
     function handleManageProducts() {
-        setIsOrdersClicked(false);
-        setIsFavoritesClicked(false);
-        setIsReviewsClicked(false);
-        setIsCreditCardsClicked(false);
-        setIsAddressesClicked(false);
-        setIsManageProductsClicked(true);
+        navigate("/account/manage");
     }
 
     return (
@@ -114,27 +80,27 @@ function AccountPage(props:any) {
                     <br/>
                     <hr style={{backgroundColor:"black", height:2, border:"none"}}/>
                     <button
-                        className={isOrdersClicked ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                        className={navigationOptions[0] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
                         onClick={handleOrders}
                     >Orders</button>
                     <button
-                        className={isFavoritesClicked ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                        className={navigationOptions[1] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
                         onClick={handleFavorites}
                     >Favorites</button>
                     <button
-                        className={isReviewsClicked ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                        className={navigationOptions[2] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
                         onClick={handleMyReviews}
                     >My reviews</button>
                     <button
-                        className={isCreditCardsClicked ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                        className={navigationOptions[3] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
                         onClick={handleMyCreditCards}
                     >My credits cards</button>
                     <button
-                        className={isAddressesClicked ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                        className={navigationOptions[4] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
                         onClick={handleMyAddresses}
                     >My addresses</button>
                     {accountInfo.role === "ADMIN" && <button
-                        className={isManageProductsClicked ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                        className={navigationOptions[5] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
                         onClick={handleManageProducts}
                     >Manage Products</button>}
                 </div>
