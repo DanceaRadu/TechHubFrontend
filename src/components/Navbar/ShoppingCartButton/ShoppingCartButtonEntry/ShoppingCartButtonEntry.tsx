@@ -62,7 +62,7 @@ function ShoppingCartButtonEntry(props:any) {
 
     return(
         <div id="shopping-cart-button-entry-container">
-            {!error && !isPending && !isLoadingDelete && <img id="shopping-cart-button-entry-image" src={imageSourceUrl} alt="asd"/>}
+            {!error && !isPending && !isLoadingDelete && <img id="shopping-cart-button-entry-image" src={imageSourceUrl} alt="Product"/>}
             {((isPending || error) && !isLoadingDelete) ? (
                 <img id="shopping-cart-button-entry-image" src={require('../../../../resources/images/whiteSquare.png')}  alt="Product image"/>
             ) : null}

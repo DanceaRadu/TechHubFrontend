@@ -5,6 +5,7 @@ import {Link, redirect, useNavigate} from 'react-router-dom';
 import useFetchAccountInfo from "../../hooks/useFetchAccountInfo";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 import useFetchProfilePicture from "../../hooks/useFetchProfilePicture";
+import ManageProductsPage from "../ManageProductsPage/ManageProductsPage";
 function AccountPage(this: any, props:any) {
 
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ function AccountPage(this: any, props:any) {
             navigate("/login");
         }
         setNavigationOptions(props.selectedCategory);
-    }, [isPending, isLoggedIn, props.selectedCategory]);
+    }, [isPending, isLoggedIn, props.selectedCategory, navigationOptions]);
 
     function handleOrders() {
         navigate("/account/orders");
@@ -43,7 +44,7 @@ function AccountPage(this: any, props:any) {
         navigate("/account/addresses");
     }
     function handleManageProducts() {
-        navigate("/account/manage");
+        navigate("/account/manage/1");
     }
 
     return (
@@ -104,7 +105,9 @@ function AccountPage(this: any, props:any) {
                         onClick={handleManageProducts}
                     >Manage Products</button>}
                 </div>
-                <div id="test-div"></div>
+                <div id="account-page-side-content-div">
+                    {navigationOptions[5] && <ManageProductsPage></ManageProductsPage>}
+                </div>
             </div>
         </div>
     )

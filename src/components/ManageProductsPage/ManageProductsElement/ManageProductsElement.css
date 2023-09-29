@@ -1,0 +1,113 @@
+#manage-product-element-div {
+    height: 120px;
+    background-color: #1A1A1A;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #DDDDDD;
+}
+
+#manage-product-element-div:hover {
+    background-color: var(--primary-color);
+}
+
+#manage-product-element-left-side {
+    display: flex;
+    flex-direction: row;
+    width: 800px;
+    min-width: 300px;
+}
+
+#manage-product-image {
+    margin-left: 5px;
+    height: 110px;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
+}
+
+#manage-product-element-name-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 5px 5px 10px 10px;
+    width: 100%;
+}
+
+#manage-product-element-name-div > p {
+    overflow: hidden;
+    max-height: 80px;
+    width: clamp(100px, 100%, 1000px);
+    min-width: 80%;
+}
+
+#manage-product-element-stock-div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+#manage-product-element-stock-input {
+    width: 50px;
+    font-size: 20px;
+    outline: none;
+    border: 1px solid white;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+#manage-product-element-stock-input:focus {
+    border: 1px solid var(--accent-color)
+}
+
+#manage-product-element-stock-update-notification {
+    opacity: 1;
+    color: var(--secondary-color);
+    transition: opacity 0.5s;
+}
+
+#manage-product-element-stock-update-notification-fade {
+    opacity: 0;
+    color: var(--secondary-color);
+    transition: opacity 0.5s;
+}
+
+#manage-product-stock-update-button {
+    height: 25px;
+    width: 30px;
+    position: relative;
+    outline: none;
+    background-color: var(--secondary-color);
+    border: none;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#manage-product-stock-update-button:hover {
+    cursor: pointer;
+    background-color: var(--accent-color);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+#manage-products-element-delete-icon {
+    font-variation-settings:
+             'FILL' 0,
+             'wght' 400,
+             'GRAD' 0,
+             'opsz' 24;
+    font-size: 45px;
+    margin-right: 5px;
+}
+
+#manage-products-element-delete-icon:hover {
+    font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    cursor: pointer;
+    color: darkred;
+
+}
