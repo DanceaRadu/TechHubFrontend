@@ -85,6 +85,8 @@
 
 
 .user-button-dropdown-item {
+    color: white;
+    text-decoration: none;
     border-radius: 5px;
     margin-top: 5px;
     font-size: clamp(11px, 1.6vh, 500px);
