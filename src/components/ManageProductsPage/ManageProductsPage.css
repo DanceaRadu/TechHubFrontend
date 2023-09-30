@@ -5,3 +5,37 @@
     width: calc(100% - 30px);
     overflow: auto;
 }
+
+#manage-products-page-add-icon {
+     font-variation-settings:
+             'FILL' 1,
+             'wght' 400,
+             'GRAD' 0,
+             'opsz' 24;
+    color: var(--accent-color);
+    font-size: 45px;
+}
+
+#manage-products-add-button {
+    outline: none;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    height: 40px;
+    width: 115px;
+    font-size: 30px;
+    vertical-align: middle;
+    padding: 0;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+#manage-products-add-button:hover>span {
+    color: white;
+}
+
+#manage-products-add-button:hover {
+    color: white;
+    transform: scale(1);
+}

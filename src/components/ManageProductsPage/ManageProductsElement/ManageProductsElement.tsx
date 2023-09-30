@@ -49,7 +49,7 @@ function ManageProductsElement(props:any) {
                     </form>
                     <button id="manage-product-stock-update-button" onClick={handleStockChange} disabled={isStockButtonDisabled}>Set</button>
                 </div>
-                <div id={isStockMessageVisible ? "manage-product-element-stock-update-notification":"manage-product-element-stock-update-notification-fade"}>Stock updated !</div>
+                <div id={isStockMessageVisible ? "manage-product-element-stock-update-notification":"manage-product-element-stock-update-notification-fade"}>Updated stock!</div>
             </div>
             <span className="material-symbols-outlined" id="manage-products-element-delete-icon">delete</span>
         </div>

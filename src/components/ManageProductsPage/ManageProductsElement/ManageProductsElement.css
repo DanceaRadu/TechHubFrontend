@@ -65,12 +65,16 @@
     opacity: 1;
     color: var(--secondary-color);
     transition: opacity 0.5s;
+    overflow: hidden;
+    max-height: 20px;
 }
 
 #manage-product-element-stock-update-notification-fade {
     opacity: 0;
     color: var(--secondary-color);
     transition: opacity 0.5s;
+    overflow: hidden;
+    max-height: 20px;
 }
 
 #manage-product-stock-update-button {
@@ -109,5 +113,4 @@
             'opsz' 24;
     cursor: pointer;
     color: darkred;
-
 }

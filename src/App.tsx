@@ -80,7 +80,7 @@ function App() {
                     selectedCategory = {[false,false,false,false,true,false]}
                 />}>
                 </Route>
-                <Route path="/account/manage/:pageNumber" element={<AccountPage
+                <Route path="/account/manage/:pageParam" element={<AccountPage
                     shoppingCartEntries = {shoppingCartEntries}
                     setShoppingCartEntries = {setShoppingCartEntries}
                     isPendingLoggedIn = {isPendingLoggedIn}
