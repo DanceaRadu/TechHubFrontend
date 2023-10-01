@@ -66,4 +66,9 @@
 
 .lds-roller {
     transform: scale(0.8);
+    width: 100%;
+}
+
+#shopping-cart-button-entry-lds-roller-outer-div {
+    width: 100%;
 }

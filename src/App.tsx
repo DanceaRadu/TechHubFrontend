@@ -88,6 +88,14 @@ function App() {
                     selectedCategory = {[false,false,false,false,false,true]}
                 />}>
                 </Route>
+                <Route path="/account/manage/search/:searchQuery/:pageParam" element={<AccountPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
+                    isPendingLoggedIn = {isPendingLoggedIn}
+                    isLoggedIn = {isLoggedIn}
+                    selectedCategory = {[false,false,false,false,false,true]}
+                />}>
+                </Route>
 
                 <Route path = "/verifymail/:token" element={
                    <EmailTokenPage/>

@@ -1,7 +1,9 @@
 import './ManageProductsElement.css'
 import Product from "../../../models/Product";
 import useFetchImage from "../../../hooks/useFetchImage";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
+// @ts-ignore
+import Cookies from "js-cookie";
 
 function ManageProductsElement(props:any) {
 
@@ -11,17 +13,92 @@ function ManageProductsElement(props:any) {
     const { imageSourceUrl, error:errorImageFetch, isPending:imageFetchPending } = useFetchImage(imageID);
     const [tempStock, setTempStock] = useState<number>(product.stock);
     const [isStockButtonDisabled, setIsStockButtonDisabled] = useState<boolean>(false);
+
     const [isStockMessageVisible, setIsStockMessageVisible] = useState<boolean>(false);
+    const [stockMessage, setStockMessage] = useState<string>("-");
+
+    const [isDeletePending, setIsDeletePending] = useState<boolean>(false);
 
     function handleStockChange(e:any) {
+
         e.preventDefault();
         setIsStockButtonDisabled(true);
-        setIsStockMessageVisible(true)
+        setIsStockMessageVisible(false);
+        setStockMessage("-");
 
-        const timer = setTimeout(() => {
-            setIsStockMessageVisible(false);
-            setIsStockButtonDisabled(false);
-        }, 2000);
+        if(tempStock > 2000000000) {
+            setStockMessage("Too big");
+            setIsStockMessageVisible(true);
+            setIsStockButtonDisabled(true);
+            setTempStock(product.stock);
+            const timer = setTimeout(() => {
+                setIsStockMessageVisible(false);
+                setIsStockButtonDisabled(false);
+            }, 2000);
+            return;
+        }
+
+        // @ts-ignore
+        if(isNaN(tempStock)) setTempStock(0);
+
+        const productId = product.productID;
+        const patchData = [
+            { op: 'replace', path: '/stock', value: tempStock}
+        ];
+
+        fetch(`http://localhost:8080/api/v1/product/${productId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json-patch+json',
+                "Origin": "http://localhost:8080:3000",
+                "Authorization": "Bearer " + Cookies.get('jwtToken')
+            },
+            body: JSON.stringify(patchData),
+        })
+            .then((response) => {
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+                setStockMessage("Updated!");
+                setIsStockMessageVisible(true);
+                product.stock = tempStock;
+                const timer = setTimeout(() => {
+                    setIsStockMessageVisible(false);
+                    setIsStockButtonDisabled(false);
+                }, 2000);
+            })
+            .catch(() => {
+                setStockMessage("Error!");
+                setIsStockMessageVisible(true);
+                setTempStock(product.stock);
+                const timer = setTimeout(() => {
+                    setIsStockMessageVisible(false);
+                    setIsStockButtonDisabled(false);
+                }, 2000);
+            });
+    }
+
+    function handleProductDelete() {
+        setIsDeletePending(true);
+
+        fetch("http://localhost:8080/api/v1/product/" + product.productID,
+            {
+                method: 'DELETE',
+                headers: {
+                    "Origin": "http://localhost:8080:3000",
+                    "Authorization": "Bearer " + Cookies.get('jwtToken')
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    setIsDeletePending(false);
+                    throw new Error('Network response was not ok');
+                }
+                window.location.reload();
+            })
+            .catch(() => {
+                setIsDeletePending(false);
+                alert("Something went wrong. Please try again");
+            })
     }
 
     return (
@@ -41,6 +118,7 @@ function ManageProductsElement(props:any) {
                             type ="number"
                             id="manage-product-element-stock-input"
                             value={tempStock}
+                            min="0" max="2000000000"
                             onChange={(e)=>{
                                 setTempStock(parseInt(e.target.value))
                             }
@@ -49,12 +127,22 @@ function ManageProductsElement(props:any) {
                     </form>
                     <button id="manage-product-stock-update-button" onClick={handleStockChange} disabled={isStockButtonDisabled}>Set</button>
                 </div>
-                <div id={isStockMessageVisible ? "manage-product-element-stock-update-notification":"manage-product-element-stock-update-notification-fade"}>Updated stock!</div>
+                <div id={isStockMessageVisible ? "manage-product-element-stock-update-notification":"manage-product-element-stock-update-notification-fade"}>{stockMessage}</div>
             </div>
-            <span className="material-symbols-outlined" id="manage-products-element-delete-icon">delete</span>
+            {!isDeletePending && <span className="material-symbols-outlined" id="manage-products-element-delete-icon" onClick={handleProductDelete}>delete</span>}
+            {isDeletePending &&
+                <div className="lds-roller">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>}
         </div>
     )
-
 }
 
 export default ManageProductsElement;
