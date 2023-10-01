@@ -2,10 +2,10 @@ import './ManageProductsPage.css'
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import Product from "../../models/Product";
-import ShoppingCartEntry from "../../models/ShoppingCartEntry";
-import ShoppingCartButtonEntry from "../Navbar/ShoppingCartButton/ShoppingCartButtonEntry/ShoppingCartButtonEntry";
 import ManageProductsElement from "./ManageProductsElement/ManageProductsElement";
 import AddProductPage from "./AddProductPage/AddProductPage";
+// @ts-ignore
+import Cookies from "js-cookie";
 
 function ManageProductsPage() {
 
@@ -22,39 +22,59 @@ function ManageProductsPage() {
         setIsAddProduct(false);
         setFetchError(false);
         setFetchPending(true);
-        //TODO check that the logged in user has the permission to access this page
 
-        // @ts-ignore
-        if(!isNaN(pageParam)) {
-            // @ts-ignore
-            fetch("http://localhost:8080/api/v1/product/paginate?pageNumber=" + (pageParam - 1) + "&pageSize=20",
-                {
-                    method: 'GET',
-                    headers: {
-                        "Origin": "http://localhost:8080:3000",
+        //fetch the account info to verify that the user is an ADMIN and can access this page
+        fetch("http://localhost:8080/api/v1/user",
+            {
+                method: 'GET',
+                headers: {
+                    "Origin": "http://localhost:8080:3000",
+                    "Authorization": "Bearer " + Cookies.get('jwtToken')
+                }
+            }
+        )
+            .then(res => {
+                if (!res.ok) throw Error("Could not fetch user info");
+                return res.json();
+            })
+            .then(data => {
+                if(data.role === "USER") navigate("/");
+                else {
+                    // @ts-ignore
+                    if(!isNaN(pageParam)) {
+                        // @ts-ignore
+                        fetch("http://localhost:8080/api/v1/product/paginate?pageNumber=" + (pageParam - 1) + "&pageSize=20",
+                            {
+                                method: 'GET',
+                                headers: {
+                                    "Origin": "http://localhost:8080:3000",
+                                }
+                            }
+                        )
+                            .then(res => {
+                                if (!res.ok) throw Error("Could not fetch products");
+                                return res.json();
+                            })
+                            .then(data => {
+                                setProductList(data.content);
+                                setFetchPending(false);
+                                setFetchError(false);
+                                console.log(data.content.length);
+                                if (data.content.length === 0) throw Error("No more products");
+                            })
+                            .catch(() => {
+                                setFetchPending(false);
+                                setFetchError(true);
+                            })
+                    }
+                    else {
+                        if(pageParam === "add") setIsAddProduct(true);
                     }
                 }
-            )
-                .then(res => {
-                    if (!res.ok) throw Error("Could not fetch products");
-                    return res.json();
-                })
-                .then(data => {
-                    setProductList(data.content);
-                    setFetchPending(false);
-                    setFetchError(false);
-                    console.log(data.content.length);
-                    if (data.content.length === 0) throw Error("No more products");
-                })
-                .catch(err => {
-                    setFetchPending(false);
-                    setFetchError(true);
-                })
-        }
-        else {
-            if(pageParam === "add") setIsAddProduct(true);
-        }
-    }, [pageParam])
+            })
+            .catch(err => {
+            })
+    }, [pageParam, navigate])
 
     return (
         <div id = "manage-products-list-div">
