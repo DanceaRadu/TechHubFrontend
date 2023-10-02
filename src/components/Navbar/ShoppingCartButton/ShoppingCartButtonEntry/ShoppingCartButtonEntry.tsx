@@ -62,9 +62,9 @@ function ShoppingCartButtonEntry(props:any) {
 
     return(
         <div id="shopping-cart-button-entry-container">
-            {!error && !isPending && !isLoadingDelete && <img id="shopping-cart-button-entry-image" src={imageSourceUrl} alt="asd"/>}
+            {!error && !isPending && !isLoadingDelete && <img id="shopping-cart-button-entry-image" src={imageSourceUrl} alt="Product"/>}
             {((isPending || error) && !isLoadingDelete) ? (
-                <img id="shopping-cart-button-entry-image" src={require('../../../../resources/images/whiteSquare.png')}  alt="Product image"/>
+                <img id="shopping-cart-button-entry-image" src={require('../../../../resources/images/whiteSquare.png')}  alt="Product"/>
             ) : null}
             {!isLoadingDelete && <div id="shopping-cart-button-entry-product-name">{product.product.productName}</div>}
             {!isLoadingDelete && <div id="shopping-cart-button-entry-product-quantity">{"x" + product.quantity}</div>}
@@ -72,15 +72,18 @@ function ShoppingCartButtonEntry(props:any) {
                 <div id="shopping-cart-button-entry-product-total">{itemTotal + "$"}</div>
                 <button id="shopping-cart-button-entry-x-button" onClick={handleEntryDelete}>X</button>
             </div>}
-            {isLoadingDelete && <div className="lds-roller">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+            {isLoadingDelete &&
+                <div id="shopping-cart-button-entry-lds-roller-outer-div">
+                    <div className="lds-roller">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
             </div> }
         </div>
     )

@@ -41,8 +41,8 @@ function UserButton(props: any) {
             </div>
             {isLoggedIn && <div id="user-button-dropdown">
                 <Link to="/account"><div className="user-button-dropdown-item">My account</div></Link>
-                <div className="user-button-dropdown-item">My orders</div>
-                <div className="user-button-dropdown-item">Favorites</div>
+                <Link to= "/account/orders"><div className="user-button-dropdown-item">My orders</div></Link>
+                <Link to= "/account/favorites"><div className="user-button-dropdown-item">Favorites</div></Link>
                 <div className="user-button-dropdown-item" onClick={handleLogOut}>Log out</div>
             </div>}
             {!isLoggedIn && !isPendingLoggedIn && <div id="user-button-dropdown">

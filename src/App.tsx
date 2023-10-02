@@ -80,12 +80,20 @@ function App() {
                     selectedCategory = {[false,false,false,false,true,false]}
                 />}>
                 </Route>
-                <Route path="/account/manage" element={<AccountPage
+                <Route path="/account/manage/:pageParam" element={<AccountPage
                     shoppingCartEntries = {shoppingCartEntries}
                     setShoppingCartEntries = {setShoppingCartEntries}
                     isPendingLoggedIn = {isPendingLoggedIn}
                     isLoggedIn = {isLoggedIn}
-                    selectedCategory = {[false,false,false,false,true,false]}
+                    selectedCategory = {[false,false,false,false,false,true]}
+                />}>
+                </Route>
+                <Route path="/account/manage/search/:searchQuery/:pageParam" element={<AccountPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
+                    isPendingLoggedIn = {isPendingLoggedIn}
+                    isLoggedIn = {isLoggedIn}
+                    selectedCategory = {[false,false,false,false,false,true]}
                 />}>
                 </Route>
 
