@@ -19,7 +19,7 @@ function App() {
     <div className="App">
         <BrowserRouter>
             <Routes>
-                <Route path = "/" element={<Home
+                <Route path = "/:category?/:order?/:filters?/:pageNumber?/:query?" element={<Home
                     isLoggedIn = {isLoggedIn}
                     shoppingCartEntries = {shoppingCartEntries}
                     setShoppingCartEntries = {setShoppingCartEntries}

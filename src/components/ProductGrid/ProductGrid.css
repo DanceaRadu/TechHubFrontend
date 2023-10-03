@@ -16,7 +16,7 @@
     justify-content: center;
     overflow: auto;
     padding: 10px;
-    width: clamp(calc(100% - 200px), 80%, calc(100% - 500px));
+    width: calc(100% - 300px);
     height: calc(100% - 90px);
 }
 

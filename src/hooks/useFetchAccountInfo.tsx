@@ -1,13 +1,12 @@
 import {useEffect, useState} from "react";
 import User from "../models/User";
 import Image from "../models/Image"
-import {randomUUID} from "crypto";
 // @ts-ignore
 import Cookies from "js-cookie";
 
 function useFetchAccountInfo(isLoggedIn:boolean) {
 
-    const [accountInfo, setAccountInfo] = useState<User>(new User("", "", "", "", "USER", new Image("00000000-0000-0000-0000-000000000000", "", "")));
+    const [accountInfo, setAccountInfo] = useState<User>(new User("", "", "", "", "USER", new Image("00000000-0000-0000-0000-000000000000", "", ""), ""));
 
     useEffect(() => {
 
@@ -29,7 +28,7 @@ function useFetchAccountInfo(isLoggedIn:boolean) {
                     console.log(data);
                     setAccountInfo(data);
                 })
-                .catch(err => {
+                .catch(() => {
                 })
         }
 

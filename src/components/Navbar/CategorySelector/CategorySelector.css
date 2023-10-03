@@ -1,0 +1,23 @@
+#category-selector-outer-div {
+    background-color: var(--primary-color);
+    width: 200px;
+    z-index: 1;
+    box-shadow: 0 5px 5px #111111;
+    border-radius: 5px;
+    display: flex;
+}
+
+.category-selector-category {
+    width: 190px;
+    padding: 5px;
+    color: var(--secondary-color);
+    font-size: 20px;
+    border: 2px solid var(--primary-color)
+}
+
+.category-selector-category:hover {
+    background-color: var(--accent-color);
+    border-bottom: 2px solid var(--darker-primary);
+    border-top: 2px solid var(--darker-primary);
+    cursor: pointer;
+}

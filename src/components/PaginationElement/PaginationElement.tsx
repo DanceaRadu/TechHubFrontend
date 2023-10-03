@@ -11,7 +11,6 @@ function PaginationElement(props:any) {
     const pageNumbers:number[] = Array.from({ length: totalPagesNumber }, (_, index) => index + 1)
 
     function changePage(pageNumber:number) {
-        console.log(linkBeginning + "hellother");
         navigate(linkBeginning + "/" + pageNumber);
     }
 

@@ -7,9 +7,16 @@
 #home-content-div {
     display: flex;
     height: 100%;
+    flex-direction: row;
 }
 
 #home-sorting-div {
     background-color: var(--primary-color);
-    width: clamp(200px, 20%, 500px);
+    width: 300px;
+}
+
+#product-browser-div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 }

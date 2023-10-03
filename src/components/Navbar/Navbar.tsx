@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import UserButton from "./UserButton/UserButton";
 import ShoppingCartButton from "./ShoppingCartButton/ShoppingCartButton";
+import CategorySelector from "./CategorySelector/CategorySelector";
 function Navbar(props: any) {
 
     let isLoggedIn:boolean = props.isLoggedIn;
@@ -17,17 +18,27 @@ function Navbar(props: any) {
         setIsSearchBarFocused(false);
     }
 
+
+
     return (
       <div id="navbar-div">
-          <Link to='/' onClick={() => {
-              navigate("/")
-              window.location.reload();
-          }}>
-                <h1>
-                    <span style={{color: '#ebf1ff'}}>Tech</span>
-                    <span style={{color: 'purple'}}>Hub</span>
-                </h1>
-          </Link>
+          <div id = "navbar-logo-div">
+              <div id="navbar-category-outer-div">
+                  <span className="material-symbols-outlined" id="navbar-category-icon">list</span>
+                  <div id="navbar-category-selector-div">
+                      <CategorySelector></CategorySelector>
+                  </div>
+              </div>
+              <Link to='/' onClick={() => {
+                  navigate("/")
+                  window.location.reload();
+              }}>
+                    <h1>
+                        <span style={{color: '#ebf1ff'}}>Tech</span>
+                        <span style={{color: 'purple'}}>Hub</span>
+                    </h1>
+              </Link>
+          </div>
           <form id="navbar-search-form" style={{border: isSearchBarFocused ? '2px solid #730075' : '2px solid #AAAAAA'}}>
               <input type = "text" placeholder="Search for a product" id="navbar-search-field" onFocus={handleSearchBarFocus} onBlur={handleSearchBarBlur}/>
               <span className="material-symbols-outlined" id="navbar-search-icon">search</span>
