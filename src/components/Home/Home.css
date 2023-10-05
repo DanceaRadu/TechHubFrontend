@@ -9,14 +9,3 @@
     height: 100%;
     flex-direction: row;
 }
-
-#home-sorting-div {
-    background-color: var(--primary-color);
-    width: 300px;
-}
-
-#product-browser-div {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}

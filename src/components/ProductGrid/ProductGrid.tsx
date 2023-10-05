@@ -2,7 +2,7 @@ import './ProductGrid.css'
 import {useEffect, useState} from "react";
 import Product from "../../models/Product";
 import ProductPreview from "../ProductPreview/ProductPreview";
-import {useNavigate} from "react-router-dom";
+import config from "../../config";
 
 function ProductGrid(props:any) {
 
@@ -25,17 +25,10 @@ function ProductGrid(props:any) {
 
     useEffect(() => {
 
-        if(window.location.href !== "http://localhost:3000/"
-            + productSorter.productCategory + "/"
-            + productSorter.order + "/"
-            + productSorter.filter + "/"
-            + productSorter.pageNumber + "/"
-            + productSorter.query) {}
-
         fetch("http://localhost:8080/api/v1/product/paginate/filter",
             {method: 'POST',
                 headers: {
-                "Origin":"http://localhost:8080:3000",
+                "Origin":config.origin,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(productSorter)
@@ -47,7 +40,7 @@ function ProductGrid(props:any) {
             .then(data => {
                 setProducts(data.content);
             })
-    }, [products])
+    }, [category, order, filter, query, pageNumber])
 
     return (
         <div id="product-grid-container">
