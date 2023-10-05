@@ -6,12 +6,13 @@ function PaginationElement(props:any) {
     const currentPageNumber:number = props.currentPageNumber;
     const totalPagesNumber:number = props.totalPagesNumber;
     const linkBeginning:number = props.linkBeginning;
+    const linkEnding:number = props.linkEnding;
 
     const navigate = useNavigate();
     const pageNumbers:number[] = Array.from({ length: totalPagesNumber }, (_, index) => index + 1)
 
     function changePage(pageNumber:number) {
-        navigate(linkBeginning + "/" + pageNumber);
+        navigate(linkBeginning + "/" + pageNumber + linkEnding);
     }
 
     return (

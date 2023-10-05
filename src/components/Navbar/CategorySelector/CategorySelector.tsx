@@ -38,7 +38,7 @@ function CategorySelector() {
         <div id="category-selector-outer-div">
             <div id="category-selector-div">
                 {categories.map((item, index) => (
-                    <div key={index} className="category-selector-category" onClick={() =>  navigate("/browse/" + item.categoryID + "/order/filters/1/d")}>
+                    <div key={index} className="category-selector-category" onClick={() =>  navigate("/browse/" + item.categoryID + "/none/none/1")}>
                         {item.categoryName}
                     </div>
                 ))}

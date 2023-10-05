@@ -1,6 +1,6 @@
 #navbar-div{
     display: flex;
-    background-color: #151515;
+    background-color: var(--darker-primary);
     height: clamp(70px, 8vh, 500px);
     box-shadow: 0 5px 5px #111111;
     align-items: center;
@@ -129,6 +129,7 @@
 #navbar-category-selector-div {
     position: relative;
     top: clamp(70px, 8vh, 500px);
+    z-index: 99;
 }
 
 #navbar-category-selector-div:hover {
