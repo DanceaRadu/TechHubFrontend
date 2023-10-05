@@ -57,7 +57,7 @@
     }
 }
 
-@media (min-width: 3000px) {
+@media (min-width: 2500px) {
     #product-grid-container {
         grid-template-columns: 15% 15% 15% 15% 15% 15%;
     }

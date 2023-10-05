@@ -32,7 +32,7 @@
             'wght' 400,
             'GRAD' 0,
             'opsz' 48;
-    font-size: clamp(50px, 6vh, 500px);
+    font-size: 60px;
     color: var(--accent-color);
 }
 
@@ -89,7 +89,7 @@
     text-decoration: none;
     border-radius: 5px;
     margin-top: 5px;
-    font-size: clamp(11px, 1.6vh, 500px);
+    font-size: 14px;
 }
 
 .user-button-dropdown-item:hover {

@@ -1,7 +1,7 @@
 #navbar-div{
     display: flex;
     background-color: var(--darker-primary);
-    height: clamp(70px, 8vh, 500px);
+    height: 75px;
     box-shadow: 0 5px 5px #111111;
     align-items: center;
     justify-content: space-between;
@@ -11,7 +11,7 @@
     position: relative;
     top: 5px;
     font-family: 'Bebas Neue', sans-serif !important;
-    font-size: clamp(50px, 5.5vh, 500px);
+    font-size: 52px;
     margin-left: 10px;
 }
 
@@ -21,7 +21,7 @@
             'wght' 400,
             'GRAD' 0,
             'opsz' 48;
-    font-size: clamp(70px * 0.5, 8vh * 0.5, 500px * 0.5);
+    font-size: clamp(70px * 0.5, 8vh * 0.5, 90px * 0.5);
     color: var(--primary-color);
     margin-right: 5px;
 }
@@ -98,11 +98,11 @@
 @keyframes fade-in-move {
     from {
         opacity: 0;
-        top: clamp(90px, calc(8vh + 20px), 520px);
+        top: 90px;
     }
     to {
         opacity: 1;
-        top: clamp(70px, 8vh, 500px);
+        top: 70px;
     }
 }
 
@@ -112,7 +112,7 @@
 }
 
 #navbar-category-outer-div {
-    height: clamp(70px, 8vh, 500px);
+    height: 75px;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -128,7 +128,7 @@
 
 #navbar-category-selector-div {
     position: relative;
-    top: clamp(70px, 8vh, 500px);
+    top: 75px;
     z-index: 99;
 }
 
