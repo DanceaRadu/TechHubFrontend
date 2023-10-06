@@ -23,7 +23,7 @@
             'wght' 400,
             'GRAD' 0,
             'opsz' 48;
-    font-size: clamp(45px, 5.8vh, 500px);
+    font-size: 55px;
     color: var(--accent-color);
 }
 
@@ -54,11 +54,11 @@
 @keyframes fade-in {
     from {
         opacity: 0;
-        top: clamp(85px, 9.5vh, 500px);
+        top: 90px;
     }
     to {
         opacity: 1;
-        top: clamp(65px, 7.3vh, 495px);
+        top: 75px;
     }
 }
 
@@ -68,7 +68,7 @@
     opacity: 0;
     display: none;
     position: absolute;
-    top: clamp(65px, 7.3vh, 495px);
+    top: 75px;
     left: -110px;
     border-radius: 5px;
     box-shadow: 0 5px 5px #111111;
@@ -168,9 +168,9 @@
     background-color: var(--secondary-color);
     border-radius: 20px;
     padding: 2px;
-    font-size: clamp(11px, 1.6vh, 500px);
-    min-height: clamp(14px, 1.8vh, 550px);
-    min-width: clamp(14px, 1.8vh, 550px);
+    font-size: 16px;
+    min-height: 20px;
+    min-width: 20px;
     text-align: center;
     z-index: 1;
 }

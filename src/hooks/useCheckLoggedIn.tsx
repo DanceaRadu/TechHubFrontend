@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
+import config from "../config";
 
 function useCheckLoggedIn() {
 
@@ -8,9 +9,9 @@ function useCheckLoggedIn() {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/v1/auth/validate",
+        fetch(config.apiUrl + "/auth/validate",
             {method: 'POST',
-                headers: {"Origin":"http://localhost:8080:3000",
+                headers: {"Origin":config.origin,
                     "Authorization": "Bearer " + Cookies.get('jwtToken')}}
         )
             .then(res => {

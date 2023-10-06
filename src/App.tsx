@@ -9,6 +9,7 @@ import useFetchShoppingCartProducts from "./hooks/useFetchShoppingCartProducts";
 import RegistrationPage from "./components/RegistrationPage/RegistrationPage";
 import EmailTokenPage from "./components/EmailTokenPage/EmailTokenPage";
 import AccountPage from "./components/AccountPage/AccountPage";
+import ProductBrowser from "./components/ProductBrowser/ProductBrowser";
 
 function App() {
 
@@ -19,11 +20,15 @@ function App() {
     <div className="App">
         <BrowserRouter>
             <Routes>
-                <Route path = "/" element={<Home
+                <Route path = "/:category?/:order?/:filters?/:pageNumber?/:query?" element={<Home
                     isLoggedIn = {isLoggedIn}
                     shoppingCartEntries = {shoppingCartEntries}
                     setShoppingCartEntries = {setShoppingCartEntries}
                     isPendingLoggedIn = {isPendingLoggedIn}
+                />}/>
+                <Route path = "/browse/:category?/:order?/:filters?/:pageNumber?/:query?" element={<ProductBrowser
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
                 />}/>
                 <Route path = "/login" element={<LoginPage
                     shoppingCartEntries = {shoppingCartEntries}

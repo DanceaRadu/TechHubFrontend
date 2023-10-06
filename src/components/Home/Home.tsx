@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "../Navbar/Navbar";
 import './Home.css'
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
-import ProductGrid from "../ProductGrid/ProductGrid";
 
 function Home(props:any) {
 
@@ -17,12 +16,7 @@ function Home(props:any) {
                 setShoppingCartEntries = {props.setShoppingCartEntries}>
             </Navbar>
             <div id="home-content-div">
-                <div id="home-sorting-div"></div>
-                <ProductGrid
-                    isLoggedIn = {isLoggedIn}
-                    shoppingCartEntries={props.shoppingCartEntries}
-                    setShoppingCartEntries = {props.setShoppingCartEntries}>
-                </ProductGrid>
+                This is the home
             </div>
 
         </div>
