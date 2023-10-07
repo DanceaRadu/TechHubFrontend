@@ -7,6 +7,7 @@ import ShoppingCartEntry from "../../models/ShoppingCartEntry";
 // @ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 import useFetchImage from "../../hooks/useFetchImage";
+import { Link } from 'react-router-dom';
 
 function ProductPreview(props: any) {
 
@@ -18,7 +19,7 @@ function ProductPreview(props: any) {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const imageID = product?.productImages[0]?.image?.imageID;
-    const { imageSourceUrl, error: imageFetchError, isPending: isPendingImage } = useFetchImage(imageID)
+    const { imageSourceUrl, error: imageFetchError, isPending: isPendingImage } = useFetchImage(imageID);
 
     function handleAddToCart() {
 
@@ -85,22 +86,24 @@ function ProductPreview(props: any) {
     }
 
     return (
-        <div id = "product-preview-container">
-            <div>
-                <span className="material-symbols-outlined" id="product-preview-favorite-icon" onClick={() => console.log("bababoi")}>favorite</span>
-                {!imageFetchError && !isPendingImage && <img id="product-preview-image" src={imageSourceUrl} alt="Product"/>}
-                {isPendingImage || imageFetchError ? (
-                    <img id="product-preview-image" src={require('../../resources/images/product-placeholder.jpg')}  alt="Product"/>
-                ) : null}
+        <Link to = {"/product/" + product.productID}>
+            <div id = "product-preview-container">
+                <div>
+                    <span className="material-symbols-outlined" id="product-preview-favorite-icon" onClick={() => console.log("bababoi")}>favorite</span>
+                    {!imageFetchError && !isPendingImage && <img id="product-preview-image" src={imageSourceUrl} alt="Product"/>}
+                    {isPendingImage || imageFetchError ? (
+                        <img id="product-preview-image" src={require('../../resources/images/product-placeholder.jpg')}  alt="Product"/>
+                    ) : null}
+                </div>
+                <p id="product-preview-name">{product.productName}</p>
+                <div id="product-preview-price-div">
+                    <p id="product-preview-price">{Math.floor(product.productPrice)}<sup>{Math.floor((product.productPrice - Math.floor(product.productPrice)) * 100)}</sup> USD</p>
+                    <div id="product-preview-score-div">4.5/5<span className="material-symbols-outlined" id="product-preview-star-icon">star</span></div>
+                </div>
+                <button className="cover-button" id="product-preview-cart-button" onClick={handleAddToCart} disabled={isButtonDisabled}>
+                    <span className="material-symbols-outlined" id="product-preview-shopping-cart-icon">shopping_cart</span>Add to cart</button>
             </div>
-            <p id="product-preview-name">{product.productName}</p>
-            <div id="product-preview-price-div">
-                <p id="product-preview-price">{Math.floor(product.productPrice)}<sup>{Math.floor((product.productPrice - Math.floor(product.productPrice)) * 100)}</sup> USD</p>
-                <div id="product-preview-score-div">4.5/5<span className="material-symbols-outlined" id="product-preview-star-icon">star</span></div>
-            </div>
-            <button className="cover-button" id="product-preview-cart-button" onClick={handleAddToCart} disabled={isButtonDisabled}>
-                <span className="material-symbols-outlined" id="product-preview-shopping-cart-icon">shopping_cart</span>Add to cart</button>
-        </div>
+        </Link>
     )
 }
 

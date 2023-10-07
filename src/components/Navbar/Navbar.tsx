@@ -1,6 +1,6 @@
 import './Navbar.css'
 import React, {useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import UserButton from "./UserButton/UserButton";
 import ShoppingCartButton from "./ShoppingCartButton/ShoppingCartButton";
 import CategorySelector from "./CategorySelector/CategorySelector";
@@ -10,12 +10,6 @@ function Navbar(props: any) {
     let isPendingLoggedIn:boolean = props.isPendingLoggedIn;
     const [isSearchBarFocused, setIsSearchBarFocused] = useState<boolean>(false);
     const [navbarSearchValue, setNavbarSearchValue] = useState<string>("");
-
-    const {category} = useParams();
-    const {order} = useParams();
-    const {filters} = useParams();
-    const {query} = useParams();
-    const {pageNumber} = useParams();
 
     const navigate = useNavigate();
     const handleSearchBarFocus = () => {

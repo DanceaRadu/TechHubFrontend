@@ -1,0 +1,38 @@
+.background-div {
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#product-page-loading-animation {
+    justify-content: center;
+    position: relative;
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+    left: 38%;
+}
+
+#product-page-fetch-error {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    color: var(--secondary-color);
+    font-size: 22px;
+}
+
+@media (min-width: 2500px) {
+    #product-page-outer-div {
+        width: 100%;
+        text-align: center;
+        margin-top: 100px;
+    }
+}
+
+#product-page-images-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+}

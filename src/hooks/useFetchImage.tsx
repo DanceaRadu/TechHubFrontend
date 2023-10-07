@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {UUID} from "crypto";
+import config from "../config";
 
 function useFetchImage(id:UUID) {
 
@@ -12,7 +13,7 @@ function useFetchImage(id:UUID) {
                 fetch("http://localhost:8080/api/v1/image/" + id,
                     {
                         method: 'GET',
-                        headers: {"Origin": "http://localhost:8080:3000"}
+                        headers: {"Origin": config.origin}
                     }
                 )
                     .then(res => {
