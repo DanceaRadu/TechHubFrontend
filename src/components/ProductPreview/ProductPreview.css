@@ -15,6 +15,7 @@
 
 #product-preview-container:hover {
     transform: scale(1.02);
+    cursor: pointer;
 }
 
 #product-preview-container:hover #product-preview-favorite-icon {
