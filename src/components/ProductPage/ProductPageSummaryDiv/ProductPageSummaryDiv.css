@@ -1,0 +1,14 @@
+#product-page-summary-outer-div {
+    width: 560px;
+    display: flex;
+    flex-direction: column;
+}
+
+#product-page-summary-price-div {
+    width: 100%;
+    text-align: left;
+    padding-left: 30px;
+    padding-top: 30px;
+    font-size: 30px;
+    color: var(--accent-color)
+}

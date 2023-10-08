@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import config from "../../config";
 import {useParams} from "react-router-dom";
 import ProductImageSlider from "./ProductImageSlider/ProductImageSlider";
+import ProductPageSummaryDiv from "./ProductPageSummaryDiv/ProductPageSummaryDiv";
 
 function ProductPage(props:any) {
 
@@ -59,9 +60,23 @@ function ProductPage(props:any) {
                 <div></div>
             </div>}
             {!isPendingProductFetch && productFetchError && <div id="product-page-fetch-error">{productFetchError}</div>}
+
             {productData && !isPendingProductFetch && <div id="product-page-outer-div">
-                <div id="product-page-images-div">
-                    <ProductImageSlider imageList = {productData.productImages}></ProductImageSlider>
+                <div id="product-page-inner-div">
+
+
+                    <p id="product-page-name-p">{productData.productName}</p>
+                    <div id="product-page-first-div">
+                        <div id="product-page-images-div">
+                            <ProductImageSlider imageList = {productData.productImages}></ProductImageSlider>
+                        </div>
+                        <div id="product-page-second-div">
+                            <ProductPageSummaryDiv productData = {productData}></ProductPageSummaryDiv>
+                        </div>
+                    </div>
+                    <div id="product-page-sections-div"></div>
+
+
                 </div>
             </div>}
         </div>
