@@ -1,4 +1,5 @@
 import './ProductPage.css'
+import './../../index.css'
 import Navbar from "../Navbar/Navbar";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 import React, {useEffect, useState} from "react";

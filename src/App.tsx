@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './index.css'
 import './components/LoginPage/LoginPage'
 import LoginPage from "./components/LoginPage/LoginPage";
 import {BrowserRouter, Routes, Route} from "react-router-dom";

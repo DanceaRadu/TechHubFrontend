@@ -1,11 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
-
 .background-div {
     display: flex;
     flex-direction: column;
     width: 100%;
     overflow: auto;
-    font-family: "Roboto", sans-serif;
 }
 
 #product-page-loading-animation {
@@ -62,7 +59,7 @@
     margin-left: 20px;
     border: 2px solid var(--darker-primary);
     width: 560px;
-    height: 640px;
+    height: 280px;
     border-radius: 10px;
     box-shadow: 0 5px 5px #111111;
     background-color: #1A1A1A;
