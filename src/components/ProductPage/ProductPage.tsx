@@ -7,7 +7,7 @@ import config from "../../config";
 import {useParams} from "react-router-dom";
 import ProductImageSlider from "./ProductImageSlider/ProductImageSlider";
 import ProductPageSummaryDiv from "./ProductPageSummaryDiv/ProductPageSummaryDiv";
-
+import ProductPageReviewsSection from "./ProductPageReviewsSection/ProductPageReviewsSection";
 function ProductPage(props:any) {
 
     const {isLoggedIn, isPending} = useCheckLoggedIn();
@@ -37,6 +37,7 @@ function ProductPage(props:any) {
             })
             .then(data => {
                 setProductData(data);
+                console.log(productData)
                 setIsPendingProductFetch(false);
             })
             .catch(() => {
@@ -87,7 +88,6 @@ function ProductPage(props:any) {
             {productData && !isPendingProductFetch && <div id="product-page-outer-div">
                 <div id="product-page-inner-div">
 
-
                     <p id="product-page-name-p">{productData.productName}</p>
                     <div id="product-page-first-div">
                         <div id="product-page-images-div">
@@ -109,12 +109,10 @@ function ProductPage(props:any) {
                             <div className={isReviewsSelected ? "product-page-sections-button-div-selected" : "product-page-sections-button-div"} onClick={changeToReviews}>Reviews</div>
                         </div>
                         <div id = "product-page-sections-content-div">
-                            {isDescriptionSelected && <div>{productData.description}</div>}
+                            {isDescriptionSelected && <div id="product-page-sections-description-div">{productData.description}</div>}
+                            {isReviewsSelected && <ProductPageReviewsSection isLoggedIn = {isLoggedIn} productReviews = {productData.productReviews}></ProductPageReviewsSection>}
                         </div>
-
                     </div>
-
-
                 </div>
             </div>}
         </div>
