@@ -37,7 +37,7 @@ function ProductPage(props:any) {
             })
             .then(data => {
                 setProductData(data);
-                console.log(productData)
+                console.log(productData);
                 setIsPendingProductFetch(false);
             })
             .catch(() => {

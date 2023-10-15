@@ -175,7 +175,7 @@
     width: 20%;
     font-size: 16px;
     position: relative;
-    top: 10px;
+    top: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }

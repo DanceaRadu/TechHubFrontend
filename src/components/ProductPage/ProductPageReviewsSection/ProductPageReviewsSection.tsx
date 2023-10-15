@@ -1,5 +1,5 @@
 import './ProductPageReviewsSection.css'
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import ProductReviewElement from "./ProductReviewElement/ProductReviewElement";
 import CustomPopup from "../../CustomPopup/CustomPopup";
@@ -8,12 +8,18 @@ import Cookies from "js-cookie";
 
 function ProductPageReviewsSection(props:any) {
 
+    const navigate = useNavigate();
     const isLoggedIn = props.isLoggedIn;
     const productReviews = props.productData.productReviews;
     const productData = props.productData;
+
+    const [isPendingVerifyAlreadyReviewed, setIsPendingVerifyAlreadyReviewed] = useState<boolean>(true);
+    const [hasAlreadyAddedReview, setHasAlreadyAddedReview] = useState<boolean>(false);
+    const [alreadyReviewedError, setAlreadyReviewedError] = useState<string>("");
+
+    //states used for managing the product score. One for when the user hovers over a score, and one for when the user clicks on that score
     const [hoverRating, setHoverRating] = useState<number>(0);
     const [rating, setRating] = useState<number>(0);
-    const navigate = useNavigate();
 
     const [isReviewPopupVisible, setIsReviewPopupVisible] = useState<boolean>(false);
 
@@ -27,6 +33,45 @@ function ProductPageReviewsSection(props:any) {
     const [reviewBodyErrorMessage, setReviewBodyErrorMessage] = useState<string>("");
 
     const [isPostButtonDisabled, setIsPostButtonDisabled] = useState<boolean>(false);
+
+    //check if the current user has already reviewed this product or not
+    useEffect(() => {
+        if(isLoggedIn) {
+            let userReviews = [];
+            fetch("http://localhost:8080/api/v1/user/reviews",
+                {
+                    method: 'GET',
+                    headers: {
+                        "Origin": "http://localhost:8080:3000",
+                        "Authorization": "Bearer " + Cookies.get('jwtToken'),
+                    },
+                })
+                .then(res => {
+                    if(!res.ok) throw Error("Status is not 200");
+                    return res.json();
+                })
+                .then(data => {
+                    userReviews = data;
+                    for(let i = 0; i < userReviews.length; i++) {
+                        if(userReviews[i].reviewedProduct.productID === productData.productID) {
+                            setHasAlreadyAddedReview(true);
+                            setIsPendingVerifyAlreadyReviewed(false);
+                            break;
+                        }
+                    }
+                    setIsPendingVerifyAlreadyReviewed(false);
+                })
+                .catch(() => {
+                    setIsPendingVerifyAlreadyReviewed(false);
+                    setHasAlreadyAddedReview(true);
+                    setAlreadyReviewedError("Error. Please try again.");
+                })
+        }
+        else {
+            setIsPendingVerifyAlreadyReviewed(false);
+            setHasAlreadyAddedReview(false);
+        }
+    }, [isLoggedIn])
 
     const handleStarHover = (starIndex:number) => {
         setHoverRating(starIndex + 1);
@@ -99,29 +144,49 @@ function ProductPageReviewsSection(props:any) {
                 setIsPostButtonDisabled(false);
                 setPostReviewError("Error posting review. Please try again")
             })
-
     }
 
     return (
         <div id="product-page-reviews-section-outer-div">
             <div id="product-page-reviews-section-add-review-div">
-                <p id="product-page-review-section-header">Do you own the product ?</p>
-                <p id="product-page-review-section-sub-header">Write a review and tell others what you think</p>
-                <div>
-                    <div id="product-page-review-section-star-rating">
-                        {Array.from({ length: 5 }, (_, index) => (
-                            <span
-                                key={index}
-                                className={`material-symbols-outlined review${(hoverRating > index) || (rating > index ) ? ' filled' : ''}`}
-                                onMouseEnter={() => handleStarHover(index)}
-                                onMouseLeave={handleStarLeave}
-                                onClick={() => handleAddReview(index)}
-                            >star</span>
-                        ))}
+                {!isPendingVerifyAlreadyReviewed && !hasAlreadyAddedReview && <div>
+                    <p id="product-page-review-section-header">Do you own the product ?</p>
+                    <p id="product-page-review-section-sub-header">Write a review and tell others what you think</p>
+                    <div>
+                        <div id="product-page-review-section-star-rating">
+                            {Array.from({ length: 5 }, (_, index) => (
+                                <span
+                                    key={index}
+                                    className={`material-symbols-outlined review${(hoverRating > index) || (rating > index ) ? ' filled' : ''}`}
+                                    onMouseEnter={() => handleStarHover(index)}
+                                    onMouseLeave={handleStarLeave}
+                                    onClick={() => handleAddReview(index)}
+                                >star</span>
+                            ))}
+                        </div>
+                        <span id="product-page-review-section-give-score-text">Give the product a score</span>
                     </div>
-                    <span id="product-page-review-section-give-score-text">Give the product a score</span>
-                </div>
-                <button className="cover-button" id="product-page-reviews-section-review-button" onClick={() => handleAddReview(0)}>Review</button>
+                    <button className="cover-button" id="product-page-reviews-section-review-button" onClick={() => handleAddReview(0)}>Review</button>
+                </div>}
+                {!isPendingVerifyAlreadyReviewed && hasAlreadyAddedReview && !alreadyReviewedError &&
+                    <div style={{height:145, display:"flex", flexDirection:"column"}}>
+                        <div>
+                            You have already added a review for this product.
+                        </div>
+                        <button className="product-page-reviews-manage-reviews-button" onClick={() => navigate("/account/reviews")}>Manage my reviews</button>
+                        <button className="product-page-reviews-manage-reviews-button" onClick={() => navigate("/account")}>My account</button>
+                    </div>}
+                {isPendingVerifyAlreadyReviewed && <div className="lds-roller review-sections-page" style={{left:"46%"}}>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>}
+                {alreadyReviewedError && <div>{alreadyReviewedError}</div>}
             </div>
             {productReviews.length > 0 && <div id="product-page-reviews-section-reviews-div">
                 {productReviews.map((item:any) => (
@@ -164,7 +229,7 @@ function ProductPageReviewsSection(props:any) {
                         {reviewBodyErrorMessage && <div className="product-page-review-sections-error-message" style={{position:"relative", top:-5}}>{reviewBodyErrorMessage}</div>}
                         <button id="product-page-reviews-section-submit-button" disabled={isPostButtonDisabled}>Submit review</button>
                         {postReviewError && <div className="product-page-review-sections-error-message">{postReviewError}</div>}
-                        {isPendingAddReview && <div className="lds-roller" id="product-page-reviews-section-add-review-loader">
+                        {isPendingAddReview && <div className="lds-roller review-sections-page" id="product-page-reviews-section-add-review-loader">
                             <div></div>
                             <div></div>
                             <div></div>
