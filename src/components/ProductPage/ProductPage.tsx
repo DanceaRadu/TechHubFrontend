@@ -110,7 +110,7 @@ function ProductPage(props:any) {
                         </div>
                         <div id = "product-page-sections-content-div">
                             {isDescriptionSelected && <div id="product-page-sections-description-div">{productData.description}</div>}
-                            {isReviewsSelected && <ProductPageReviewsSection isLoggedIn = {isLoggedIn} productReviews = {productData.productReviews}></ProductPageReviewsSection>}
+                            {isReviewsSelected && <ProductPageReviewsSection isLoggedIn = {isLoggedIn} productData = {productData}></ProductPageReviewsSection>}
                         </div>
                     </div>
                 </div>

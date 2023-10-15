@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap');
+
 #product-page-reviews-section-outer-div {
     width: 100%;
     display: flex;
@@ -66,9 +68,88 @@
 #product-page-reviews-section-reviews-div {
     background-color: var(--primary-color);
     display: flex;
+    flex-direction: column;
     height: 620px;
     width: 100%;
     border-radius: 5px;
     margin-top: 10px;
     overflow: auto;
+}
+
+#product-page-add-review-div {
+    width: 500px;
+    height: 520px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 0 30px 30px 30px;
+}
+
+#product-page-reviews-section-form {
+    display: flex;
+    flex-direction: column;
+    font-family: "Open Sans", sans-serif;
+}
+
+#product-page-reviews-section-title-input {
+    height: 30px;
+    width: 500px;
+    outline: none;
+    border: none;
+    padding: 2px 2px 2px 5px;
+    border-radius: 5px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#product-page-reviews-section-comment-p {
+    font-size: 18px;
+}
+
+#product-page-reviews-section-comment-input {
+    height: 300px;
+    width: 500px;
+    outline: none;
+    border: none;
+    margin-bottom: 10px;
+    padding: 2px 2px 2px 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+#product-page-reviews-section-submit-button {
+    padding: 5px;
+    width: 200px;
+    font-size: 16px;
+    background-color: var(--accent-color);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: #CCC;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#product-page-reviews-section-submit-button:hover {
+    background-color: #450046;
+    cursor: pointer;
+}
+
+.product-page-review-sections-error-message {
+    font-size: 16px;
+    color: darkred;
+}
+
+#lds-roller-outer-div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.lds-roller {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    left: 40%;
 }
