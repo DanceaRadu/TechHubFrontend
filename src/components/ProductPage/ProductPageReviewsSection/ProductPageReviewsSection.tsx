@@ -10,7 +10,6 @@ function ProductPageReviewsSection(props:any) {
 
     const navigate = useNavigate();
     const isLoggedIn = props.isLoggedIn;
-    const productReviews = props.productData.productReviews;
     const productData = props.productData;
 
     const [isPendingVerifyAlreadyReviewed, setIsPendingVerifyAlreadyReviewed] = useState<boolean>(true);
@@ -188,12 +187,12 @@ function ProductPageReviewsSection(props:any) {
                 </div>}
                 {alreadyReviewedError && <div>{alreadyReviewedError}</div>}
             </div>
-            {productReviews.length > 0 && <div id="product-page-reviews-section-reviews-div">
-                {productReviews.map((item:any) => (
+            {productData.reviewDTOs.length > 0 && <div id="product-page-reviews-section-reviews-div">
+                {productData.reviewDTOs.map((item:any) => (
                         <ProductReviewElement key={item.reviewID} review={item}></ProductReviewElement>
                 ))}
             </div>}
-            {productReviews.length === 0 && <div style={{marginTop:20}}>No reviews yet.</div>}
+            {productData.reviewDTOs.length === 0 && <div style={{marginTop:20}}>No reviews yet.</div>}
 
             <CustomPopup show={isReviewPopupVisible} onClose={() => setIsReviewPopupVisible(false)}>
                 <div id="product-page-add-review-div">
