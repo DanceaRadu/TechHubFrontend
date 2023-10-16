@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+#product-page-summary-outer-div {
+    width: 560px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+#product-page-summary-price-div {
+    text-align: left;
+    padding-left: 30px;
+    padding-top: 30px;
+    font-size: 40px;
+    color: var(--accent-color);
+    font-family: 'Roboto', sans-serif;
+}
+
+#product-page-summary-button-div {
+    margin: 0 30px 30px 30px;
+    justify-self: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+
+.cover-button {
+    width: 100%;
+    font-family: "Roboto", sans-serif;
+    margin: 10px 0 0 0;
+    vertical-align: center;
+    padding-top: 5px;
+}
+
+#product-page-summary-upper-div {
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-start;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#product-page-summary-reviews-div {
+    margin-top: 30px;
+    margin-right: 30px;
+    font-size: 20px;
+    color: #ccc;
+    text-align: right;
+}
+
+#product-summary-stock-div {
+    font-size: 20px;
+    color: #888
+}
+
+#product-page-summary-shopping-cart-icon {
+    position: relative;
+    top: 8px;
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    font-size: 30px;
+}
+
+#product-page-summary-shopping-cart-icon:hover {
+    font-variation-settings:
+             'FILL' 0,
+             'wght' 400,
+             'GRAD' 0,
+             'opsz' 24
+}
+#product-page-summary-shopping-cart-icon {
+    position: relative;
+    top: 8px;
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    font-size: 30px;
+}
+
+#product-page-summary-shopping-cart-icon:hover {
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+}
+
+#product-page-summary-favorites-icon {
+    position: relative;
+    top: 8px;
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    font-size: 30px;
+}
+
+#product-page-summary-favorites-icon:hover {
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+}
+
+

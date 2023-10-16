@@ -24,7 +24,6 @@ function CategorySelector() {
             })
             .then(data => {
                 setCategories(data);
-                console.log(data);
                 setIsFetchPending(false);
             })
             .catch(() => {

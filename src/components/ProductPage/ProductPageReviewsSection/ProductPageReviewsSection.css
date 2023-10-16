@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap');
+
+#product-page-reviews-section-outer-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#product-page-reviews-section-add-review-div {
+    background-color: var(--primary-color);
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#product-page-review-section-sub-header {
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: gray;
+}
+
+.material-symbols-outlined.review {
+     font-variation-settings:
+             'FILL' 0,
+             'wght' 200,
+             'GRAD' 0,
+             'opsz' 24;
+    color: gold;
+    font-size: 40px;
+}
+
+#product-page-review-section-star-rating {
+    display: inline-block;
+    position: relative;
+    left: -5px;
+}
+
+.material-symbols-outlined.filled {
+    cursor: pointer;
+    font-variation-settings:
+            'FILL' 1,
+            'wght' 200,
+            'GRAD' 0,
+            'opsz' 24;
+}
+
+#product-page-review-section-give-score-text {
+    position: relative;
+    top: -10px;
+    margin-left: 10px;
+    color: #AAA;
+    font-size: 18px;
+}
+
+#product-page-reviews-section-review-button {
+    width: 120px;
+    height: 30px;
+    padding: 0;
+    margin-left: 5px;
+    font-size: 18px;
+    border-radius: 7px;
+    position: relative;
+    top: -5px;
+}
+
+#product-page-reviews-section-reviews-div {
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    height: 580px;
+    width: calc(100% - 40px);
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: auto;
+    padding: 20px;
+    scrollbar-width: none;
+}
+
+#product-page-reviews-section-reviews-div::-webkit-scrollbar {
+    display: none;
+}
+
+#product-page-add-review-div {
+    width: 500px;
+    height: 520px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 0 30px 30px 30px;
+}
+
+#product-page-reviews-section-form {
+    display: flex;
+    flex-direction: column;
+    font-family: "Open Sans", sans-serif;
+}
+
+#product-page-reviews-section-title-input {
+    height: 30px;
+    width: 500px;
+    outline: none;
+    border: none;
+    padding: 2px 2px 2px 5px;
+    border-radius: 5px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#product-page-reviews-section-comment-p {
+    font-size: 18px;
+}
+
+#product-page-reviews-section-comment-input {
+    height: 300px;
+    width: 500px;
+    outline: none;
+    border: none;
+    margin-bottom: 10px;
+    padding: 2px 2px 2px 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+#product-page-reviews-section-submit-button {
+    padding: 5px;
+    width: 200px;
+    font-size: 16px;
+    background-color: var(--accent-color);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: #CCC;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#product-page-reviews-section-submit-button:hover {
+    background-color: #450046;
+    cursor: pointer;
+}
+
+.product-page-review-sections-error-message {
+    font-size: 16px;
+    color: darkred;
+}
+
+#lds-roller-outer-div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.lds-roller.review-sections-page {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    left: 40%;
+}
+
+.product-page-reviews-manage-reviews-button {
+    margin-top: 10px;
+    width: 200px;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.product-page-reviews-manage-reviews-button:hover {
+    cursor: pointer;
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+
+}

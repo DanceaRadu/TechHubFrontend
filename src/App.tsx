@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './index.css'
 import './components/LoginPage/LoginPage'
 import LoginPage from "./components/LoginPage/LoginPage";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
@@ -10,6 +11,7 @@ import RegistrationPage from "./components/RegistrationPage/RegistrationPage";
 import EmailTokenPage from "./components/EmailTokenPage/EmailTokenPage";
 import AccountPage from "./components/AccountPage/AccountPage";
 import ProductBrowser from "./components/ProductBrowser/ProductBrowser";
+import ProductPage from "./components/ProductPage/ProductPage";
 
 function App() {
 
@@ -99,6 +101,12 @@ function App() {
                     isPendingLoggedIn = {isPendingLoggedIn}
                     isLoggedIn = {isLoggedIn}
                     selectedCategory = {[false,false,false,false,false,true]}
+                />}>
+                </Route>
+
+                <Route path = "/product/:productId" element={<ProductPage
+                    shoppingCartEntries = {shoppingCartEntries}
+                    setShoppingCartEntries = {setShoppingCartEntries}
                 />}>
                 </Route>
 

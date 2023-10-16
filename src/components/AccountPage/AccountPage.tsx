@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import './AccountPage.css'
 import Navbar from "../Navbar/Navbar";
-import {Link, redirect, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import useFetchAccountInfo from "../../hooks/useFetchAccountInfo";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 import useFetchProfilePicture from "../../hooks/useFetchProfilePicture";
@@ -61,7 +61,7 @@ function AccountPage(this: any, props:any) {
                         {(isProfilePicturePending || imageError) ? (
                                 <span className="material-symbols-outlined" id="account-page-user-icon">account_circle</span>
                         ) : null}
-                        {!isProfilePicturePending && !imageError && <img src={imageSourceUrl} id="account-page-user-image"/>}
+                        {!isProfilePicturePending && !imageError && <img src={imageSourceUrl} id="account-page-user-image" alt="user"/>}
                     </div>
                     <div id="account-page-info-inner-div">
                         <div id="account-page-info-keys-div">

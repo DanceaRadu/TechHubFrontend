@@ -183,15 +183,17 @@ function LoginPage(props:any) {
                         <button className="cover-button" disabled={isButtonDisabled}>Login</button>
                     </form>
                     {isPending &&
-                        <div className="lds-roller">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
+                        <div id="lds-roller-outer-div">
+                            <div className="lds-roller">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
                         </div>}
                     <div id="no-account-div">
                         <Link to="/home">Forgot password?</Link><br/>
