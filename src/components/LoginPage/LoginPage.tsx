@@ -5,6 +5,7 @@ import './LoginPage.css'
 import Cookies from 'js-cookie'
 import ShoppingCartEntry from "../../models/ShoppingCartEntry";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
+import config from "../../config";
 
 function LoginPage(props:any) {
 
@@ -57,11 +58,11 @@ function LoginPage(props:any) {
      setIsPending(true);
      setError(null);
 
-     fetch('http://localhost:8080/api/v1/auth/authenticate', {
+     fetch(config.apiUrl + '/auth/authenticate', {
          method: 'POST',
          headers: {
              "Content-Type": "application/json",
-             "Origin":"http://localhost:8080:3000"
+             "Origin":config.origin
          },
          body: JSON.stringify({"username":usernameInput, "password":passwordInput})
      }).then(res => {
@@ -83,10 +84,10 @@ function LoginPage(props:any) {
 
                 for(let i = 0; i < cookieStoredShoppingCartItems.length; i++) {
                     fetchPromises.push(
-                        fetch("http://localhost:8080/api/v1/user/shoppingcart/" + cookieStoredShoppingCartItems[i].product.productID, {
+                        fetch(config.apiUrl + "/user/shoppingcart/" + cookieStoredShoppingCartItems[i].product.productID, {
                             method: 'POST',
                             headers: {
-                                "Origin": "http://localhost:8080:3000",
+                                "Origin": config.origin,
                                 "Authorization": "Bearer " + Cookies.get('jwtToken')
                             }
                         })
@@ -102,11 +103,11 @@ function LoginPage(props:any) {
             }
             Promise.all(fetchPromises)
                 .then(() => {
-                    fetch("http://localhost:8080/api/v1/user/shoppingcart",
+                    fetch(config.apiUrl + "/user/shoppingcart",
                         {
                             method: 'GET',
                             headers: {
-                                "Origin": "http://localhost:8080:3000",
+                                "Origin": config.origin,
                                 "Authorization": "Bearer " + Cookies.get('jwtToken')
                             }
                         }

@@ -16,7 +16,6 @@ function ProductPageSummaryDiv(props:any) {
     }, [productData])
 
     function handleAddToCart() {
-        console.log(productData);
         setIsCartButtonDisabled(true);
         addProductToCart(props.isLoggedIn, productData.productID, props.shoppingCartEntries, props.setShoppingCartEntries);
         setIsCartButtonDisabled(false);

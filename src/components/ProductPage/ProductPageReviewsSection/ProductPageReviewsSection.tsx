@@ -5,6 +5,7 @@ import ProductReviewElement from "./ProductReviewElement/ProductReviewElement";
 import CustomPopup from "../../CustomPopup/CustomPopup";
 // @ts-ignore
 import Cookies from "js-cookie";
+import config from "../../../config";
 
 function ProductPageReviewsSection(props:any) {
 
@@ -37,11 +38,11 @@ function ProductPageReviewsSection(props:any) {
     useEffect(() => {
         if(isLoggedIn) {
             let userReviews = [];
-            fetch("http://localhost:8080/api/v1/user/reviews",
+            fetch(config.apiUrl + "/user/reviews",
                 {
                     method: 'GET',
                     headers: {
-                        "Origin": "http://localhost:8080:3000",
+                        "Origin": config.origin,
                         "Authorization": "Bearer " + Cookies.get('jwtToken'),
                     },
                 })
@@ -123,11 +124,11 @@ function ProductPageReviewsSection(props:any) {
             reviewTitle: reviewTitle
         }
 
-        fetch("http://localhost:8080/api/v1/review",
+        fetch(config.apiUrl + "/review",
             {
                 method: 'POST',
                 headers: {
-                    "Origin": "http://localhost:8080:3000",
+                    "Origin": config.origin,
                     "Authorization": "Bearer " + Cookies.get('jwtToken'),
                     'Content-Type': 'application/json'
                 },

@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
+import config from "../config";
 
 function useFetchProfilePicture() {
 
@@ -9,9 +10,9 @@ function useFetchProfilePicture() {
     const [isPending, setIsPending] = useState<boolean>(true);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/v1/user/profilepicture",
+        fetch(config.apiUrl + "/user/profilepicture",
             {method: 'GET',
-                headers: {"Origin":"http://localhost:8080:3000",
+                headers: {"Origin":config.origin,
                     "Authorization": "Bearer " + Cookies.get('jwtToken')}}
         )
             .then(res => {

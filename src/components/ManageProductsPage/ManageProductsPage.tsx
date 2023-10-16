@@ -7,6 +7,7 @@ import AddProductPage from "./AddProductPage/AddProductPage";
 // @ts-ignore
 import Cookies from "js-cookie";
 import PaginationElement from "../PaginationElement/PaginationElement";
+import config from "../../config";
 
 function ManageProductsPage() {
 
@@ -31,11 +32,11 @@ function ManageProductsPage() {
         setFetchPending(true);
 
         //fetch the account info to verify that the user is an ADMIN and can access this page
-        fetch("http://localhost:8080/api/v1/user",
+        fetch(config.apiUrl + "/user",
             {
                 method: 'GET',
                 headers: {
-                    "Origin": "http://localhost:8080:3000",
+                    "Origin": config.origin,
                     "Authorization": "Bearer " + Cookies.get('jwtToken')
                 }
             }
@@ -52,18 +53,18 @@ function ManageProductsPage() {
                     // @ts-ignore
                     if(!isNaN(pageParam)) {
                         if(searchQuery === undefined) { // @ts-ignore
-                            apiPath = "http://localhost:8080/api/v1/product/paginate?pageNumber=" + (pageParam - 1) + "&pageSize=10"
+                            apiPath = config.apiUrl + "/product/paginate?pageNumber=" + (pageParam - 1) + "&pageSize=10"
                         }
                         else {
                             // @ts-ignore
-                            apiPath = "http://localhost:8080/api/v1/product/paginate/search?pageNumber=" + (pageParam - 1) + "&pageSize=10&query=" + searchQuery;
+                            apiPath = config.apiUrl + "/product/paginate/search?pageNumber=" + (pageParam - 1) + "&pageSize=10&query=" + searchQuery;
                         }
 
                         fetch(apiPath,
                             {
                                 method: 'GET',
                                 headers: {
-                                    "Origin": "http://localhost:8080:3000",
+                                    "Origin": config.origin,
                                 }
                             }
                         )

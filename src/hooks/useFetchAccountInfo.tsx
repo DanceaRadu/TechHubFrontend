@@ -3,6 +3,7 @@ import User from "../models/User";
 import Image from "../models/Image"
 // @ts-ignore
 import Cookies from "js-cookie";
+import config from "../config";
 
 function useFetchAccountInfo(isLoggedIn:boolean) {
 
@@ -11,11 +12,11 @@ function useFetchAccountInfo(isLoggedIn:boolean) {
     useEffect(() => {
 
         if(isLoggedIn) {
-            fetch("http://localhost:8080/api/v1/user",
+            fetch(config.apiUrl + "/user",
                 {
                     method: 'GET',
                     headers: {
-                        "Origin": "http://localhost:8080:3000",
+                        "Origin": config.origin,
                         "Authorization": "Bearer " + Cookies.get('jwtToken')
                     }
                 }
@@ -25,7 +26,6 @@ function useFetchAccountInfo(isLoggedIn:boolean) {
                     return res.json();
                 })
                 .then(data => {
-                    console.log(data);
                     setAccountInfo(data);
                 })
                 .catch(() => {

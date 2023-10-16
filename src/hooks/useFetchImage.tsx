@@ -10,7 +10,7 @@ function useFetchImage(id:UUID) {
 
         useEffect(() => {
             if(id != null) {
-                fetch("http://localhost:8080/api/v1/image/" + id,
+                fetch(config.apiUrl + "/image/" + id,
                     {
                         method: 'GET',
                         headers: {"Origin": config.origin}

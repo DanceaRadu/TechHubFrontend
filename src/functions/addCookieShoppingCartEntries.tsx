@@ -1,6 +1,7 @@
 import ShoppingCartEntry from "../models/ShoppingCartEntry";
 // @ts-ignore
 import Cookies from "js-cookie";
+import config from "../config";
 
 function addCookieShoppingCartEntries(jwtToken:string, setShoppingCartEntries:any): void {
 
@@ -11,10 +12,10 @@ function addCookieShoppingCartEntries(jwtToken:string, setShoppingCartEntries:an
 
         for(let i = 0; i < cookieStoredShoppingCartItems.length; i++) {
             fetchPromises.push(
-                fetch("http://localhost:8080/api/v1/user/shoppingcart/" + cookieStoredShoppingCartItems[i].product.productID, {
+                fetch(config.apiUrl + "/user/shoppingcart/" + cookieStoredShoppingCartItems[i].product.productID, {
                     method: 'POST',
                     headers: {
-                        "Origin": "http://localhost:8080:3000",
+                        "Origin": config.origin,
                         "Authorization": "Bearer " + jwtToken
                     }
                 })
@@ -30,11 +31,11 @@ function addCookieShoppingCartEntries(jwtToken:string, setShoppingCartEntries:an
     }
     Promise.all(fetchPromises)
         .then(() => {
-            fetch("http://localhost:8080/api/v1/user/shoppingcart",
+            fetch(config.apiUrl + "/user/shoppingcart",
                 {
                     method: 'GET',
                     headers: {
-                        "Origin": "http://localhost:8080:3000",
+                        "Origin": config.origin,
                         "Authorization": "Bearer " + jwtToken
                     }
                 }

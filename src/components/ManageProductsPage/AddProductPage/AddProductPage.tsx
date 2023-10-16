@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import Cookies from "js-cookie";
 import ProductDTO from "../../../models/ProductDTO";
 import {useNavigate} from "react-router-dom";
+import config from "../../../config";
 
 function AddProductPage() {
 
@@ -93,11 +94,11 @@ function AddProductPage() {
 
         let p:ProductDTO = new ProductDTO(productName, productPrice, productDescription, productStock);
 
-        fetch("http://localhost:8080/api/v1/product",
+        fetch(config.apiUrl + "/product",
             {
                 method: 'POST',
                 headers: {
-                    "Origin": "http://localhost:8080:3000",
+                    "Origin": config.origin,
                     "Authorization": "Bearer " + Cookies.get('jwtToken'),
                     'Content-Type': 'application/json'
                 },
@@ -118,10 +119,10 @@ function AddProductPage() {
                     formData.append('productID', data);
                     formData.append('image', selectedImages[i]);
                     fetchPromises.push(
-                        fetch("http://localhost:8080/api/v1/product/image", {
+                        fetch(config.apiUrl + "/product/image", {
                             method: 'POST',
                             headers: {
-                                "Origin": "http://localhost:8080:3000",
+                                "Origin": config.origin,
                                 "Authorization": "Bearer " + Cookies.get('jwtToken')
                             },
                             body: formData

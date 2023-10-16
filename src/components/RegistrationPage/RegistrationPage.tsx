@@ -6,6 +6,7 @@ import RegisterRequest from "../../models/RegisterRequest";
 import Cookies from "js-cookie";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 import addCookieShoppingCartEntries from "../../functions/addCookieShoppingCartEntries";
+import config from "../../config";
 
 function RegistrationPage(props: any) {
 
@@ -169,11 +170,11 @@ function RegistrationPage(props: any) {
 
         //reset the fetch error and send a request to the server to register the user
         setFetchError('');
-        fetch("http://localhost:8080/api/v1/auth/register",
+        fetch(config.apiUrl + "/auth/register",
             {
                 method: 'POST',
                 headers: {
-                    "Origin": "http://localhost:8080:3000",
+                    "Origin": config.origin,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(new RegisterRequest(usernameInput, emailInput, passwordInput, firstNameInput, lastNameInput))
@@ -223,11 +224,11 @@ function RegistrationPage(props: any) {
 
                     //start a timer that checks if the user is verified every 3 seconds. If the user has verified their email, we then redirect to the main page.
                     let checkVerifiedTimer = setInterval(() => {
-                        fetch("http://localhost:8080/api/v1/user/verified",
+                        fetch(config.apiUrl + "/user/verified",
                             {
                                 method: 'GET',
                                 headers: {
-                                    "Origin": "http://localhost:8080:3000",
+                                    "Origin": config.origin,
                                     "Authorization": "Bearer " + data.token
                                 }
                             })
@@ -289,11 +290,11 @@ function RegistrationPage(props: any) {
 
         //update the email in the database and send a confirmation mail to that address
         //the method here should normally be PATCH, but CORS in Spring disables the PATCH method, and enabling it doesn't seem to work
-        fetch("http://localhost:8080/api/v1/user/email/update/" + newEmailInput,
+        fetch(config.apiUrl + "/user/email/update/" + newEmailInput,
             {
                 method: 'POST',
                 headers: {
-                    "Origin": "http://localhost:8080:3000",
+                    "Origin": config.origin,
                     "Authorization": "Bearer " + jwtToken
                 }
             }
@@ -313,11 +314,11 @@ function RegistrationPage(props: any) {
             })
             .then(() => {
                 setEmailNotificationMessage("Sending email...");
-                fetch("http://localhost:8080/api/v1/auth/mail/token",
+                fetch(config.apiUrl + "/auth/mail/token",
                     {
                         method: 'POST',
                         headers: {
-                            "Origin": "http://localhost:8080:3000",
+                            "Origin": config.origin,
                             "Authorization": "Bearer " + jwtToken
                         }
                     })

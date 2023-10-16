@@ -4,6 +4,7 @@ import useFetchImage from "../../../../hooks/useFetchImage";
 import React, {useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
+import config from "../../../../config";
 
 function ShoppingCartButtonEntry(props:any) {
 
@@ -22,11 +23,11 @@ function ShoppingCartButtonEntry(props:any) {
     function handleEntryDelete() {
         setIsLoadingDelete(true);
         if(props.isLoggedIn) {
-            fetch("http://localhost:8080/api/v1/user/shoppingcart/" + product.product.productID,
+            fetch(config.apiUrl + "/user/shoppingcart/" + product.product.productID,
                 {
                     method: 'DELETE',
                     headers: {
-                        "Origin": "http://localhost:8080:3000",
+                        "Origin": config.origin,
                         "Authorization": "Bearer " + Cookies.get('jwtToken')
                     }
                 }

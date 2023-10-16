@@ -8,6 +8,7 @@ import {useParams} from "react-router-dom";
 import ProductImageSlider from "./ProductImageSlider/ProductImageSlider";
 import ProductPageSummaryDiv from "./ProductPageSummaryDiv/ProductPageSummaryDiv";
 import ProductPageReviewsSection from "./ProductPageReviewsSection/ProductPageReviewsSection";
+import ProductPageSpecsSection from "./ProductPageSpecsSection/ProductPageSpecsSection";
 function ProductPage(props:any) {
 
     const {isLoggedIn, isPending} = useCheckLoggedIn();
@@ -38,6 +39,7 @@ function ProductPage(props:any) {
             .then(data => {
                 setProductData(data);
                 setIsPendingProductFetch(false);
+                console.log(JSON.parse(data.specs));
             })
             .catch(() => {
                 setIsPendingProductFetch(false);
@@ -110,6 +112,7 @@ function ProductPage(props:any) {
                         <div id = "product-page-sections-content-div">
                             {isDescriptionSelected && <div id="product-page-sections-description-div">{productData.description}</div>}
                             {isReviewsSelected && <ProductPageReviewsSection isLoggedIn = {isLoggedIn} productData = {productData}></ProductPageReviewsSection>}
+                            {isSpecsSelected && <ProductPageSpecsSection specs = {productData.specs}></ProductPageSpecsSection>}
                         </div>
                     </div>
                 </div>
