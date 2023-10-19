@@ -85,7 +85,7 @@
 
 #account-page-side-content-div {
     height: clamp(calc(100vh - 105px), calc(92vh - 35px), calc(100vh - 535px)); /*calculate the height based on the height of the navbar*/
-    width: calc(80% - 30px);
+    width: clamp(1000px, calc(80% - 30px), 5000px);
     background-color: var(--darker-primary);
     box-shadow: 0 5px 5px #111111;
     border-radius: 5px;

@@ -6,6 +6,7 @@ import useFetchAccountInfo from "../../hooks/useFetchAccountInfo";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 import useFetchProfilePicture from "../../hooks/useFetchProfilePicture";
 import ManageProductsPage from "../ManageProductsPage/ManageProductsPage";
+import MyReviewsPage from "./MyReviewsPage/MyReviewsPage";
 function AccountPage(this: any, props:any) {
 
     const navigate = useNavigate();
@@ -107,6 +108,7 @@ function AccountPage(this: any, props:any) {
                 </div>
                 <div id="account-page-side-content-div">
                     {navigationOptions[5] && <ManageProductsPage></ManageProductsPage>}
+                    {navigationOptions[2] && <MyReviewsPage></MyReviewsPage>}
                 </div>
             </div>
         </div>

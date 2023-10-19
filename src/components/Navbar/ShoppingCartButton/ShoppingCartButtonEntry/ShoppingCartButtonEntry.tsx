@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
 import config from "../../../../config";
+import {Link} from "react-router-dom";
 
 function ShoppingCartButtonEntry(props:any) {
 
@@ -67,7 +68,7 @@ function ShoppingCartButtonEntry(props:any) {
             {((isPending || error) && !isLoadingDelete) ? (
                 <img id="shopping-cart-button-entry-image" src={require('../../../../resources/images/whiteSquare.png')}  alt="Product"/>
             ) : null}
-            {!isLoadingDelete && <div id="shopping-cart-button-entry-product-name">{product.product.productName}</div>}
+            {!isLoadingDelete && <Link to={"/product/" + product.product.productID}><div id="shopping-cart-button-entry-product-name">{product.product.productName}</div></Link>}
             {!isLoadingDelete && <div id="shopping-cart-button-entry-product-quantity">{"x" + product.quantity}</div>}
             {!isLoadingDelete && <div id="shopping-cart-button-entry-right-div">
                 <div id="shopping-cart-button-entry-product-total">{itemTotal + "$"}</div>
