@@ -54,7 +54,6 @@ function ProductPreview(props: any) {
             <button className="cover-button" id="product-preview-cart-button" onClick={handleAddToCart} disabled={isButtonDisabled}>
                 <span className="material-symbols-outlined" id="product-preview-shopping-cart-icon">shopping_cart</span>Add to cart</button>
         </div>
-
     )
 }
 

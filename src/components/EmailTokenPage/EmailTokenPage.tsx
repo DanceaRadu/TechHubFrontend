@@ -1,6 +1,7 @@
 import './EmailTokenPage.css'
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
+import config from "../../config";
 
 function EmailTokenPage(){
 
@@ -11,9 +12,9 @@ function EmailTokenPage(){
 
     useEffect(() => {
         setError(false);
-        fetch("http://localhost:8080/api/v1/auth/mail/verify/" + token,
+        fetch(config.apiUrl + "/auth/mail/verify/" + token,
             {method: 'GET',
-                headers: {"Origin":"http://localhost:8080:3000",
+                headers: {"Origin":config.origin,
                     }}
         )
             .then(res => {

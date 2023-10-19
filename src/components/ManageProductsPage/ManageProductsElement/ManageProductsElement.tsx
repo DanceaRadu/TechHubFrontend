@@ -4,6 +4,7 @@ import useFetchImage from "../../../hooks/useFetchImage";
 import React, {useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
+import config from "../../../config";
 
 function ManageProductsElement(props:any) {
 
@@ -46,11 +47,11 @@ function ManageProductsElement(props:any) {
             { op: 'replace', path: '/stock', value: tempStock}
         ];
 
-        fetch(`http://localhost:8080/api/v1/product/${productId}`, {
+        fetch(config.apiUrl + `/product/${productId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json-patch+json',
-                "Origin": "http://localhost:8080:3000",
+                "Origin": config.origin,
                 "Authorization": "Bearer " + Cookies.get('jwtToken')
             },
             body: JSON.stringify(patchData),
@@ -80,11 +81,11 @@ function ManageProductsElement(props:any) {
     function handleProductDelete() {
         setIsDeletePending(true);
 
-        fetch("http://localhost:8080/api/v1/product/" + product.productID,
+        fetch(config.apiUrl + "/product/" + product.productID,
             {
                 method: 'DELETE',
                 headers: {
-                    "Origin": "http://localhost:8080:3000",
+                    "Origin": config.origin,
                     "Authorization": "Bearer " + Cookies.get('jwtToken')
                 }
             })

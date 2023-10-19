@@ -1,0 +1,28 @@
+#product-page-specs-section-outer-div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+#product-page-specs-section-key-div {
+    width: 50%;
+}
+#product-page-specs-section-value-div {
+    text-align: right;
+    width: 50%;
+}
+
+.spec-key.odd, .spec-value.odd {
+    background-color: var(--darker-primary);
+    padding: 10px;
+    font-size: 20px;
+}
+
+.spec-key.even, .spec-value.even {
+    background-color: #222222;
+    padding: 10px;
+    font-size: 20px;
+}

@@ -1,9 +1,11 @@
 import './AddProductPage.css'
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
 import ProductDTO from "../../../models/ProductDTO";
 import {useNavigate} from "react-router-dom";
+import config from "../../../config";
+import ProductCategory from "../../../models/ProductCategory";
 
 function AddProductPage() {
 
@@ -21,11 +23,45 @@ function AddProductPage() {
     const [stockErrorMessage, setStockErrorMessage] = useState<string>("T");
     const [descriptionErrorMessage, setDescriptionErrorMessage] = useState<string>("T");
     const [nameErrorMessage, setNameErrorMessage] = useState<string>("T");
+    const [categoryErrorMessage, setCategoryErrorMessage] = useState<string>("T");
 
     const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState<boolean>(false);
 
+    const [specDivs, setSpecDivs] = useState<SpecDiv[]>([]);
+    const [specGlobalID, setSpecGlobalID] = useState<number>(0);
+    const [specErrorMessage, setSpecErrorMessage] = useState<string>("T");
+
     const [selectedImages, setSelectedImages] = useState<any>([]);
     const navigate = useNavigate();
+
+    const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
+    const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(-1);
+    const [isCategoriesButtonHovered, setIsCategoriesButtonHovered] = useState<boolean>(false);
+
+    interface SpecDiv {
+        id:number,
+        key:string,
+        value:string
+    }
+
+    useEffect(() => {
+        fetch(config.apiUrl + "/category/all")
+            .then(response => {
+                // Check if the response status is OK
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    // Handle non-successful response
+                    throw new Error('Request failed with status: ' + response.status);
+                }
+            })
+            .then(data => {
+                setProductCategories(data);
+            })
+            .catch((e) => {
+                console.log(e.message);
+            });
+    }, [])
 
     function handleAddProduct(e:any) {
 
@@ -38,7 +74,9 @@ function AddProductPage() {
         setPriceErrorMessage("T");
         setStockErrorMessage("T");
         setDescriptionErrorMessage("T");
-        setNameErrorMessage("T")
+        setNameErrorMessage("T");
+        setSpecErrorMessage("T");
+        setCategoryErrorMessage("T");
 
         if(productName === "") {
             setNameErrorMessage("Name cannot pe empty!");
@@ -85,19 +123,43 @@ function AddProductPage() {
             ok = false;
         }
 
+        if(selectedCategoryIndex === -1) {
+            setCategoryErrorMessage("Must select category");
+            ok = false;
+        }
+
+        specDivs.forEach((item:SpecDiv) => {
+            if(item.key === '' || item.value === '') {
+                setSpecErrorMessage("Every added spec must have a key-value pair");
+                return;
+            }
+        });
+
         if(!ok) {
             setIsPendingAdd(false);
             setIsSubmitButtonDisabled(false);
             return;
         }
 
-        let p:ProductDTO = new ProductDTO(productName, productPrice, productDescription, productStock);
+        let specObject:any = {};
 
-        fetch("http://localhost:8080/api/v1/product",
+        specDivs.forEach((item:SpecDiv) => {
+            specObject[item.key] = item.value;
+        });
+
+        let p:ProductDTO = new ProductDTO(
+            productName, productPrice,
+            productDescription,
+            productStock,
+            JSON.stringify(specObject),
+            new ProductCategory(productCategories[selectedCategoryIndex].categoryID, productCategories[selectedCategoryIndex].categoryName)
+        );
+
+        fetch(config.apiUrl + "/product",
             {
                 method: 'POST',
                 headers: {
-                    "Origin": "http://localhost:8080:3000",
+                    "Origin": config.origin,
                     "Authorization": "Bearer " + Cookies.get('jwtToken'),
                     'Content-Type': 'application/json'
                 },
@@ -118,10 +180,10 @@ function AddProductPage() {
                     formData.append('productID', data);
                     formData.append('image', selectedImages[i]);
                     fetchPromises.push(
-                        fetch("http://localhost:8080/api/v1/product/image", {
+                        fetch(config.apiUrl + "/product/image", {
                             method: 'POST',
                             headers: {
-                                "Origin": "http://localhost:8080:3000",
+                                "Origin": config.origin,
                                 "Authorization": "Bearer " + Cookies.get('jwtToken')
                             },
                             body: formData
@@ -164,6 +226,38 @@ function AddProductPage() {
         setProductDescription(e.target.value);
     }
 
+    function handleKeyChange(event:any, id:number) {
+        const updatedDivs = specDivs.map((div) => {
+            if (div.id === id) {
+                return { ...div, key: event.target.value };
+            }
+            return div;
+        });
+        setSpecDivs(updatedDivs);
+    }
+
+    function handleValueChange(event:any, id:number) {
+        const updatedDivs = specDivs.map((div) => {
+            if (div.id === id) {
+                return { ...div, value: event.target.value };
+            }
+            return div;
+        });
+        setSpecDivs(updatedDivs);
+    }
+
+    function handleAddSpec() {
+        const newId = specGlobalID;
+        setSpecGlobalID(specGlobalID + 1);
+        const newDiv = { id: newId, key: '', value:''};
+        setSpecDivs([...specDivs, newDiv]);
+    }
+
+    function handleDeleteSpec(id:number) {
+        const updatedDivs = specDivs.filter((div) => div.id !== id);
+        setSpecDivs(updatedDivs);
+    }
+
     // @ts-ignore
     return (
       <div id="add-product-page-main-div">
@@ -201,10 +295,58 @@ function AddProductPage() {
                           />
                           <div className={stockErrorMessage === "T" ? "error-inactive" : "error-active"}>{stockErrorMessage}</div>
                       </div>
+                      <div id="add-product-select-category-div">
+                          <div id="product-page-select-category-label">Select Category</div>
+                          <button
+                              type="button"
+                              id="add-product-page-categories-button"
+                              onMouseEnter={() => setIsCategoriesButtonHovered(true)}
+                              onMouseLeave={() => setIsCategoriesButtonHovered(false)}>{selectedCategoryIndex >= 0 ? productCategories[selectedCategoryIndex].categoryName : "Select category"}</button>
+                          <div className={categoryErrorMessage === "T" ? "error-inactive" : "error-active"}>{categoryErrorMessage}</div>
+                          <div id="add-product-page-dropdown-content" className={isCategoriesButtonHovered ? "add-product-page-block" : "add-product-page-none"}>
+                              {productCategories.map((category, index) => (
+                                  <div
+                                      onClick={() => {
+                                          setSelectedCategoryIndex(index);
+                                          setCategoryErrorMessage("T");
+                                      }}
+                                      key={category.categoryID}
+                                      className={selectedCategoryIndex === index ? "add-product-page-category-item-selected" : "add-product-page-category-item"}>
+                                      {category.categoryName}
+                                  </div>
+                              ))}
+                          </div>
+
+                      </div>
                   </div>
                   <div id="add-product-page-description-label">Description (max 2000 chars)</div>
                   <textarea id="add-product-page-description-text-area" maxLength={2000} onChange={handleDescriptionChange}></textarea>
                   <div className={descriptionErrorMessage === "T" ? "error-inactive" : "error-active"}>{descriptionErrorMessage}</div>
+
+                  {/*Adding specs*/}
+                  <div id="add-product-page-specs-outer-div">
+                      <button id="add-product-page-add-spec-button" type="button" onClick={handleAddSpec}><span className="material-symbols-outlined" id="add-product-page-add-spec-icon">add</span>Add spec</button>
+                      {specDivs.map((div:any) => (
+                          <div key={div.id} className="add-product-page-outer-spec-div">
+                              <input
+                                  className="add-product-page-outer-spec-key-input"
+                                  type="text"
+                                  value={div.key}
+                                  onChange={(event) => handleKeyChange(event, div.id)}
+                                  placeholder="key"
+                              />
+                              <input
+                                  className="add-product-page-outer-spec-value-input"
+                                  type="text"
+                                  value={div.value}
+                                  onChange={(event) => handleValueChange(event, div.id)}
+                                  placeholder="value"
+                              />
+                              <button type="button" className="add-product-page-outer-spec-delete-button" onClick={() => handleDeleteSpec(div.id)}>Delete</button>
+                          </div>
+                      ))}
+                      <div className={specErrorMessage === "T" ? "error-inactive" : "error-active"} style={{width:"100%"}}>{specErrorMessage}</div>
+                  </div>
 
                   {/*This is where the image selection starts*/}
                   <div id="add-product-images-label">Select product images:</div>

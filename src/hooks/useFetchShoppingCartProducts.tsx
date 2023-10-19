@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
 import ShoppingCartEntry from "../models/ShoppingCartEntry";
+import config from "../config";
 
 function useFetchShoppingCartProducts(isLoggedIn:boolean) {
     const [shoppingCartEntries, setShoppingCartEntries] = useState<ShoppingCartEntry[]>([]);
@@ -11,11 +12,11 @@ function useFetchShoppingCartProducts(isLoggedIn:boolean) {
     useEffect(() => {
 
         if(isLoggedIn) {
-            fetch("http://localhost:8080/api/v1/user/shoppingcart",
+            fetch(config.apiUrl + "/user/shoppingcart",
                 {
                     method: 'GET',
                     headers: {
-                        "Origin": "http://localhost:8080:3000",
+                        "Origin": config.origin,
                         "Authorization": "Bearer " + Cookies.get('jwtToken')
                     }
                 }

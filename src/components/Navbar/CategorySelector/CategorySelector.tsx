@@ -2,6 +2,7 @@ import './CategorySelector.css'
 import {useEffect, useState} from "react";
 import ProductCategory from "../../../models/ProductCategory";
 import {useNavigate} from "react-router-dom";
+import config from "../../../config";
 
 function CategorySelector() {
 
@@ -12,7 +13,7 @@ function CategorySelector() {
 
     useEffect(() => {
 
-        fetch("http://localhost:8080/api/v1/category/all")
+        fetch(config.apiUrl + "/category/all")
             .then(response => {
                 // Check if the response status is OK
                 if (response.ok) {
