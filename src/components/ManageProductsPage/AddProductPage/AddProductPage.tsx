@@ -1,10 +1,11 @@
 import './AddProductPage.css'
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
 import ProductDTO from "../../../models/ProductDTO";
 import {useNavigate} from "react-router-dom";
 import config from "../../../config";
+import ProductCategory from "../../../models/ProductCategory";
 
 function AddProductPage() {
 
@@ -22,6 +23,7 @@ function AddProductPage() {
     const [stockErrorMessage, setStockErrorMessage] = useState<string>("T");
     const [descriptionErrorMessage, setDescriptionErrorMessage] = useState<string>("T");
     const [nameErrorMessage, setNameErrorMessage] = useState<string>("T");
+    const [categoryErrorMessage, setCategoryErrorMessage] = useState<string>("T");
 
     const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState<boolean>(false);
 
@@ -32,11 +34,34 @@ function AddProductPage() {
     const [selectedImages, setSelectedImages] = useState<any>([]);
     const navigate = useNavigate();
 
+    const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
+    const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(-1);
+    const [isCategoriesButtonHovered, setIsCategoriesButtonHovered] = useState<boolean>(false);
+
     interface SpecDiv {
         id:number,
         key:string,
         value:string
     }
+
+    useEffect(() => {
+        fetch(config.apiUrl + "/category/all")
+            .then(response => {
+                // Check if the response status is OK
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    // Handle non-successful response
+                    throw new Error('Request failed with status: ' + response.status);
+                }
+            })
+            .then(data => {
+                setProductCategories(data);
+            })
+            .catch((e) => {
+                console.log(e.message);
+            });
+    }, [])
 
     function handleAddProduct(e:any) {
 
@@ -49,8 +74,9 @@ function AddProductPage() {
         setPriceErrorMessage("T");
         setStockErrorMessage("T");
         setDescriptionErrorMessage("T");
-        setNameErrorMessage("T")
-        setSpecErrorMessage("T")
+        setNameErrorMessage("T");
+        setSpecErrorMessage("T");
+        setCategoryErrorMessage("T");
 
         if(productName === "") {
             setNameErrorMessage("Name cannot pe empty!");
@@ -97,6 +123,11 @@ function AddProductPage() {
             ok = false;
         }
 
+        if(selectedCategoryIndex === -1) {
+            setCategoryErrorMessage("Must select category");
+            ok = false;
+        }
+
         specDivs.forEach((item:SpecDiv) => {
             if(item.key === '' || item.value === '') {
                 setSpecErrorMessage("Every added spec must have a key-value pair");
@@ -116,7 +147,13 @@ function AddProductPage() {
             specObject[item.key] = item.value;
         });
 
-        let p:ProductDTO = new ProductDTO(productName, productPrice, productDescription, productStock, JSON.stringify(specObject));
+        let p:ProductDTO = new ProductDTO(
+            productName, productPrice,
+            productDescription,
+            productStock,
+            JSON.stringify(specObject),
+            new ProductCategory(productCategories[selectedCategoryIndex].categoryID, productCategories[selectedCategoryIndex].categoryName)
+        );
 
         fetch(config.apiUrl + "/product",
             {
@@ -257,6 +294,29 @@ function AddProductPage() {
                               onChange={handleStockChange}
                           />
                           <div className={stockErrorMessage === "T" ? "error-inactive" : "error-active"}>{stockErrorMessage}</div>
+                      </div>
+                      <div id="add-product-select-category-div">
+                          <div id="product-page-select-category-label">Select Category</div>
+                          <button
+                              type="button"
+                              id="add-product-page-categories-button"
+                              onMouseEnter={() => setIsCategoriesButtonHovered(true)}
+                              onMouseLeave={() => setIsCategoriesButtonHovered(false)}>{selectedCategoryIndex >= 0 ? productCategories[selectedCategoryIndex].categoryName : "Select category"}</button>
+                          <div className={categoryErrorMessage === "T" ? "error-inactive" : "error-active"}>{categoryErrorMessage}</div>
+                          <div id="add-product-page-dropdown-content" className={isCategoriesButtonHovered ? "add-product-page-block" : "add-product-page-none"}>
+                              {productCategories.map((category, index) => (
+                                  <div
+                                      onClick={() => {
+                                          setSelectedCategoryIndex(index);
+                                          setCategoryErrorMessage("T");
+                                      }}
+                                      key={category.categoryID}
+                                      className={selectedCategoryIndex === index ? "add-product-page-category-item-selected" : "add-product-page-category-item"}>
+                                      {category.categoryName}
+                                  </div>
+                              ))}
+                          </div>
+
                       </div>
                   </div>
                   <div id="add-product-page-description-label">Description (max 2000 chars)</div>
