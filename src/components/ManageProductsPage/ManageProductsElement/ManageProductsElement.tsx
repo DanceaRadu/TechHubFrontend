@@ -105,6 +105,9 @@ function ManageProductsElement(props:any) {
     return (
         <div id = "manage-product-element-div">
             <div id="manage-product-element-left-side">
+                {imageFetchPending || errorImageFetch ? (
+                    <img id="manage-product-element-placeholder-image" src={require('../../../resources/images/product-placeholder.jpg')}  alt="Product"/>
+                ) : null}
                 {!errorImageFetch && !imageFetchPending && <img id="manage-product-image" src={imageSourceUrl} alt="Product"/>}
                 <div id="manage-product-element-name-div">
                     <p>{product.productName}</p>

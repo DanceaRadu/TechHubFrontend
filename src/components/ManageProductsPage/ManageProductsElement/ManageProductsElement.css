@@ -114,3 +114,10 @@
     cursor: pointer;
     color: darkred;
 }
+
+#manage-product-element-placeholder-image {
+    margin-left: 5px;
+    height: 110px;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
+}

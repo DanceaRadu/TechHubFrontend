@@ -1,15 +1,11 @@
 import './MyReviewsPage.css'
-import React, {useEffect} from "react";
+import React from "react";
 import useFetchUserReviews from "../../../hooks/useFetchUserReviews";
 import MyReview from "./MyReview/MyReview";
 
 function MyReviewsPage(){
 
     const {reviews, error, isPending} = useFetchUserReviews();
-
-    useEffect(() => {
-        console.log(reviews);
-    }, [reviews])
 
     return (
       <div id="my-reviews-page-outer-div">

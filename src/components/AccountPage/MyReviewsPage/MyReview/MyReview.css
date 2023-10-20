@@ -18,7 +18,7 @@
 }
 
 
-#my-review-product-image {
+#my-review-product-image, #my-review-image-outer-div-placeholder {
     aspect-ratio: 1/1;
     height: 180px;
     border-radius: 5px;
@@ -54,7 +54,7 @@
 #my-review-review-body {
     color: #AAA;
     font-size: 18px;
-    max-width: 700px;
+    max-width: clamp(1100px, 80%, 2000px);
     text-align: justify;
     overflow: hidden;
 }
@@ -66,4 +66,53 @@
     text-align: justify;
     overflow: hidden;
     margin-top: 10px;
+}
+
+#my-review-right-div-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+#my-review-edit-button {
+    width: 70px;
+    height: 30px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    transition: background-color 0.2s ease, color 0.2s ease, scale 0.3s ease;
+}
+#my-review-edit-button:hover {
+    cursor: pointer;
+    background-color: #333;
+    color: var(--secondary-color);
+    scale: 1.1;
+}
+
+
+#my-review-delete-button {
+    width: 70px;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 10px;
+    background-color: darkred;
+    border: none;
+    outline: none;
+    color: var(--secondary-color);
+    transition: background-color 0.5s ease, scale 0.3s ease;
+}
+
+#my-review-delete-button:hover {
+    cursor: pointer;
+    scale: 1.05;
+    background-color: #520000;
+}
+
+#my-review-page-loading-animation {
+    margin-left: 15px;
+    margin-right: 15px;
 }
