@@ -3,16 +3,25 @@ import React, {useEffect, useState} from "react";
 import useFetchImage from "../../hooks/useFetchImage";
 import {useNavigate} from 'react-router-dom';
 import addProductToCart from "../../functions/addProductToCart";
+import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
+import useCheckIsProductFavorite from "../../hooks/useCheckIsProductFavorite";
+import config from "../../config";
+// @ts-ignore
+import Cookies from "js-cookie";
 
 function ProductPreview(props: any) {
 
     let product = props.product;
     let shoppingCartEntries = props.shoppingCartEntries;
     let setShoppingCartEntries = props.setShoppingCartEntries;
+    let favorites = props.favorites;
+    let setFavorites = props.setFavorites;
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    const {isLoggedIn, isPending:isPendingLoggedIn} = useCheckLoggedIn();
 
     const imageID = product?.productImages[0]?.image?.imageID;
     const { imageSourceUrl, error: imageFetchError, isPending: isPendingImage } = useFetchImage(imageID);
+    const {isFavorite} = useCheckIsProductFavorite(product.productID, favorites);
 
     const [rating, setRating] = useState<number>(0);
 
@@ -32,15 +41,74 @@ function ProductPreview(props: any) {
         setIsButtonDisabled(false);
     }
 
-
     function handleAddToFavorites(e:any) {
         e.stopPropagation();
+        if(isLoggedIn) {
+            fetch(config.apiUrl + "/favorite/" + product.productID,
+                {
+                    method: 'POST',
+                    headers: {
+                        "Origin": config.origin,
+                        "Authorization": "Bearer " + Cookies.get('jwtToken')
+                    }
+                }
+            )
+                .then(res => {
+                    if (!res.ok) throw Error("Could not fetch user reviews");
+                    return res.json();
+                })
+                .then(data => {
+                    let newFavoritesList = [...favorites, data];
+                    setFavorites(newFavoritesList);
+                })
+                .catch((e) => {
+                    console.log(e.message);
+                })
+        }
+        else if(!isPendingLoggedIn) navigate("/login");
+    }
+
+    function handleRemoveFromFavorites(e:any) {
+        e.stopPropagation();
+        if(isLoggedIn) {
+            //find the id of the favorites entry to remove
+            for(let i = 0; i < favorites.length; i++) {
+                if(product.productID === favorites[i].productID) {
+                    fetch(config.apiUrl + "/favorite/" + favorites[i].favoriteID,
+                        {
+                            method: 'DELETE',
+                            headers: {
+                                "Origin": config.origin,
+                                "Authorization": "Bearer " + Cookies.get('jwtToken')
+                            }
+                        }
+                    )
+                        .then(res => {
+                            if (!res.ok) throw Error("Could not fetch user reviews");
+                            favorites.splice(i, 1);
+                            let newFavoritesList = [...favorites];
+                            setFavorites(newFavoritesList)
+                        })
+                        .catch((e) => {
+                            console.log(e.message);
+                        })
+                    break;
+                }
+            }
+        }
+        else if(!isPendingLoggedIn) navigate("/login");
     }
 
     return (
         <div id = "product-preview-container" onClick={() => navigate("/product/" + product.productID)}>
             <div>
-                <span className="material-symbols-outlined" id="product-preview-favorite-icon" onClick={handleAddToFavorites}>favorite</span>
+                {!isFavorite && <span className="material-symbols-outlined" id="product-preview-favorite-icon" onClick={handleAddToFavorites}>favorite</span>}
+                {isFavorite &&
+                        <span className="material-symbols-outlined" id="product-preview-favorite-icon-favorite" onClick={handleRemoveFromFavorites}>
+                            favorite
+                            <span className="material-symbols-outlined" id="product-preview-favorite-icon-x-icon" onClick={handleRemoveFromFavorites}>close</span>
+                        </span>
+                }
                 {!imageFetchError && !isPendingImage && <img id="product-preview-image" src={imageSourceUrl} alt="Product"/>}
                 {isPendingImage || imageFetchError ? (
                     <img id="product-preview-image" src={require('../../resources/images/product-placeholder.jpg')}  alt="Product"/>

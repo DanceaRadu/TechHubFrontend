@@ -5,6 +5,7 @@ import React, {useState} from "react";
 // @ts-ignore
 import Cookies from "js-cookie";
 import config from "../../../config";
+import {Link} from "react-router-dom";
 
 function ManageProductsElement(props:any) {
 
@@ -108,7 +109,9 @@ function ManageProductsElement(props:any) {
                 {imageFetchPending || errorImageFetch ? (
                     <img id="manage-product-element-placeholder-image" src={require('../../../resources/images/product-placeholder.jpg')}  alt="Product"/>
                 ) : null}
-                {!errorImageFetch && !imageFetchPending && <img id="manage-product-image" src={imageSourceUrl} alt="Product"/>}
+                <Link to={"/product/" + product.productID}>
+                    {!errorImageFetch && !imageFetchPending && <img id="manage-product-image" src={imageSourceUrl} alt="Product"/>}
+                </Link>
                 <div id="manage-product-element-name-div">
                     <p>{product.productName}</p>
                     <p style={{color:"var(--accent-color)", fontSize:18}}>{product.productPrice  + " USD"}</p>

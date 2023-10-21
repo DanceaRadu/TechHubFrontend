@@ -4,10 +4,12 @@ import {useParams} from "react-router-dom";
 import ProductGrid from "../ProductGrid/ProductGrid";
 import React from "react";
 import Navbar from "../Navbar/Navbar";
+import useFetchUserFavorites from "../../hooks/useFetchUserFavorites";
 
 function ProductBrowser(props:any) {
 
     const {isLoggedIn, isPending: isPendingLoggedIn} = useCheckLoggedIn();
+    const {favorites, setFavorites, error: errorFavorites, isPending: isPendingFavorites} = useFetchUserFavorites(isLoggedIn);
 
     const {category} = useParams();
     const {order} = useParams();
@@ -34,6 +36,8 @@ function ProductBrowser(props:any) {
                   filters = {filters}
                   query = {query}
                   pageNumber = {pageNumber}
+                  favorites = {favorites}
+                  setFavorites = {setFavorites}
               >
               </ProductGrid>
           </div>}

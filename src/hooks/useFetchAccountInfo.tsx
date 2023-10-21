@@ -26,6 +26,7 @@ function useFetchAccountInfo(isLoggedIn:boolean) {
                     return res.json();
                 })
                 .then(data => {
+                    console.log(data);
                     setAccountInfo(data);
                 })
                 .catch(() => {
