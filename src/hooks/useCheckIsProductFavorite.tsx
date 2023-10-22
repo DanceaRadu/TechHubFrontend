@@ -7,10 +7,12 @@ function useCheckIsProductFavorite(productID:UUID, favoritesList:any) {
 
     useEffect(() => {
         setIsFavorite(false);
-        for(let i = 0; i < favoritesList.length; i++) {
-            if(favoritesList[i].productID === productID) {
-                setIsFavorite(true);
-                break;
+        if(productID !== null) {
+            for (let i = 0; i < favoritesList.length; i++) {
+                if (favoritesList[i].productID === productID) {
+                    setIsFavorite(true);
+                    break;
+                }
             }
         }
 

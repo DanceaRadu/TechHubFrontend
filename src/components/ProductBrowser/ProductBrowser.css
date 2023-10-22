@@ -4,6 +4,7 @@
     height: 100%;
     box-shadow: 0 5px 5px #111111;
     z-index: 1;
+    overflow: hidden;
 }
 
 #product-browser-div {
@@ -11,4 +12,5 @@
     flex-direction: row;
     width: 100%;
     height: clamp(calc(100% - 70px), calc(100% - 8vh), calc(100% - 500px));
+    overflow: hidden;
 }

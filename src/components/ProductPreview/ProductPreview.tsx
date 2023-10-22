@@ -54,7 +54,7 @@ function ProductPreview(props: any) {
                 }
             )
                 .then(res => {
-                    if (!res.ok) throw Error("Could not fetch user reviews");
+                    if (!res.ok) throw Error("Could not fetch user favorites");
                     return res.json();
                 })
                 .then(data => {
