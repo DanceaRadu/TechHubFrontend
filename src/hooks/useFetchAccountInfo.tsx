@@ -26,7 +26,6 @@ function useFetchAccountInfo(isLoggedIn:boolean) {
                     return res.json();
                 })
                 .then(data => {
-                    console.log(data);
                     setAccountInfo(data);
                 })
                 .catch(() => {
@@ -35,7 +34,7 @@ function useFetchAccountInfo(isLoggedIn:boolean) {
 
     }, [isLoggedIn])
 
-    return [accountInfo]
+    return {accountInfo, setAccountInfo}
 }
 
 export default useFetchAccountInfo;
