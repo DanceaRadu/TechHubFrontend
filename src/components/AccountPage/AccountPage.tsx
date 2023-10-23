@@ -10,7 +10,7 @@ import MyReviewsPage from "./MyReviewsPage/MyReviewsPage";
 import MyFavoritesPage from "./MyFavoritesPage/MyFavoritesPage";
 import CustomPopup from "../CustomPopup/CustomPopup";
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput, {formatPhoneNumberIntl} from 'react-phone-number-input'
 import config from "../../config";
 // @ts-ignore
 import Cookies from "js-cookie";
@@ -63,6 +63,12 @@ function AccountPage(this: any, props:any) {
     function handleChangePhoneNumber(e:any) {
         e.preventDefault();
         setModifyPhoneNumberError("");
+
+        console.log(phoneValue);
+        if(phoneValue === "" || phoneValue === undefined) {
+            setModifyPhoneNumberError("Phone number cannot be empty.")
+            return;
+        }
         setIsLoadingModifyPhoneNumber(true);
 
         const patchData = [
@@ -79,17 +85,18 @@ function AccountPage(this: any, props:any) {
             body: JSON.stringify(patchData),
         })
             .then((response) => {
-                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                //check for phone number conflict
+                if (response.status === 409) throw new Error("User with this phone number already exists.");
+                if(!response.ok) throw new Error("Something went wrong. Please try again.")
                 setIsLoadingModifyPhoneNumber(false);
                 setIsPhoneNumberPopupVisible(false);
                 const updatedUser = {...accountInfo};
                 updatedUser.phoneNumber = phoneValue;
                 setAccountInfo(updatedUser);
-
             })
-            .catch(() => {
+            .catch((e) => {
                 setIsLoadingModifyPhoneNumber(false);
-                setModifyPhoneNumberError("Error!");
+                setModifyPhoneNumberError(e.message);
             });
     }
 
@@ -120,7 +127,7 @@ function AccountPage(this: any, props:any) {
                             <div>{accountInfo._username}</div>
                             <div>{accountInfo.firstName + " " + accountInfo.lastName}</div>
                             <div>{accountInfo.email}</div>
-                            <div>{accountInfo.phoneNumber ? accountInfo.phoneNumber : "No phone number added"}</div>
+                            <div>{accountInfo.phoneNumber ? formatPhoneNumberIntl(accountInfo.phoneNumber) : "No phone number added"}</div>
                             <button id="account-page-email-button" onClick={() => setIsPhoneNumberPopupVisible(true)}>{accountInfo.phoneNumber ? "Modify phone number" : "Add phone number"}</button>
                         </div>
                     </div>
@@ -175,6 +182,7 @@ function AccountPage(this: any, props:any) {
                         <div></div>
                         <div></div>
                     </div>}
+                    {modifyPhoneNumberError && <p style={{color:"darkred", marginTop:5}}>{modifyPhoneNumberError}</p>}
                 </div>
             </CustomPopup>
         </div>
