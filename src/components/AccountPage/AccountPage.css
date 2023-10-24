@@ -20,12 +20,20 @@
     flex-direction: column;
     background-color: var(--darker-primary);
     width: clamp(250px, calc(20% - 10px), 400px);
-    height: clamp(calc(100vh - 105px), calc(92vh - 35px), calc(100vh - 535px)); /*calculate the height based on the height of the navbar*/
+    height: calc(100vh - 105px);
     border-radius: 10px;
     box-shadow: 0 5px 5px #111111;
-    overflow: hidden;
+    overflow: auto;
+    overflow-x: hidden;
     justify-content: left;
     margin-right: 10px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    position: relative;
+}
+
+#account-info-div::-webkit-scrollbar {
+    display: none;
 }
 
 #account-page-image-container {
@@ -35,7 +43,7 @@
     overflow: hidden; /* Ensure the image is contained within the border */
     margin-left: 10px;
     margin-top: 10px;
-    height: 100px;
+    min-height: 100px;
     min-width: 100px;
     max-width: 100px;
     aspect-ratio: 1/1;
@@ -84,7 +92,7 @@
 }
 
 #account-page-side-content-div {
-    height: clamp(calc(100vh - 105px), calc(92vh - 35px), calc(100vh - 535px)); /*calculate the height based on the height of the navbar*/
+    height: calc(100vh - 105px);
     width: clamp(calc(100% - 250px), calc(80% - 30px), calc(100% - 400px));
     background-color: var(--darker-primary);
     box-shadow: 0 5px 5px #111111;
@@ -201,6 +209,93 @@
 #account-page-email-loading-animation {
     left: 35%;
 }
+
+#account-page-edit-photo-icon {
+    font-size: 25px;
+    top: 85px;
+    left: 80px;
+    z-index: 4;
+    position: absolute;
+    display: flow;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+    background-color: #DDD;
+    border-radius: 20px;
+    padding: 3px;
+}
+
+#account-page-edit-photo-icon:hover {
+    color: var(--accent-color);
+    cursor: pointer;
+}
+
+#account-page-profile-image-popup-div {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#add-product-page-images-input-label {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 0 34px;
+    cursor: pointer;
+    color: var(--secondary-color);
+    font-size: 18px;
+    border-radius: 5px;
+    max-height: 40px;
+    margin-left: 3px;
+    margin-bottom: 10px;
+}
+
+#add-product-page-images-input-label:hover {
+    background-color: var(--accent-color);
+    transition: background-color 0.1s ease-in;
+    transform: scale(1.05);
+}
+#account-page-profile-image-label {
+    color: var(--secondary-color);
+    font-size: 18px;
+    margin-bottom: 5px;
+    margin-left: 3px;
+}
+
+#account-page-new-user-image {
+    width: 140px;
+    aspect-ratio: 1/1;
+    border-radius: 70px;
+    border: 2px solid #555;
+}
+
+#account-page-profile-image-input-label {
+    width: 90px;
+    text-align: center;
+    justify-items: center;
+    display: flex;
+}
+
+#account-page-submit-profile-picture-button {
+    padding: 3px;
+    width: 130px;
+    height: 30px;
+    color: white;
+    border-radius: 7px;
+    background-color: var(--accent-color);
+    border: none;
+    outline: none;
+    margin-top: 10px;
+    font-size: 16px;
+}
+#account-page-submit-profile-picture-button:hover {
+    background-color: #48004a;
+    cursor: pointer;
+}
+
 
 
 

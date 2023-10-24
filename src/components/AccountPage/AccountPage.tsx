@@ -24,10 +24,16 @@ function AccountPage(this: any, props:any) {
 
     const [navigationOptions, setNavigationOptions] = useState<boolean[]>([false,false,false,false,false,false])
     const [isPhoneNumberPopupVisible, setIsPhoneNumberPopupVisible] = useState<boolean>(false);
+    const [isChangeProfilePicturePopupVisible,setIsChangeProfilePicturePopupVisible] = useState<boolean>();
 
     const [phoneValue, setPhoneValue] = useState<any>();
     const [isLoadingModifyPhoneNumber, setIsLoadingModifyPhoneNumber] = useState<boolean>(false);
     const [modifyPhoneNumberError, setModifyPhoneNumberError] = useState<string>("")
+
+    const [selectedProfileImage, setSelectedProfileImage] = useState(null);
+    const [selectedProfileImageError, setSelectedProfileImageError] = useState<string>("");
+    const [isSetProfileImagePending, setIsProfileImagePending] = useState<boolean>(false);
+
 
     //if the user is not logged in, redirect them to the login page
     useEffect(() => {
@@ -100,6 +106,35 @@ function AccountPage(this: any, props:any) {
             });
     }
 
+    function handleChangeProfileImage() {
+        const formData = new FormData();
+        setSelectedProfileImageError("");
+
+        if(selectedProfileImage === null) {
+            setSelectedProfileImageError("You must select a picture");
+            return;
+        }
+        formData.append('image', selectedProfileImage);
+        setIsProfileImagePending(true);
+        fetch(config.apiUrl + "/user/profilepicture", {
+            method: 'POST',
+            headers: {
+                "Origin": config.origin,
+                "Authorization": "Bearer " + Cookies.get('jwtToken')
+            },
+            body: formData
+        })
+            .then((response) => {
+                if(!response.ok) throw new Error("Something went wrong.")
+                setIsProfileImagePending(false);
+                window.location.reload();
+            })
+            .catch((e) => {
+                setSelectedProfileImageError(e.message);
+                setIsProfileImagePending(false);
+            })
+    }
+
     return (
         <div className = "background-div">
             <Navbar
@@ -108,13 +143,15 @@ function AccountPage(this: any, props:any) {
                 shoppingCartEntries={props.shoppingCartEntries}
                 setShoppingCartEntries = {props.setShoppingCartEntries}>
             </Navbar>
-            <div id="account-container-div" className={isPhoneNumberPopupVisible ? 'blurred' : ''}>
+            <div id="account-container-div" className={(isPhoneNumberPopupVisible || isChangeProfilePicturePopupVisible) ? 'blurred' : ''}>
                 <div id="account-info-div">
                     <div id ="account-page-image-container">
+                        <span className="material-symbols-outlined" id="account-page-edit-photo-icon" onClick={() => setIsChangeProfilePicturePopupVisible(true)}>edit</span>
                         {(isProfilePicturePending || imageError) ? (
                                 <span className="material-symbols-outlined" id="account-page-user-icon">account_circle</span>
                         ) : null}
                         {!isProfilePicturePending && !imageError && <img src={imageSourceUrl} id="account-page-user-image" alt="user"/>}
+
                     </div>
                     <div id="account-page-info-inner-div">
                         <div id="account-page-info-keys-div">
@@ -183,6 +220,45 @@ function AccountPage(this: any, props:any) {
                         <div></div>
                     </div>}
                     {modifyPhoneNumberError && <p style={{color:"darkred", marginTop:5}}>{modifyPhoneNumberError}</p>}
+                </div>
+            </CustomPopup>
+            <CustomPopup show={isChangeProfilePicturePopupVisible} onClose={() => setIsChangeProfilePicturePopupVisible(false)}>
+                <div id="account-page-profile-image-popup-div">
+                    <div id="account-page-profile-image-label">Select profile image:</div>
+                    <label htmlFor="account-page-profile-image-input" id="account-page-profile-image-input-label">
+                        <span className="material-symbols-outlined" style={{fontSize:35}}>upload</span>
+                    </label>
+                    <input type="file"
+                           name = "userImage"
+                           id="account-page-profile-image-input"
+                           onChange={(event) => {
+                               const files = event.target.files;
+                               if(files && files.length === 1)
+                               { // @ts-ignore
+                                   setSelectedProfileImage(files[0])
+                                   console.log(files);
+                               }
+                           }}/>
+                    {selectedProfileImage && (
+                        <div id="account-page-profile-image-div">
+                                <img alt="not found"
+                                     id="account-page-new-user-image"
+                                     src={URL.createObjectURL(selectedProfileImage)}
+                                />
+                        </div>
+                    )}
+                    {selectedProfileImage && <button id="account-page-submit-profile-picture-button" onClick={handleChangeProfileImage}>Change</button>}
+                    {isSetProfileImagePending && <div className="lds-roller">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>}
+                    {selectedProfileImageError && <p style={{marginTop:5, color: "darkred"}}>{selectedProfileImageError}</p>}
                 </div>
             </CustomPopup>
         </div>

@@ -39,7 +39,7 @@
     border: none;
     width: 100%;
     margin-left: 5px;
-    border-left: 1px solid gray;
+    border-left: 1px solid rgb(128, 128, 128);
     padding-left: 5px;
 }
 
@@ -123,7 +123,7 @@
 input[type="file"] {
     display: none;
 }
-#add-product-page-images-input-label {
+#account-page-profile-image-input-label {
     border: 1px solid #ccc;
     display: inline-block;
     padding: 0 34px;
@@ -136,7 +136,7 @@ input[type="file"] {
     margin-bottom: 10px;
 }
 
-#add-product-page-images-input-label:hover {
+#account-page-profile-image-input-label:hover {
     background-color: var(--accent-color);
     transition: background-color 0.1s ease-in;
     transform: scale(1.05);

@@ -117,7 +117,7 @@ function ProductPreview(props: any) {
             <p id="product-preview-name">{product.productName}</p>
             <div id="product-preview-price-div">
                 <p id="product-preview-price">{Math.floor(product.productPrice)}<sup>{Math.floor((product.productPrice - Math.floor(product.productPrice)) * 100)}</sup> USD</p>
-                <div id="product-preview-score-div">{product.productReviews.length > 0 ? rating + "/5" : "Not rated"}{<span className="material-symbols-outlined" id="product-preview-star-icon">star</span>}</div>
+                <div id="product-preview-score-div">{product.productReviews.length > 0 ? rating + "/5" : "Not rated"}{<span className="material-symbols-outlined" id="product-preview-star-icon">star</span>}{product.productReviews.length > 0 ? `(${product.productReviews.length})` : ""}</div>
             </div>
             <button className="cover-button" id="product-preview-cart-button" onClick={handleAddToCart} disabled={isButtonDisabled}>
                 <span className="material-symbols-outlined" id="product-preview-shopping-cart-icon">shopping_cart</span>Add to cart</button>
