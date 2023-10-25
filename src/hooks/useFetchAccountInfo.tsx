@@ -34,7 +34,7 @@ function useFetchAccountInfo(isLoggedIn:boolean) {
 
     }, [isLoggedIn])
 
-    return [accountInfo]
+    return {accountInfo, setAccountInfo}
 }
 
 export default useFetchAccountInfo;

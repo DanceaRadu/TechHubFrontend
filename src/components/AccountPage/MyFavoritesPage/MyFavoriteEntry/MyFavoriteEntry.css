@@ -1,0 +1,136 @@
+#my-favorite-entry-outer-div {
+    margin: 15px 15px 15px 15px;
+    width: calc(100% - 30px);
+    display: flex;
+    flex-direction: row;
+}
+
+#my-favorite-entry-product-image, #my-favorite-entry-image-outer-div-placeholder {
+    width: 150px;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
+}
+
+#my-favorite-entry-left-div {
+    width: 150px;
+}
+
+#my-favorite-entry-right-div {
+    width: calc(100% - 150px);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#my-favorite-entry-name-div {
+    width: calc(100% - 171px);
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+#my-favorite-entry-buttons-div {
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+#my-favorite-entry-name {
+    color: #DDD;
+    font-size: 18px;
+    max-width: 80%;
+    text-align: left;
+    max-height: 150px;
+    overflow: hidden;
+}
+
+#my-favorite-entry-score-div {
+    color: #CCCCCC;
+    font-size: 16px;
+}
+
+#my-favorite-entry-star-icon {
+    font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48;
+    color: gold;
+    position: relative;
+    top: 4px;
+}
+
+#my-favorite-entry-vertical-line {
+    width: 1px;
+    height: 100%;
+    background-color: #222;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#my-favorite-entry-add-to-cart-button {
+    padding: 7px 6px 3px 6px;
+    width: 145px;
+    font-size: 18px;
+    border-radius: 5px;
+    color: var(--secondary-color);
+    background-color: var(--accent-color);
+    outline: none;
+    border: none;
+    transition: background-color 0.5s ease, scale 0.5s ease;
+}
+
+#my-favorite-entry-add-to-cart-button span {
+    position: relative;
+    top: -2px;
+}
+
+#my-favorite-entry-add-to-cart-button:hover span {
+    color: white;
+}
+#my-favorite-entry-add-to-cart-button:hover {
+    color: white;
+    cursor: pointer;
+    scale: 1.03;
+    background-color: #550057;
+}
+
+#product-preview-delete-div {
+    color: #AAA;
+    transition: color 0.1s ease-in;
+}
+
+#product-preview-delete-div span {
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48;
+    position: relative;
+    top: 5px;
+}
+
+#product-preview-delete-div:hover {
+    color: darkred;
+    cursor: pointer;
+}
+
+#product-preview-delete-div:hover span {
+    font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48;
+}
+
+#my-favorite-entry-price-p {
+    color: var(--accent-color);
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+#my-favorites-entry-delete-loading-animation {
+    margin-right: 30px;
+}

@@ -84,7 +84,14 @@ function ProductGrid(props:any) {
                 {products && !fetchProductsFetchError && !isPendingFetchProducts &&
                     products.map((product) => (
                         <div key={product.productID}>
-                            <ProductPreview product = {product} isLoggedIn = {props.isLoggedIn} shoppingCartEntries={props.shoppingCartEntries} setShoppingCartEntries={props.setShoppingCartEntries}></ProductPreview>
+                            <ProductPreview
+                                product = {product}
+                                isLoggedIn = {props.isLoggedIn}
+                                shoppingCartEntries={props.shoppingCartEntries}
+                                setShoppingCartEntries={props.setShoppingCartEntries}
+                                favorites = {props.favorites}
+                                setFavorites = {props.setFavorites}
+                            ></ProductPreview>
                         </div>
                     ))}
             </div>

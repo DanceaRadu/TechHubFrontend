@@ -12,6 +12,7 @@ import EmailTokenPage from "./components/EmailTokenPage/EmailTokenPage";
 import AccountPage from "./components/AccountPage/AccountPage";
 import ProductBrowser from "./components/ProductBrowser/ProductBrowser";
 import ProductPage from "./components/ProductPage/ProductPage";
+import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
     <div className="App">
         <BrowserRouter>
             <Routes>
-                <Route path = "/:category?/:order?/:filters?/:pageNumber?/:query?" element={<Home
+                <Route path = "/" element={<Home
                     isLoggedIn = {isLoggedIn}
                     shoppingCartEntries = {shoppingCartEntries}
                     setShoppingCartEntries = {setShoppingCartEntries}
@@ -103,16 +104,15 @@ function App() {
                     selectedCategory = {[false,false,false,false,false,true]}
                 />}>
                 </Route>
-
                 <Route path = "/product/:productId" element={<ProductPage
                     shoppingCartEntries = {shoppingCartEntries}
                     setShoppingCartEntries = {setShoppingCartEntries}
                 />}>
                 </Route>
-
                 <Route path = "/verifymail/:token" element={
                    <EmailTokenPage/>
                 }/>
+                <Route path="*" element = {<NotFoundPage></NotFoundPage>}></Route>
             </Routes>
         </BrowserRouter>
     </div>

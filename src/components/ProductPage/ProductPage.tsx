@@ -9,6 +9,8 @@ import ProductImageSlider from "./ProductImageSlider/ProductImageSlider";
 import ProductPageSummaryDiv from "./ProductPageSummaryDiv/ProductPageSummaryDiv";
 import ProductPageReviewsSection from "./ProductPageReviewsSection/ProductPageReviewsSection";
 import ProductPageSpecsSection from "./ProductPageSpecsSection/ProductPageSpecsSection";
+import useFetchUserFavorites from "../../hooks/useFetchUserFavorites";
+import useCheckIsProductFavorite from "../../hooks/useCheckIsProductFavorite";
 function ProductPage(props:any) {
 
     const {isLoggedIn, isPending} = useCheckLoggedIn();
@@ -19,6 +21,9 @@ function ProductPage(props:any) {
     const [isDescriptionSelected, setIsDescriptionSelected] = useState<boolean>(true);
     const [isSpecsSelected, setIsSpecsSelected] = useState<boolean>(false);
     const [isReviewsSelected, setIsReviewsSelected] = useState<boolean>(false);
+
+    const {favorites, setFavorites, error:favoritesFetchError, isPending:isPendingFavorites} = useFetchUserFavorites(isLoggedIn);
+    const {isFavorite} = useCheckIsProductFavorite(productData ? productData.productID : null, favorites);
 
     const {productId} = useParams();
 
@@ -39,7 +44,6 @@ function ProductPage(props:any) {
             .then(data => {
                 setProductData(data);
                 setIsPendingProductFetch(false);
-                console.log(JSON.parse(data.specs));
             })
             .catch(() => {
                 setIsPendingProductFetch(false);
@@ -88,7 +92,6 @@ function ProductPage(props:any) {
 
             {productData && !isPendingProductFetch && <div id="product-page-outer-div">
                 <div id="product-page-inner-div">
-
                     <p id="product-page-name-p">{productData.productName}</p>
                     <div id="product-page-first-div">
                         <div id="product-page-images-div">
@@ -100,6 +103,9 @@ function ProductPage(props:any) {
                                 isLoggedIn = {isLoggedIn}
                                 shoppingCartEntries = {props.shoppingCartEntries}
                                 setShoppingCartEntries = {props.setShoppingCartEntries}
+                                isFavorite = {isFavorite}
+                                favorites = {favorites}
+                                setFavorites = {setFavorites}
                             ></ProductPageSummaryDiv>
                         </div>
                     </div>

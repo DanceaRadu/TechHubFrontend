@@ -9,8 +9,8 @@
 }
 
 #shopping-cart-button-entry-product-name {
-    height: 90%;
-    width: calc(40% - 10px);
+    height: 57px;
+    width: 110px;
     font-size: 12px;
     overflow: hidden;
     margin-left: 10px;

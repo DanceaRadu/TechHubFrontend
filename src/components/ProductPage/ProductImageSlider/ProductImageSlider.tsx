@@ -39,9 +39,10 @@ function ProductImageSlider(props:any) {
 
     return (
         <div id="product-slider-outer-div">
+
             <div id="product-image-slider-bigger-image-div">
                 {isPendingImages || imagesFetchError ? (
-                    <img className="product-image-slider-bigger-image" src={require('../../../resources/images/product-placeholder.jpg')}  alt="Product"/>
+                    <img className="product-image-slider-bigger-image" style={{position:"relative", left:0}} src={require('../../../resources/images/product-placeholder.jpg')}  alt="Product"/>
                 ) : null}
                 {imageSourceUrls.length > 0 && !isPendingImages && imageSourceUrls.map((imageUrl:string, index:number) => (
                         <img

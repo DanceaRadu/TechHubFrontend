@@ -1,0 +1,12 @@
+#my-reviews-page-header, #my-reviews-page-error-message {
+    color: #DDD;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+#my-reviews-page-loading-animation {
+    left: calc(50% - 35px);
+    margin-top: 10px;
+}

@@ -3,6 +3,12 @@
     flex-direction: column;
     width: 100%;
     overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.background-div::-webkit-scrollbar {
+    display: none;
 }
 
 #product-page-loading-animation {
@@ -106,6 +112,7 @@
     background-color: #1A1A1A;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 #product-page-sections-buttons-div {
@@ -120,6 +127,21 @@
     font-size: 25px;
     color: #BBB;
     text-align: justify;
+    overflow: auto;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Customize the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    background: #111;
+}
+
+/* Customize the scrollbar track */
+::-webkit-scrollbar-track {
+    background: #aaa;
 }
 
 .product-page-sections-button-div {
