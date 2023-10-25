@@ -24,7 +24,7 @@ function MyFavoritesPage(props:any) {
             {errorFavorites && <p id="my-favorites-page-error-message">{errorFavorites}</p>}
             {!isPendingFavorites && !isPendingLoggedIn && !errorFavorites && <p id="my-favorites-page-header">{favorites.length > 0 ? "My favorites" : "You have no favorites"}</p>}
             {!isPendingFavorites && !isPendingLoggedIn && !errorFavorites && favorites.map((favoriteEntry:any, index:number) => (
-                <div key={favoriteEntry.favoriteId}>
+                <div key={favoriteEntry.favoriteID}>
                     <MyFavoriteEntry
                         favoriteEntry = {favoriteEntry}
                         shoppingCartEntries={props.shoppingCartEntries}

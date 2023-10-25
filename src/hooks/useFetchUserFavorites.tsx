@@ -27,7 +27,6 @@ function useFetchUserFavorites(isLoggedIn:boolean) {
                 })
                 .then(data => {
                     setFavorites(data);
-                    console.log(data);
                     setIsPending(false);
                 })
                 .catch((e) => {
