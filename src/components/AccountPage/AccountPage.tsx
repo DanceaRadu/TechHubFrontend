@@ -135,6 +135,10 @@ function AccountPage(this: any, props:any) {
             })
     }
 
+    function handleLogOut() {
+        Cookies.remove("jwtToken");
+        window.location.reload();
+    }
     return (
         <div className = "background-div">
             <Navbar
@@ -144,56 +148,58 @@ function AccountPage(this: any, props:any) {
                 setShoppingCartEntries = {props.setShoppingCartEntries}>
             </Navbar>
             <div id="account-container-div" className={(isPhoneNumberPopupVisible || isChangeProfilePicturePopupVisible) ? 'blurred' : ''}>
-                <div id="account-info-div">
-                    <div id ="account-page-image-container">
-                        <span className="material-symbols-outlined" id="account-page-edit-photo-icon" onClick={() => setIsChangeProfilePicturePopupVisible(true)}>edit</span>
-                        {(isProfilePicturePending || imageError) ? (
-                                <span className="material-symbols-outlined" id="account-page-user-icon">account_circle</span>
-                        ) : null}
-                        {!isProfilePicturePending && !imageError && <img src={imageSourceUrl} id="account-page-user-image" alt="user"/>}
-
-                    </div>
-                    <div id="account-page-info-inner-div">
-                        <div id="account-page-info-keys-div">
-                            <p>username:</p>
-                            <p>name:</p>
-                            <p>e-mail:</p>
-                            <p>phone number:</p>
+                <div id="account-info-outer-div">
+                    <div id="account-info-div">
+                        <div id ="account-page-image-container">
+                            <span className="material-symbols-outlined" id="account-page-edit-photo-icon" onClick={() => setIsChangeProfilePicturePopupVisible(true)}>edit</span>
+                            {(isProfilePicturePending || imageError) ? (
+                                    <span className="material-symbols-outlined" id="account-page-user-icon">account_circle</span>
+                            ) : null}
+                            {!isProfilePicturePending && !imageError && <img src={imageSourceUrl} id="account-page-user-image" alt="user"/>}
                         </div>
-                        <div id="account-page-info-values-div">
-                            <div>{accountInfo._username}</div>
-                            <div>{accountInfo.firstName + " " + accountInfo.lastName}</div>
-                            <div>{accountInfo.email}</div>
-                            <div>{accountInfo.phoneNumber ? formatPhoneNumberIntl(accountInfo.phoneNumber) : "No phone number added"}</div>
-                            <button id="account-page-email-button" onClick={() => setIsPhoneNumberPopupVisible(true)}>{accountInfo.phoneNumber ? "Modify phone number" : "Add phone number"}</button>
+                        <div id="account-page-info-inner-div">
+                            <div id="account-page-info-keys-div">
+                                <p>username:</p>
+                                <p>name:</p>
+                                <p>e-mail:</p>
+                                <p>phone number:</p>
+                            </div>
+                            <div id="account-page-info-values-div">
+                                <div>{accountInfo._username}</div>
+                                <div>{accountInfo.firstName + " " + accountInfo.lastName}</div>
+                                <div>{accountInfo.email}</div>
+                                <div>{accountInfo.phoneNumber ? formatPhoneNumberIntl(accountInfo.phoneNumber) : "No phone number added"}</div>
+                                <button id="account-page-email-button" onClick={() => setIsPhoneNumberPopupVisible(true)}>{accountInfo.phoneNumber ? "Modify phone number" : "Add phone number"}</button>
+                            </div>
                         </div>
-                    </div>
-                    <br/>
-                    <hr style={{backgroundColor:"black", height:2, border:"none"}}/>
-                    <button
-                        className={navigationOptions[0] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
-                        onClick={handleOrders}
-                    >Orders</button>
-                    <button
-                        className={navigationOptions[1] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
-                        onClick={handleFavorites}
-                    >Favorites</button>
-                    <button
-                        className={navigationOptions[2] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
-                        onClick={handleMyReviews}
-                    >My reviews</button>
-                    <button
-                        className={navigationOptions[3] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
-                        onClick={handleMyCreditCards}
-                    >My credits cards</button>
-                    <button
-                        className={navigationOptions[4] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
-                        onClick={handleMyAddresses}
-                    >My addresses</button>
-                    {accountInfo.role === "ADMIN" && <button
-                        className={navigationOptions[5] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
-                        onClick={handleManageProducts}
-                    >Manage Products</button>}
+                        <br/>
+                        <hr style={{backgroundColor:"black", height:2, border:"none"}}/>
+                            <button
+                                className={navigationOptions[0] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                                onClick={handleOrders}
+                            >Orders</button>
+                            <button
+                                className={navigationOptions[1] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                                onClick={handleFavorites}
+                            >Favorites</button>
+                            <button
+                                className={navigationOptions[2] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                                onClick={handleMyReviews}
+                            >My reviews</button>
+                            <button
+                                className={navigationOptions[3] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                                onClick={handleMyCreditCards}
+                            >My credits cards</button>
+                            <button
+                                className={navigationOptions[4] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                                onClick={handleMyAddresses}
+                            >My addresses</button>
+                            {accountInfo.role === "ADMIN" && <button
+                                className={navigationOptions[5] ? "account-page-navigation-button-clicked":"account-page-navigation-button"}
+                                onClick={handleManageProducts}
+                            >Manage Products</button>}
+                        </div>
+                    <button id="account-page-log-out-button" onClick={handleLogOut}><span className="material-symbols-outlined">power_settings_new</span>Log out</button>
                 </div>
                 <div id="account-page-side-content-div">
                     {navigationOptions[5] && <ManageProductsPage></ManageProductsPage>}
