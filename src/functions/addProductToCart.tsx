@@ -4,13 +4,14 @@ import {UUID} from "crypto";
 // @ts-ignore
 import Cookies from "js-cookie";
 import shoppingCartEntry from "../models/ShoppingCartEntry";
+import config from "../config";
 
 function addProductToCart(isLoggedIn:boolean, productID:UUID, shoppingCartEntries:shoppingCartEntry[], setShoppingCartEntries:any):boolean {
     if(isLoggedIn) {
-        fetch("http://localhost:8080/api/v1/user/shoppingcart/" + productID, {
+        fetch(config.apiUrl + "/user/shoppingcart/" + productID, {
             method: 'POST',
             headers: {
-                "Origin": "http://localhost:8080:3000",
+                "Origin": config.origin,
                 "Authorization": "Bearer " + Cookies.get('jwtToken')
             }
         })
