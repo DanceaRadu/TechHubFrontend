@@ -12,6 +12,7 @@
     align-items: flex-end;
     animation: scaleIn 0.4s forwards;
     opacity: 0;
+    z-index: 99;
 }
 
 #popup-outer-div.scale-in {

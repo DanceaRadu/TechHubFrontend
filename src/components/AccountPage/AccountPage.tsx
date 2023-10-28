@@ -34,7 +34,6 @@ function AccountPage(this: any, props:any) {
     const [selectedProfileImageError, setSelectedProfileImageError] = useState<string>("");
     const [isSetProfileImagePending, setIsProfileImagePending] = useState<boolean>(false);
 
-
     //if the user is not logged in, redirect them to the login page
     useEffect(() => {
         if(!isPending && !isLoggedIn) {

@@ -31,7 +31,6 @@ function MyReviewsPage(){
           ))}
       </div>
     );
-
 }
 
 export default MyReviewsPage;
