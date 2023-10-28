@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import config from "../../../../config";
 // @ts-ignore
 import Cookies from "js-cookie";
+import ReviewPopup from "../../../ReviewPopup/ReviewPopup";
 
 function MyReview(props:any) {
 
@@ -14,6 +15,8 @@ function MyReview(props:any) {
 
     const [isPendingDelete, setIsPendingDelete] = useState<boolean>(false);
     const [deleteError, setDeleteError] = useState<string>("")
+
+    const [isReviewPopupVisible, setIsReviewPopupVisible] = useState<boolean>(false);
 
     function handleReviewDelete() {
 
@@ -67,7 +70,7 @@ function MyReview(props:any) {
             </div>
             <div id="my-review-right-div">
                 {!isPendingDelete && <div id="my-review-right-div-inner">
-                    <button id="my-review-edit-button">Edit</button>
+                    <button id="my-review-edit-button" onClick={() => setIsReviewPopupVisible(true)}>Edit</button>
                     <button id="my-review-delete-button" onClick={handleReviewDelete}>Delete</button>
                 </div>}
                 {isPendingDelete &&
@@ -83,9 +86,19 @@ function MyReview(props:any) {
                     </div>
                 }
             </div>
+            <ReviewPopup
+                isReviewPopupVisible = {isReviewPopupVisible}
+                setIsReviewPopupVisible = {setIsReviewPopupVisible}
+                initialRating = {review.reviewScore}
+                initialBody = {review.reviewComment}
+                initialTitle = {review.reviewTitle}
+                buttonText = "Update review"
+                productID = {review.reviewedProduct.productID}
+                update = {true}
+                review = {review}
+            ></ReviewPopup>
         </div>
     )
-
 }
 
 export default MyReview;
