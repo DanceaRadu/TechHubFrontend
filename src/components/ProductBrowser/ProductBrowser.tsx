@@ -26,7 +26,8 @@ function ProductBrowser(props:any) {
               setShoppingCartEntries = {props.setShoppingCartEntries}>
           </Navbar>
           {category !== undefined && order !== undefined && filters !== undefined && pageNumber !== undefined && <div id="product-browser-div">
-              <div id="product-browser-sorting-div"></div>
+              <div id="product-browser-sorting-div">
+              </div>
               <ProductGrid
                   isLoggedIn = {isLoggedIn}
                   shoppingCartEntries={props.shoppingCartEntries}

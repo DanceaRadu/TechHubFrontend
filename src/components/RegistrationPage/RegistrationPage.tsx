@@ -7,6 +7,8 @@ import Cookies from "js-cookie";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 import addCookieShoppingCartEntries from "../../functions/addCookieShoppingCartEntries";
 import config from "../../config";
+import {useGoogleLogin} from "@react-oauth/google";
+import CustomGoogleButton from "../CustomGoogleButton/CustomGoogleButton";
 
 function RegistrationPage(props: any) {
 
@@ -97,6 +99,7 @@ function RegistrationPage(props: any) {
     //for disabling buttons when the user clicks them
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
     const [isNewEmailButtonDisabled, setIsNewEmailButtonDisabled] = useState<boolean>(false);
+    const [isGoogleButtonDisabled, setIsGoogleButtonDisabled] = useState<boolean>(false);
 
     //countdown for disabling the new email button for a number of seconds
     const [newEmailButtonCountdown, setNewEmailButtonCountdown] = useState<number>(0);
@@ -347,6 +350,72 @@ function RegistrationPage(props: any) {
             })
     }
 
+    const handleGoogleSignup = useGoogleLogin({
+        onSuccess: tokenResponse => {
+            setIsPending(true);
+            setFetchError("");
+            setIsButtonDisabled(true);
+            setIsGoogleButtonDisabled(true);
+            const url = 'https://www.googleapis.com/oauth2/v2/userinfo';
+            fetch(url, {
+                headers: {
+                    Authorization: `Bearer ${tokenResponse.access_token}`
+                }
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to fetch user info');
+                    }
+                })
+                .then((userInfo) => {
+                    console.log(userInfo)
+                    fetch(config.apiUrl + "/auth/register/google",
+                        {
+                            method: 'POST',
+                            headers: {
+                                "Origin": config.origin,
+                                'Content-Type': 'application/json'
+                            },
+                            body: userInfo.family_name === undefined ? JSON.stringify({...userInfo, family_name: userInfo.given_name}) : JSON.stringify(userInfo)
+                        }
+                    )
+                        .then(res => {
+                            return res.json();
+                        })
+                        .then((data) => {
+                            //if the returned data contains the error param, that means there was an error with the registration process
+                            if(data.error) {
+                                if(data.error === "User with this email already exists") setFetchError(data.error);
+                                else if(data.error === "This google account is already associated to a user") setFetchError(data.error);
+                                else setFetchError("Could not create an account. Please try again.");
+                                setIsPending(false);
+                                setIsButtonDisabled(false);
+                                setIsGoogleButtonDisabled(false);
+                            }
+                            else if(data.token) {
+                                //if the fetch response contains a jwt token, that means the registration was successful, and we can store the token in the browser cookies
+                                Cookies.set('jwtToken', data.token);
+                                navigate("/");
+                            }}
+                        )
+                        .catch(() => {
+                            setIsPending(false);
+                            setIsGoogleButtonDisabled(false);
+                            setIsButtonDisabled(false);
+                            setFetchError("Something went wrong");
+                        })
+                })
+                .catch(() => {
+                    setIsPending(false);
+                    setIsGoogleButtonDisabled(false);
+                    setIsButtonDisabled(false);
+                    setFetchError("Something went wrong");
+                });
+        }
+    });
+
     return (
         <div className="background-div" id = "registration-page-background">
             <div id="registration-page-form-container">
@@ -437,7 +506,9 @@ function RegistrationPage(props: any) {
                         </div>
                         {confirmErrorMessage && <p className = "registration-page-error-p">{confirmErrorMessage}</p>}
                         <button className="cover-button" id="register-page-register-button" disabled={isButtonDisabled}>Register</button>
-                        {fetchError && !isPending && <div id = "registration-page-fetch-error">{fetchError}</div>}
+                        <hr style={{width:"90%", marginTop:15, marginBottom:15}}/>
+                        <CustomGoogleButton onClick={() => {handleGoogleSignup()}} text={"Sign-up with google"}></CustomGoogleButton>
+                    {fetchError && !isPending && <div id = "registration-page-fetch-error">{fetchError}</div>}
                     </form>}
                 {isPending && !emailNotificationMessage &&
                     <div className="lds-roller">
