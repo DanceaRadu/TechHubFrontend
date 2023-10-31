@@ -37,6 +37,9 @@
     border-radius: 5px;
     border: 2px solid var(--primary-color);
 }
+.product-image-slider-small-image-selected:hover {
+    cursor: pointer;
+}
 
 .product-image-slider-small-image-selected {
     width: 75px;
@@ -92,4 +95,11 @@
 
     justify-content: left;
     border-radius: 5px;
+}
+
+#product-image-slider-enlarged-image {
+    width: 90vh;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    margin: 5vh;
 }
