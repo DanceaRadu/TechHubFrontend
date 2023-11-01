@@ -370,7 +370,6 @@ function RegistrationPage(props: any) {
                     }
                 })
                 .then((userInfo) => {
-                    console.log(userInfo)
                     fetch(config.apiUrl + "/auth/register/google",
                         {
                             method: 'POST',
@@ -507,7 +506,7 @@ function RegistrationPage(props: any) {
                         {confirmErrorMessage && <p className = "registration-page-error-p">{confirmErrorMessage}</p>}
                         <button className="cover-button" id="register-page-register-button" disabled={isButtonDisabled}>Register</button>
                         <hr style={{width:"90%", marginTop:15, marginBottom:15}}/>
-                        <CustomGoogleButton onClick={() => {handleGoogleSignup()}} text={"Sign-up with google"}></CustomGoogleButton>
+                        <CustomGoogleButton onClick={() => {handleGoogleSignup()}} text={"Sign-up with google"} disabled={isGoogleButtonDisabled}></CustomGoogleButton>
                     {fetchError && !isPending && <div id = "registration-page-fetch-error">{fetchError}</div>}
                     </form>}
                 {isPending && !emailNotificationMessage &&

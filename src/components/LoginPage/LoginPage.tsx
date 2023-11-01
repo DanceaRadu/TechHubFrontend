@@ -6,6 +6,8 @@ import Cookies from 'js-cookie'
 import ShoppingCartEntry from "../../models/ShoppingCartEntry";
 import useCheckLoggedIn from "../../hooks/useCheckLoggedIn";
 import config from "../../config";
+import CustomGoogleButton from "../CustomGoogleButton/CustomGoogleButton";
+import {useGoogleLogin} from "@react-oauth/google";
 
 function LoginPage(props:any) {
 
@@ -44,6 +46,7 @@ function LoginPage(props:any) {
 
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
     const [isChecked, setIsChecked] = useState<boolean>(false);
+    const [isGoogleButtonDisabled, setIsGoogleButtonDisabled] = useState<boolean>(false);
 
     const handleCheckboxChange = (event: any) => {
         setIsChecked(event.target.checked);
@@ -133,6 +136,76 @@ function LoginPage(props:any) {
         });
    };
 
+    const handleGoogleLogin = useGoogleLogin({
+        onSuccess: tokenResponse => {
+            setIsPending(true);
+            setError(null);
+            setIsButtonDisabled(true);
+            setIsGoogleButtonDisabled(true);
+            const url = 'https://www.googleapis.com/oauth2/v2/userinfo';
+            fetch(url, {
+                headers: {
+                    Authorization: `Bearer ${tokenResponse.access_token}`
+                }
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to fetch user info');
+                    }
+                })
+                .then((userInfo) => {
+                    fetch(config.apiUrl + "/auth/authenticate/google",
+                        {
+                            method: 'POST',
+                            headers: {
+                                "Origin": config.origin,
+                                'Content-Type': 'application/json'
+                            },
+                            body: userInfo.family_name === undefined ? JSON.stringify({...userInfo, family_name: userInfo.given_name}) : JSON.stringify(userInfo)
+                        }
+                    )
+                        .then(res => {
+                            return res.json();
+                        })
+                        .then((data) => {
+                            //if the returned data contains the error param, that means there was an error with the registration process
+                            if(data.error) {
+                                if(data.error === "User was not found") { // @ts-ignore
+                                    setError("The user associated to this Google account hasn't registered yet");
+                                }
+                                else { // @ts-ignore
+                                    setError("Could not create an account. Please try again.");
+                                }
+                                setIsPending(false);
+                                setIsButtonDisabled(false);
+                                setIsGoogleButtonDisabled(false);
+                            }
+                            else if(data.token) {
+                                //if the fetch response contains a jwt token, that means the registration was successful, and we can store the token in the browser cookies
+                                Cookies.set('jwtToken', data.token);
+                                navigate("/");
+                            }}
+                        )
+                        .catch(() => {
+                            setIsPending(false);
+                            setIsGoogleButtonDisabled(false);
+                            setIsButtonDisabled(false);
+                            // @ts-ignore
+                            setError("Something went wrong");
+                        })
+                })
+                .catch(() => {
+                    setIsPending(false);
+                    setIsGoogleButtonDisabled(false);
+                    setIsButtonDisabled(false);
+                    // @ts-ignore
+                    setError("Something went wrong");
+                });
+        }
+    });
+
     return (
         <div className="background-div">
             <div className="login-page">
@@ -182,6 +255,8 @@ function LoginPage(props:any) {
                             </div>
                         </div>
                         <button className="cover-button" disabled={isButtonDisabled}>Login</button>
+                        <hr style={{width:"100%", marginTop:15, marginBottom:15}}/>
+                        <CustomGoogleButton onClick={handleGoogleLogin} text={"Log in with Google"} disabled={isGoogleButtonDisabled}></CustomGoogleButton>
                     </form>
                     {isPending &&
                         <div id="lds-roller-outer-div">
