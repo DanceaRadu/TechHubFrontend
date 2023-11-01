@@ -1,0 +1,117 @@
+#product-filter-outer-div {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 30px);
+    color: #DDD;
+    padding: 15px;
+    margin-top: 12px;
+}
+
+/*SORTER ELEMENT*/
+.product-filter-dropdown-outer-div {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.product-filter-dropdown {
+    background-color: var(--secondary-color);
+    vertical-align: center;
+    position: relative;
+    bottom: 6px;
+    margin-left: 10px;
+    width: 205px;
+    padding: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #1A1A1A;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.product-filter-dropdown:hover {
+    cursor: pointer;
+}
+
+.product-filter-dropdown-span {
+    font-size: 18px;
+    padding: 3px 50px 3px 3px;
+}
+
+#product-sorter-arrow-icon {
+    position: relative;
+    top: 3px;
+    transition: transform 0.2s ease;
+    transform-origin: center;
+}
+
+.arrow-rotated {
+    transform: rotate(180deg) translateY(5px);
+}
+
+@keyframes fadeIn {
+    from {
+        max-height: 0;
+    }
+    to {
+        max-height: 2000px;
+    }
+}
+
+.product-filter-dropdown-content {
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    padding: 5px 10px 5px 10px;
+    z-index: 1;
+    width: 189px;
+    top: 26px;
+    left: 60px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    animation: fadeIn 1s forwards;
+}
+
+.display-block {
+    display: block;
+}
+
+.display-none {
+    display: none;
+}
+
+.product-sorter-option {
+    transition: background-color 0.3s ease;
+    padding: 5px 5px 5px 5px;
+    color: #1A1A1A;
+    border-radius: 5px;
+}
+
+.product-sorter-option:hover {
+    cursor: pointer;
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/*SORTER ELEMENT*/
+#product-sorter-price-element-outer-div {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.product-filter-price-price-span {
+    margin-left: 10px;
+    position: relative;
+    bottom: 2px;
+}
+
+#product-filter-price-element-div {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0 5px 0;
+}

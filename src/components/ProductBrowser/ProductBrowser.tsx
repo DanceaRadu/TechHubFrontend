@@ -5,6 +5,7 @@ import ProductGrid from "../ProductGrid/ProductGrid";
 import React from "react";
 import Navbar from "../Navbar/Navbar";
 import useFetchUserFavorites from "../../hooks/useFetchUserFavorites";
+import ProductFilter from './ProductFilter/ProductFilter';
 
 function ProductBrowser(props:any) {
 
@@ -27,6 +28,7 @@ function ProductBrowser(props:any) {
           </Navbar>
           {category !== undefined && order !== undefined && filters !== undefined && pageNumber !== undefined && <div id="product-browser-div">
               <div id="product-browser-sorting-div">
+                  <ProductFilter></ProductFilter>
               </div>
               <ProductGrid
                   isLoggedIn = {isLoggedIn}
