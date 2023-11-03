@@ -1,0 +1,25 @@
+#interval-selector-outer-div {
+    width: 100%;
+    background-color: red;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+#interval-selector-line {
+    width: 100%;
+    height: 5px;
+    background-color: white;
+    position: relative;
+    border-radius: 2px;
+}
+
+#interval-selector-right-div, #interval-selector-left-div {
+    position: absolute;
+    cursor: grab;
+    height: 18px;
+    aspect-ratio: 1/1;
+    background-color: var(--accent-color);
+    top: -8px;
+    border-radius: 15px;
+    border: 2px solid #AAA;
+    z-index: 2;
+}

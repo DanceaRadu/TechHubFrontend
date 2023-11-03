@@ -28,7 +28,13 @@ function ProductBrowser(props:any) {
           </Navbar>
           {category !== undefined && order !== undefined && filters !== undefined && pageNumber !== undefined && <div id="product-browser-div">
               <div id="product-browser-sorting-div">
-                  <ProductFilter></ProductFilter>
+                  <ProductFilter
+                      category = {category}
+                      order = {order}
+                      filters = {filters}
+                      query = {query}
+                      pageNumber = {pageNumber}>
+                  </ProductFilter>
               </div>
               <ProductGrid
                   isLoggedIn = {isLoggedIn}
@@ -40,8 +46,7 @@ function ProductBrowser(props:any) {
                   query = {query}
                   pageNumber = {pageNumber}
                   favorites = {favorites}
-                  setFavorites = {setFavorites}
-              >
+                  setFavorites = {setFavorites}>
               </ProductGrid>
           </div>}
       </div>
