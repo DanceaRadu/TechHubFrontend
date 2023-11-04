@@ -1,6 +1,7 @@
 import './ProductImageSlider.css'
 import React, {useEffect, useState} from "react";
 import useFetchImageList from "../../../hooks/useFetchImageList";
+import CustomPopup from "../../CustomPopup/CustomPopup";
 
 function ProductImageSlider(props:any) {
 
@@ -10,11 +11,19 @@ function ProductImageSlider(props:any) {
     const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
     const [previousImageIndex, setPreviousImageIndex] = useState<number>(0);
 
-    function handleImageClick(index:number) {
+    const [enlargedImageUrl, setEnlargedImageUrl] = useState<string>("");
+    const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
+
+    function handleImageHover(index:number) {
         if(index >= 0 && index < imageSourceUrls.length) {
             setPreviousImageIndex(currentImageIndex);
             setCurrentImageIndex(index);
         }
+    }
+
+    function handleImageClick(imageUrl:string) {
+        setEnlargedImageUrl(imageUrl);
+        setIsPopupVisible(true);
     }
 
     useEffect(() => {
@@ -39,7 +48,6 @@ function ProductImageSlider(props:any) {
 
     return (
         <div id="product-slider-outer-div">
-
             <div id="product-image-slider-bigger-image-div">
                 {isPendingImages || imagesFetchError ? (
                     <img className="product-image-slider-bigger-image" style={{position:"relative", left:0}} src={require('../../../resources/images/product-placeholder.jpg')}  alt="Product"/>
@@ -56,7 +64,7 @@ function ProductImageSlider(props:any) {
                 )}
             </div>
             <div id="product-slider-smaller-images-outer-div">
-                <button className="product-image-slider-navigation-button" onClick={() => handleImageClick(currentImageIndex - 1)}>&lt;</button>
+                <button className="product-image-slider-navigation-button" onClick={() => handleImageHover(currentImageIndex - 1)}>&lt;</button>
                 {<div id="product-slider-smaller-images-div">
 
                     {isPendingImages || imagesFetchError ? ( imageList.map((image:any, index:number) => (
@@ -69,14 +77,21 @@ function ProductImageSlider(props:any) {
                             src={imageUrl}
                             alt={`Product`}
                             className={`product-image-slider-small-image${index === currentImageIndex ? '-selected' : ''}`}
-                            onClick={() => handleImageClick(index)}
-                            onMouseEnter={() => handleImageClick(index)}
+                            onClick={() => handleImageClick(imageUrl)}
+                            onMouseEnter={() => handleImageHover(index)}
                         />
                     )
                 )}
                 </div>}
-                <button className = "product-image-slider-navigation-button" onClick={() => handleImageClick(currentImageIndex + 1)}>&gt;</button>
+                <button className = "product-image-slider-navigation-button" onClick={() => handleImageHover(currentImageIndex + 1)}>&gt;</button>
             </div>
+            <CustomPopup show={isPopupVisible} onClose={() => setIsPopupVisible(false)}>
+                <img
+                    src={enlargedImageUrl}
+                    alt={`Product`}
+                    id="product-image-slider-enlarged-image"
+                />
+            </CustomPopup>
         </div>
     )
 

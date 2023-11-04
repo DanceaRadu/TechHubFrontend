@@ -1,4 +1,6 @@
 #product-browser-sorting-div {
+    display: flex;
+    flex-direction: column;
     background-color: var(--darker-primary);
     width: 300px;
     height: 100%;

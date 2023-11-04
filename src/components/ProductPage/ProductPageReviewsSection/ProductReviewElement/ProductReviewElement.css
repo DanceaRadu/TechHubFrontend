@@ -8,6 +8,7 @@
 #product-review-element-inner-div {
     display: flex;
     flex-direction: column;
+    margin-left: 10px;
 }
 
 .material-symbols-outlined.review-element-star {

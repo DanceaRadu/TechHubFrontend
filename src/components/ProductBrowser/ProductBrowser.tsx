@@ -5,6 +5,7 @@ import ProductGrid from "../ProductGrid/ProductGrid";
 import React from "react";
 import Navbar from "../Navbar/Navbar";
 import useFetchUserFavorites from "../../hooks/useFetchUserFavorites";
+import ProductFilter from './ProductFilter/ProductFilter';
 
 function ProductBrowser(props:any) {
 
@@ -26,7 +27,15 @@ function ProductBrowser(props:any) {
               setShoppingCartEntries = {props.setShoppingCartEntries}>
           </Navbar>
           {category !== undefined && order !== undefined && filters !== undefined && pageNumber !== undefined && <div id="product-browser-div">
-              <div id="product-browser-sorting-div"></div>
+              <div id="product-browser-sorting-div">
+                  <ProductFilter
+                      category = {category}
+                      order = {order}
+                      filters = {filters}
+                      query = {query}
+                      pageNumber = {pageNumber}>
+                  </ProductFilter>
+              </div>
               <ProductGrid
                   isLoggedIn = {isLoggedIn}
                   shoppingCartEntries={props.shoppingCartEntries}
@@ -37,8 +46,7 @@ function ProductBrowser(props:any) {
                   query = {query}
                   pageNumber = {pageNumber}
                   favorites = {favorites}
-                  setFavorites = {setFavorites}
-              >
+                  setFavorites = {setFavorites}>
               </ProductGrid>
           </div>}
       </div>

@@ -1,0 +1,215 @@
+#product-filter-outer-div {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 30px);
+    color: #DDD;
+    padding: 15px;
+    margin-top: 12px;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#product-filter-outer-div::-webkit-scrollbar {
+    display: none;
+}
+
+/*SORTER ELEMENT*/
+.product-filter-dropdown-outer-div {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.product-filter-dropdown-outer-div span {
+    white-space: pre;
+}
+
+.product-filter-dropdown {
+    background-color: var(--secondary-color);
+    vertical-align: center;
+    position: relative;
+    bottom: 6px;
+    margin-left: 10px;
+    width: 205px;
+    padding: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #1A1A1A;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.product-filter-dropdown:hover {
+    cursor: pointer;
+}
+
+.product-filter-dropdown-span {
+    font-size: 18px;
+    padding: 3px 50px 3px 3px;
+}
+
+#product-sorter-arrow-icon {
+    position: relative;
+    top: 3px;
+    transition: transform 0.2s ease;
+    transform-origin: center;
+}
+
+.arrow-rotated {
+    transform: rotate(180deg) translateY(5px);
+}
+
+@keyframes fadeIn {
+    from {
+        max-height: 0;
+    }
+    to {
+        max-height: 2000px;
+    }
+}
+
+.product-filter-dropdown-content {
+    position: absolute;
+    background-color: var(--secondary-color);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    padding: 5px 10px 5px 10px;
+    z-index: 1;
+    width: 189px;
+    top: 26px;
+    left: 60px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    animation: fadeIn 1s forwards;
+}
+
+.display-block {
+    display: block;
+}
+
+.display-none {
+    display: none;
+}
+
+.product-sorter-option {
+    transition: background-color 0.3s ease;
+    padding: 5px 5px 5px 5px;
+    color: #1A1A1A;
+    border-radius: 5px;
+}
+
+.product-sorter-option:hover {
+    cursor: pointer;
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/*PRICE ELEMENT*/
+#product-sorter-price-element-outer-div {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.product-filter-price-price-span {
+    margin-left: 10px;
+    position: relative;
+    bottom: 2px;
+}
+
+#product-filter-price-element-div {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0 5px 0;
+}
+
+#product-sorter-price-element-input-div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+#product-sorter-price-element-input-div input {
+    width: 40%;
+    height: 22px;
+    border-radius: 5px;
+    outline: none;
+    border: 2px solid white;
+    padding-left: 5px;
+}
+
+#product-sorter-price-element-input-div input:focus {
+    border: 2px solid var(--accent-color)
+}
+
+#product-filter-apply-button {
+    color: white;
+    background-color: transparent;
+    border: 2px solid #DDD;
+    outline: none;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.5s ease;
+    margin-top: 15px;
+    width: 100%;
+}
+#product-filter-apply-button:hover {
+    cursor: pointer;
+    background-color: var(--accent-color);
+}
+
+/*RATING ELEMENT*/
+#product-filter-rating-element-outer-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#product-filter-rating-element-inner-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.product-filter-rating-element-rating-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.product-filter-rating-element-rating-div input {
+    margin-right: 10px;
+}
+
+.product-filter-rating-star-icon-gold {
+    position: relative;
+    top: -3px;
+    font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    color: gold;
+}
+
+.product-filter-rating-star-icon-gray {
+    position: relative;
+    top: -3px;
+    font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+    color: #333;
+}
