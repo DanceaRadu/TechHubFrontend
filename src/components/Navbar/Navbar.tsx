@@ -22,7 +22,7 @@ function Navbar(props: any) {
 
     function navbarSearch(e:any) {
         e.preventDefault();
-        navigate("/browse/cc0ef8af-8386-4dac-8526-97f2e997de9f/ascending/none/1/" + navbarSearchValue);
+        navigate("/browse/cc0ef8af-8386-4dac-8526-97f2e997de9f/Featured/none/1/" + navbarSearchValue);
     }
 
     return (
