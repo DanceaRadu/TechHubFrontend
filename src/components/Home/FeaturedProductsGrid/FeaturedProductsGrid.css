@@ -1,0 +1,7 @@
+#featured-product-grid-outer-div {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 100%;
+    overflow: auto;
+}

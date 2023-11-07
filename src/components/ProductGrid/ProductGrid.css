@@ -29,29 +29,29 @@
 
 @media (min-width: 500px) {
     #product-grid-container {
-        grid-template-columns: 99%;
+        grid-template-columns: 60%;
     }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 1000px) {
     #product-grid-container {
-        grid-template-columns: 49% 49%;
+        grid-template-columns: 42% 42%;
     }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1250px) {
     #product-grid-container {
-        grid-template-columns: 30% 30% 30%;
+        grid-template-columns: 31% 31% 31%;
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1550px) {
     #product-grid-container {
         grid-template-columns: 24% 24% 24% 24%;
     }
 }
 
-@media (min-width: 1800px) {
+@media (min-width: 1850px) {
     #product-grid-container {
         grid-template-columns: 19% 19% 19% 19% 19%;
     }
